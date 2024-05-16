@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 16 Mei 2024 pada 17.26
+-- Generation Time: 16 Mei 2024 pada 18.47
 -- Versi Server: 10.1.25-MariaDB
 -- PHP Version: 5.6.31
 
@@ -172,10 +172,19 @@ INSERT INTO `profil` (`id_profil`, `nama_app`, `tahun`, `nama`, `alias`, `alamat
 CREATE TABLE `riwayat` (
   `id_riwayat` int(100) NOT NULL,
   `id_pegawai` int(100) NOT NULL,
-  `jenis_riwayat` int(100) NOT NULL,
+  `jenis_riwayat` varchar(100) NOT NULL,
   `ket_riwayat` text NOT NULL,
-  `lainya` varchar(100) NOT NULL
+  `lainya` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `riwayat`
+--
+
+INSERT INTO `riwayat` (`id_riwayat`, `id_pegawai`, `jenis_riwayat`, `ket_riwayat`, `lainya`) VALUES
+(2, 5, 'pendidikan', 'SD NEGERI 2 TERBANGGI BESAR LAMPUNG TENGAH ', NULL),
+(3, 5, 'pendidikan', 'SMP NEGERI 5 TERBANGGI BESAR LAMPINGA TENGAH  ', NULL),
+(4, 5, 'pekerjaan', 'TEKNISI JARINGAI KOMPUTER SMK', NULL);
 
 -- --------------------------------------------------------
 
@@ -313,7 +322,7 @@ ALTER TABLE `profil`
 -- AUTO_INCREMENT for table `riwayat`
 --
 ALTER TABLE `riwayat`
-  MODIFY `id_riwayat` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_riwayat` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `uraiankerja`
 --
