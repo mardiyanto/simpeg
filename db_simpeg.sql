@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 16 Mei 2024 pada 18.47
+-- Generation Time: 16 Mei 2024 pada 18.52
 -- Versi Server: 10.1.25-MariaDB
 -- PHP Version: 5.6.31
 
@@ -86,6 +86,19 @@ CREATE TABLE `pegawai` (
 
 INSERT INTO `pegawai` (`id_pegawai`, `kode_pegawai`, `nama_pegawai`, `status_pegawai`, `nik`, `tempat_lahir`, `tgl_lahir`, `jenis_kelamin`, `alamat`, `gambar`, `email`, `password`, `jenis_pegawai`, `jabatan_pegawai`, `mulai_kerja`) VALUES
 (5, 'KR002', 'MARDIYANTO', 'TETAP', '1820706109100034', 'Gunung Sugih ', '2024-05-16', 'Laki-Laki', 'jhgh', '16052024093038.jpg', 'mardybest@gmail.com', 'e421c038c9d423eea2f364f743dd986d', 'Dosen', 'Teknisi Laboratorium', '2010-05-16');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `penghargaan`
+--
+
+CREATE TABLE `penghargaan` (
+  `id_penghargaan` int(100) NOT NULL,
+  `id_pegawai` int(100) NOT NULL,
+  `jenis_penghargaan` varchar(100) NOT NULL,
+  `ket_penghargaan` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -245,6 +258,13 @@ ALTER TABLE `pegawai`
   ADD PRIMARY KEY (`id_pegawai`);
 
 --
+-- Indexes for table `penghargaan`
+--
+ALTER TABLE `penghargaan`
+  ADD PRIMARY KEY (`id_penghargaan`),
+  ADD KEY `id_pegawai` (`id_pegawai`);
+
+--
 -- Indexes for table `presensi_datang`
 --
 ALTER TABLE `presensi_datang`
@@ -303,6 +323,11 @@ ALTER TABLE `map`
 --
 ALTER TABLE `pegawai`
   MODIFY `id_pegawai` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `penghargaan`
+--
+ALTER TABLE `penghargaan`
+  MODIFY `id_penghargaan` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `presensi_datang`
 --
