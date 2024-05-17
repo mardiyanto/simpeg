@@ -749,11 +749,158 @@ echo"
         </div><!-- /.tab-pane -->
 
         <div class='tab-pane' id='timeline'>
-         
+        <div class='box-header with-border'>
+        <h3 class='box-title'>Penghargaan</h3>
+      </div><!-- /.box-header -->
+        <button class='btn btn-info' data-toggle='modal' data-target='#uiModalpenghargaan'>
+        Tambah Data
+    </button><br><br>
+                        <table  class='table table-bordered table-striped'>
+                        <thead>
+                            <tr>
+                            <th>No</th>
+                                <th>Keterangan</th>
+                                <th>aksi</th>		  
+                        </tr></thead>
+                <tbody>
+                ";
+
+                $no=0;
+                $sql=mysqli_query($koneksi," SELECT * FROM penghargaan WHERE id_pegawai='$_GET[id_pegawai]'");
+                while ($s=mysqli_fetch_array($sql)){	
+                $no++;
+                        echo"<tr>
+                            <td>$no</td>
+                                <td>$s[ket_penghargaan]</td>
+                <td><button class='btn btn-info' data-toggle='modal' data-target='#uiModalpenghargaan$s[id_penghargaan]'><i class='fa fa-pencil'></i>lihat</button>
+                <a class='btn btn-info' href='hapus.php?aksi=hapuspenghargaan&id_penghargaan=$s[id_penghargaan]' onclick=\"return confirm ('Apakah yakin ingin menghapus $x[ket_penghargaan] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</a>
+                </td>
+                            </tr>
+                            
+                            <div class='modal fade' id='uiModalpenghargaan$s[id_penghargaan]' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+                            <div class='modal-dialog'>
+                                <div class='modal-content'>
+                                    <div class='modal-header'>
+                                        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                                        <h4 class='modal-title' id='H3'>Input Data </h4>
+                                    </div>
+                                    <div class='modal-body'>
+                                    <form role='form' method='post' action='edit.php?aksi=proseseditpenghargaan&id_penghargaan=$s[id_penghargaan]'>
+                                        <div class='form-group'>
+                                        <label>Keterangan</label>
+                                        <textarea id='text-ckeditor' class='form-control' name='ket_penghargaan'>$s[ket_penghargaan] </textarea><br>
+                                        <input type='hidden' class='form-control'  value='$_GET[id_pegawai]' name='id_pegawai'/><br>
+                                        <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+                                        <button type='submit' class='btn btn-primary'>Save </button>
+                                    </div>
+                </form>
+                                </div>
+                            </div>
+                        </div>
+                </div>          
+                            
+                            ";
+                }
+                    echo"  </tbody>
+                    </table>
+                    <div class='modal fade' id='uiModalpenghargaan' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+<div class='modal-dialog'>
+    <div class='modal-content'>
+        <div class='modal-header'>
+            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+            <h4 class='modal-title' id='H3'>Input Data </h4>
+        </div>
+        <div class='modal-body'>
+       <form role='form' method='post' action='input.php?aksi=inputpenghargaan'>
+                                <div class='form-group'>
+            <label>Keterangan</label>
+            <textarea id='text-ckeditor' class='form-control' name='ket_penghargaan'></textarea><br>
+            <input type='hidden' class='form-control'  value='pendidikan' name='jenis_penghargaan'/><br>
+            <input type='hidden' class='form-control'  value='$_GET[id_pegawai]' name='id_pegawai'/><br>
+
+                                <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+                                <button type='submit' class='btn btn-primary'>Save </button>
+                            </div>
+        </form>
+    </div>
+</div>
+</div>
+
+        </div> 
         </div><!-- /.tab-pane -->
 
         <div class='tab-pane' id='settings'>
+        <button class='btn btn-info' data-toggle='modal' data-target='#uiModalupload'><i class='fa fa-cloud-upload'></i>Tambah Data</button>
+        <table id='example1' class='table table-bordered table-striped'>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>nama</th>
+                <th>keterangan</th>		  
+            </tr>
+        </thead>
+";
+
+$no=0;
+$tql=mysqli_query($koneksi," SELECT * FROM dokumen WHERE id_pegawai=$_GET[id_pegawai]");
+while ($q=mysqli_fetch_array($tql)){	
+$no++;
+        echo"<tbody>
+            <tr>
+                <td>$no</td>
+                <td><a href='../foto/dokumen/$q[file_dokumen]' target='_blank'>$q[ket_dokumen]</a></td>
+<td><div class='btn-group'>
+<button type='button' class='btn btn-info'>aksi</button>
+<button type='button' class='btn btn-info dropdown-toggle' data-toggle='dropdown'>
+<span class='caret'></span>
+<span class='sr-only'>Toggle Dropdown</span>
+</button>
+<ul class='dropdown-menu' role='menu'>
+<li><a href='index.php?aksi=editadmin&user_id=$t[user_id]' title='Edit'><i class='fa fa-pencil'></i>edit</a></li>
+<li><a href='hapus.php?aksi=hapusbuktidokumen&id_uploaddokumen=$t[id_uploaddokumen]&id_buktidokumen=$t[id_buktidokumen]' onclick=\"return confirm ('Apakah yakin ingin menghapus $t[user_username] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</li>
+</ul>
+</div></td>
+            </tr>
+        </tbody>
+        
+                                 
+        ";
+}
+    echo"</table>
+    <div class='modal fade' id='uiModalupload' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+    <h4 class='modal-title' id='H3'>Data upload $t[nama_pegawai]</h4>
+            </div>
+            <div class='modal-body'>
+            <form id='upload_form'>
+                    <div class='form-group mb-5'>
+                    <label>keterangan</label><br/>
+                    <input type='text' name='keterangan'   id='keterangan' class='form-control'>
+                    <input type='hidden' name='id_pegawai'   id='id_pegawai' value='$_GET[id_pegawai]' class='form-control'>
+                </div>
+                <div class='form-group mb-5'>
+                    <label>Pilih File</label><br/>
+                    <input type='file' name='file' id='file' class='form-control'>
+                </div>
+                
+                <div class='form-group mb-5'>
+                    <input type='button' id='upload' value='Upload File' class='btn btn-success'>
+                </div>
+            
+                <progress id='progressBar' value='0' max='100' style='width:100%; display: none;'></progress>
+                <h3 id='status'></h3>
+                <p id='loaded_n_total'></p>
+            </form>
+            <div class='modal-footer'>
+            <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
           
+          </div>
+            </div>
+        </div>
+    </div>
+</div>
         </div><!-- /.tab-pane -->
 
       </div><!-- /.tab-content -->

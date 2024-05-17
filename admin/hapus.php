@@ -42,6 +42,37 @@ elseif($_GET['aksi']=='hapuspegawai'){
   unlink($pathFile);
 echo "<script>window.location=('index.php?aksi=pegawai')</script>";
 }
+elseif ($_GET['aksi'] == 'hapusbuktidokumen') {
+  $id_uploaddokumen_hapus = $_GET['id_dokumen'];
+  $id_buktidokumen_hapus = $_GET['id_buktidokumen'];  
+  // Ambil informasi file terkait
+  $query_select = "SELECT file_dokumen FROM dokumen WHERE id_dokumen = '$id_uploaddokumen_hapus'";
+  $result_select = mysqli_query($koneksi, $query_select);
+
+  if ($result_select) {
+      $row = mysqli_fetch_assoc($result_select);
+      $nama_file_hapus = $row['file_dokumen'];
+      $path_file_hapus = "../foto/dokumen/" . $nama_file_hapus;
+
+      // Hapus file dari direktori
+      if (unlink($path_file_hapus)) {
+          // Hapus data dari tabel database
+          $query_delete = "DELETE FROM dokumen WHERE id_uploaddokumen = '$id_uploaddokumen_hapus'";
+          $result_delete = mysqli_query($koneksi, $query_delete);
+
+          if ($result_delete) {
+              echo "<script>window.alert('Berhasil hapus'); window.location=('upload.php?aksi=uploaddokumen&id_buktidokumen=$id_buktidokumen_hapus')</script>";
+          } else {
+              echo "<script>window.alert('Gagal menghapus data dari database'); window.location=('upload.php?aksi=uploaddokumen&id_buktidokumen=$id_buktidokumen_hapus')</script>";
+          }
+      } else {
+          echo "<script>window.alert('Gagal menghapus file tidak terdapat di database'); window.location=('upload.php?aksi=uploaddokumen&id_buktidokumen=$id_buktidokumen_hapus')</script>";
+      }
+  } else {
+      echo "<script>window.alert('Gagal mengambil informasi file'); window.location=('upload.php?aksi=uploaddokumen&id_buktidokumen=$id_buktidokumen_hapus')</script>";
+  }
+
+}
 elseif($_GET['aksi']=='hapuskritik'){
   mysqli_query($koneksi,"DELETE FROM kritik  WHERE id_kritik='$_GET[id_kritik]'");
   echo "<script>window.location=('index.php?aksi=kritik')</script>";

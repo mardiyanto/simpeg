@@ -14,52 +14,45 @@
     <title><?php echo"$k_k[nama]";?></title>
 	    <!-- Bootstrap 3.3.5 -->
 		   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-  <link rel="stylesheet" href="../sys/bootstrap/bootstrap/css/bootstrap.min.css">
+       <link rel="stylesheet" href="../sys/bootstrap/bootstrap/css/bootstrap.min.css">
       <link rel="stylesheet" href="../sys/bootstrap/font/css/font-awesome.min.css">
   <link rel="stylesheet" href="../sys/bootstrap/plugins/datatables/dataTables.bootstrap.css">
     <link rel="stylesheet" href="../sys/bootstrap/plugins/select2/select2.min.css">
     <link rel="stylesheet" href="../sys/bootstrap/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="../sys/bootstrap/dist/css/skins/_all-skins.min.css">
-	 	<script src="../sys/bootstrap/plugins/ckeditor/ckeditor.js"></script>  
-     <style type="text/css">
-		#progress-bar1 {
-			background-color: red;
-			width:0%;
-			height:20px;
-			-webkit-transition: width .3s;
-			-moz-transition: width .3s;
-			transition: width .3s;
-		}
-    #progress-bar {
-      float: left;
-      width: 0;
-      height: 100%;
-      font-size: 12px;
-      line-height: 20px;
-      color: #fff;
-      text-align: center;
-      background-color: #337ab7;
-      -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15);
-              box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15);
-      -webkit-transition: width .6s ease;
-          -o-transition: width .6s ease;
-              transition: width .6s ease;
-              background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
-      background-image:      -o-linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
-      background-image:         linear-gradient(45deg, rgba(255, 255, 255, .15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%, transparent 75%, transparent);
-      -webkit-background-size: 40px 40px;
-              background-size: 40px 40px;
-              -webkit-animation: progress-bar-stripes 2s linear infinite;
-       -o-animation: progress-bar-stripes 2s linear infinite;
-          animation: progress-bar-stripes 2s linear infinite;
-		}
-		#progress-div {
-			border:#ccc 1px solid;
-			margin:30px 0px;
-			border-radius:4px;
-			text-align:center;
-		}
-		</style>
+	<script src="../sys/bootstrap/plugins/ckeditor/ckeditor.js"></script> 
+	<script src="../sys/bootstrap/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+	<script src="../sys/bootstrap/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script src="js/jquery.form.js"></script>	
+
+    <script src="../sys/bootstrap/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Select2 -->
+    <script src="../sys/bootstrap/plugins/select2/select2.full.min.js"></script>
+    <!-- InputMask -->
+    <script src="../sys/bootstrap/dist/js/app.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="../sys/bootstrap/dist/js/demo.js"></script> 
+     <style>
+        #progressBar {
+            height: 25px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        #progressBar .progress-bar {
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        #status {
+            margin-top: 10px;
+        }
+
+        #loaded_n_total {
+            margin-top: 5px;
+        }
+    </style>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -153,11 +146,6 @@
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
 
-    
-    <script src="../sys/bootstrap/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-    <script src="js/jquery.form.js"></script>	
-<script src="js/script.js"></script>
-    <!-- DataTables -->
     <script src="../sys/bootstrap/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="../sys/bootstrap/plugins/datatables/dataTables.bootstrap.min.js"></script>
 
@@ -175,76 +163,50 @@
         });
       });
     </script>
-    <!-- Bootstrap 3.3.5 -->
-    <script src="../sys/bootstrap/bootstrap/js/bootstrap.min.js"></script>
-    <!-- Select2 -->
-    <script src="../sys/bootstrap/plugins/select2/select2.full.min.js"></script>
-    <!-- InputMask -->
-    <script src="../sys/bootstrap/dist/js/app.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="../sys/bootstrap/dist/js/demo.js"></script>
-    <!-- Page script -->
     <script>
-      $(function () {
-        //Initialize Select2 Elements
-        $(".select2").select2();
+		function ambilId(file){
+			return document.getElementById(file);
+		}
 
-        //Datemask dd/mm/yyyy
-        $("#datemask").inputmask("dd/mm/yyyy", {"placeholder": "dd/mm/yyyy"});
-        //Datemask2 mm/dd/yyyy
-        $("#datemask2").inputmask("mm/dd/yyyy", {"placeholder": "mm/dd/yyyy"});
-        //Money Euro
-        $("[data-mask]").inputmask();
+		$(document).ready(function(){
+			$("#upload").click(function(){
+				ambilId("progressBar").style.display = "block";
+				var file = ambilId("file").files[0];
+				var keterangan = ambilId("keterangan").value; // Ambil nilai keterangan
+				var id_pegawai = ambilId("id_pegawai").value; // Ambil nilai id_buktidokumen
 
-        //Date range picker
-        $('#reservation').daterangepicker();
-        //Date range picker with time picker
-        $('#reservationtime').daterangepicker({timePicker: true, timePickerIncrement: 30, format: 'MM/DD/YYYY h:mm A'});
-        //Date range as a button
-        $('#daterange-btn').daterangepicker(
-            {
-              ranges: {
-                'Today': [moment(), moment()],
-                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-                'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-                'This Month': [moment().startOf('month'), moment().endOf('month')],
-                'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-              },
-              startDate: moment().subtract(29, 'days'),
-              endDate: moment()
-            },
-        function (start, end) {
-          $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
-        }
-        );
+				if (file!="") {
+					var formdata = new FormData();
+					formdata.append("file", file);
+					formdata.append("keterangan", keterangan); // Tambahkan keterangan ke FormData
+					formdata.append("id_pegawai", id_pegawai); // Tambahkan keterangan ke FormData
+					var ajax = new XMLHttpRequest();
+					ajax.upload.addEventListener("progress", progressHandler, false);
+					ajax.addEventListener("load", completeHandler, false);
+					ajax.addEventListener("error", errorHandler, false);
+					ajax.addEventListener("abort", abortHandler, false);
+					ajax.open("POST", "input.php?aksi=prosesuploaddokumen");
+					ajax.send(formdata);
+				}
+			});
+		});
 
-        //iCheck for checkbox and radio inputs
-        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-          checkboxClass: 'icheckbox_minimal-blue',
-          radioClass: 'iradio_minimal-blue'
-        });
-        //Red color scheme for iCheck
-        $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
-          checkboxClass: 'icheckbox_minimal-red',
-          radioClass: 'iradio_minimal-red'
-        });
-        //Flat red color scheme for iCheck
-        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
-          checkboxClass: 'icheckbox_flat-green',
-          radioClass: 'iradio_flat-green'
-        });
-
-        //Colorpicker
-        $(".my-colorpicker1").colorpicker();
-        //color picker with addon
-        $(".my-colorpicker2").colorpicker();
-
-        //Timepicker
-        $(".timepicker").timepicker({
-          showInputs: false
-        });
-      });
-    </script>
+		function progressHandler(event){
+			ambilId("loaded_n_total").innerHTML = "Uploaded "+event.loaded+" bytes of "+event.total;
+			var percent = (event.loaded / event.total) * 100;
+			ambilId("progressBar").value = Math.round(percent);
+			ambilId("status").innerHTML = Math.round(percent)+"% uploaded... please wait";
+		}
+		function completeHandler(event){
+			ambilId("status").innerHTML = event.target.responseText;
+			ambilId("progressBar").value = 0;
+		}
+		function errorHandler(event){
+			ambilId("status").innerHTML = "Upload Failed";
+		}
+		function abortHandler(event){
+			ambilId("status").innerHTML = "Upload Aborted";
+		}
+	</script>
   </body>
 </html>

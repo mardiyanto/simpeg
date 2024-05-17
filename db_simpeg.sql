@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 16 Mei 2024 pada 18.52
+-- Generation Time: 17 Mei 2024 pada 02.07
 -- Versi Server: 10.1.25-MariaDB
 -- PHP Version: 5.6.31
 
@@ -35,6 +35,13 @@ CREATE TABLE `dokumen` (
   `file_dokumen` varchar(100) DEFAULT NULL,
   `jenis_dokumen` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `dokumen`
+--
+
+INSERT INTO `dokumen` (`id_dokumen`, `id_pegawai`, `ket_dokumen`, `file_dokumen`, `jenis_dokumen`) VALUES
+(1, 5, 'Berwujud (Tengibel)', '1715903902_Lambang_Kabupaten_Pringsewu.png', NULL);
 
 -- --------------------------------------------------------
 
@@ -96,9 +103,16 @@ INSERT INTO `pegawai` (`id_pegawai`, `kode_pegawai`, `nama_pegawai`, `status_peg
 CREATE TABLE `penghargaan` (
   `id_penghargaan` int(100) NOT NULL,
   `id_pegawai` int(100) NOT NULL,
-  `jenis_penghargaan` varchar(100) NOT NULL,
-  `ket_penghargaan` text NOT NULL
+  `jenis_penghargaan` varchar(100) DEFAULT NULL,
+  `ket_penghargaan` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `penghargaan`
+--
+
+INSERT INTO `penghargaan` (`id_penghargaan`, `id_pegawai`, `jenis_penghargaan`, `ket_penghargaan`) VALUES
+(1, 5, 'pendidikan', 'KARIAWAN TERPITAR DALAM PEMBUATAN APLIKASI');
 
 -- --------------------------------------------------------
 
@@ -312,7 +326,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `dokumen`
 --
 ALTER TABLE `dokumen`
-  MODIFY `id_dokumen` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_dokumen` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `map`
 --
@@ -327,7 +341,7 @@ ALTER TABLE `pegawai`
 -- AUTO_INCREMENT for table `penghargaan`
 --
 ALTER TABLE `penghargaan`
-  MODIFY `id_penghargaan` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_penghargaan` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `presensi_datang`
 --
