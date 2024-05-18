@@ -330,6 +330,8 @@ elseif($_GET['aksi']=='pegawai'){
                                                 <input type='text' class='form-control' value='$t[nama_pegawai]' name='nama_pegawai'/><br>
                                                 <label>Nik</label>
                                                 <input type='text' class='form-control' value='$t[nik]' name='nik'/><br>
+                                                <label>Nomor Hp</label>
+                                                <input type='text' class='form-control' value='$t[no_hp]'  name='no_hp'/><br>
                                                 <label>Email</label>
                                                 <input type='text' class='form-control' value='$t[email]' name='email'/><br>
                                                 <label>Tempat Lahir pegawai</label>
@@ -433,6 +435,8 @@ elseif($_GET['aksi']=='pegawai'){
                                                 <input type='text' class='form-control' name='nama_pegawai'/><br>
                                                 <label>Nik</label>
                                                 <input type='text' class='form-control' name='nik'/><br>
+                                                <label>Nomor Hp</label>
+                                                <input type='text' class='form-control' name='no_hp'/><br>
                                                 <label>Email</label>
                                                 <input type='text' class='form-control' name='email'/><br>
                                                 <label>Mulai Kerja</label>
@@ -584,6 +588,7 @@ echo"
         <li class='active'><a href='#activity' data-toggle='tab'>Riwayat</a></li>
         <li><a href='#timeline' data-toggle='tab'>Penghargaan</a></li>
         <li><a href='#settings' data-toggle='tab'>Dokumen</a></li>
+        <li><a href='#keluarga' data-toggle='tab'>Keluarga</a></li>
       </ul>
       <div class='tab-content'>
 
@@ -766,18 +771,18 @@ echo"
                 ";
 
                 $no=0;
-                $sql=mysqli_query($koneksi," SELECT * FROM penghargaan WHERE id_pegawai='$_GET[id_pegawai]'");
+                $sql=mysqli_query($koneksi," SELECT * FROM riwayat WHERE jenis_riwayat='penghargaan' and id_pegawai='$_GET[id_pegawai]'");
                 while ($s=mysqli_fetch_array($sql)){	
                 $no++;
                         echo"<tr>
                             <td>$no</td>
-                                <td>$s[ket_penghargaan]</td>
-                <td><button class='btn btn-info' data-toggle='modal' data-target='#uiModalpenghargaan$s[id_penghargaan]'><i class='fa fa-pencil'></i>lihat</button>
-                <a class='btn btn-info' href='hapus.php?aksi=hapuspenghargaan&id_penghargaan=$s[id_penghargaan]' onclick=\"return confirm ('Apakah yakin ingin menghapus $x[ket_penghargaan] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</a>
+                                <td>$s[ket_riwayat]</td>
+                <td><button class='btn btn-info' data-toggle='modal' data-target='#uiModalpenghargaan$s[id_riwayat]'><i class='fa fa-pencil'></i>lihat</button>
+                <a class='btn btn-info' href='hapus.php?aksi=hapusriwayat&id_riwayat=$s[id_riwayat]' onclick=\"return confirm ('Apakah yakin ingin menghapus $x[ket_riwayat] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</a>
                 </td>
                             </tr>
                             
-                            <div class='modal fade' id='uiModalpenghargaan$s[id_penghargaan]' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+                            <div class='modal fade' id='uiModalpenghargaan$s[id_riwayat]' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
                             <div class='modal-dialog'>
                                 <div class='modal-content'>
                                     <div class='modal-header'>
@@ -785,10 +790,10 @@ echo"
                                         <h4 class='modal-title' id='H3'>Input Data </h4>
                                     </div>
                                     <div class='modal-body'>
-                                    <form role='form' method='post' action='edit.php?aksi=proseseditpenghargaan&id_penghargaan=$s[id_penghargaan]'>
+                                    <form role='form' method='post' action='edit.php?aksi=proseseditriwayat&id_riwayat=$s[id_riwayat]'>
                                         <div class='form-group'>
                                         <label>Keterangan</label>
-                                        <textarea id='text-ckeditor' class='form-control' name='ket_penghargaan'>$s[ket_penghargaan] </textarea><br>
+                                        <textarea id='text-ckeditor' class='form-control' name='ket_riwayat'>$s[ket_riwayat] </textarea><br>
                                         <input type='hidden' class='form-control'  value='$_GET[id_pegawai]' name='id_pegawai'/><br>
                                         <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
                                         <button type='submit' class='btn btn-primary'>Save </button>
@@ -811,11 +816,11 @@ echo"
             <h4 class='modal-title' id='H3'>Input Data </h4>
         </div>
         <div class='modal-body'>
-       <form role='form' method='post' action='input.php?aksi=inputpenghargaan'>
+       <form role='form' method='post' action='input.php?aksi=inputriwayat'>
                                 <div class='form-group'>
             <label>Keterangan</label>
-            <textarea id='text-ckeditor' class='form-control' name='ket_penghargaan'></textarea><br>
-            <input type='hidden' class='form-control'  value='pendidikan' name='jenis_penghargaan'/><br>
+            <textarea id='text-ckeditor' class='form-control' name='ket_riwayat'></textarea><br>
+            <input type='hidden' class='form-control'  value='penghargaan' name='jenis_riwayat'/><br>
             <input type='hidden' class='form-control'  value='$_GET[id_pegawai]' name='id_pegawai'/><br>
 
                                 <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
@@ -892,6 +897,64 @@ $no++;
                 <progress id='progressBar' value='0' max='100' style='width:100%; display: none;'></progress>
                 <h3 id='status'></h3>
                 <p id='loaded_n_total'></p>
+            </form>
+            <div class='modal-footer'>
+            <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+          
+          </div>
+            </div>
+        </div>
+    </div>
+</div>
+        </div><!-- /.tab-pane -->
+        <div class='tab-pane' id='keluarga'>
+        <button class='btn btn-info' data-toggle='modal' data-target='#uiModalkeluarga'><i class='fa fa-cloud-upload'></i>Tambah Data</button>
+        <table id='example1' class='table table-bordered table-striped'>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>nama</th>
+                <th>keterangan</th>		  
+            </tr>
+        </thead>
+";
+
+$no=0;
+$keluarga=mysqli_query($koneksi," SELECT * FROM keluarga WHERE id_pegawai=$_GET[id_pegawai]");
+while ($k=mysqli_fetch_array($keluarga)){	
+$no++;
+        echo"<tbody>
+            <tr>
+                <td>$no</td>
+                <td>$q[nama_keluarga]</td>
+                <td></td>
+            </tr>
+        </tbody>
+        
+                                 
+        ";
+}
+    echo"</table>
+    <div class='modal fade' id='uiModalkeluarga' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+    <h4 class='modal-title' id='H3'>Data upload $t[nama_pegawai]</h4>
+            </div>
+            <div class='modal-body'>
+                <form role='form' method='post' action='input.php?aksi=inputkeluarga'>
+                                    <div class='form-group'>
+                <label>Nama Keluarga</label>
+                <input type='text' class='form-control' name='nama_keluarga'/><br>
+                <label>Hubungan Keluarga</label>
+                <input type='text' class='form-control'  name='hubungan_keluarga'/><br>
+                <label>Kontak Darurat/HP</label>
+                <input type='text' class='form-control'  name='no_hpkeluarga'/><br>
+                <input type='hidden' class='form-control'  value='$_GET[id_pegawai]' name='id_pegawai'/><br>
+
+                <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+                <button type='submit' class='btn btn-primary'>Save </button>
+                </div>
             </form>
             <div class='modal-footer'>
             <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>

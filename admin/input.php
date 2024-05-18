@@ -112,8 +112,8 @@ elseif($_GET['aksi']=='inputpegawai'){
 	   $file=$_FILES['gambar']['tmp_name'];
 	   $file_name=$_FILES['gambar']['name'];
 	   copy($file,"../foto/pegawai/".$tanggal.".jpg");
-	   mysqli_query($koneksi,"insert into pegawai (kode_pegawai,nama_pegawai,nik,email,tempat_lahir,tgl_lahir,jenis_kelamin,status_pegawai,jabatan_pegawai,jenis_pegawai,mulai_kerja,alamat,password,gambar) 
-	   values ('$_POST[kode_pegawai]','$_POST[nama_pegawai]','$_POST[nik]','$_POST[email]','$_POST[tempat_lahir]','$_POST[tgl_lahir]','$_POST[jenis_kelamin]','$_POST[status_pegawai]','$_POST[jabatan_pegawai]','$_POST[jenis_pegawai]','$_POST[mulai_kerja]','$_POST[alamat]','$password','$tanggal.jpg')");
+	   mysqli_query($koneksi,"insert into pegawai (kode_pegawai,nama_pegawai,nik,no_hp, email,tempat_lahir,tgl_lahir,jenis_kelamin,status_pegawai,jabatan_pegawai,jenis_pegawai,mulai_kerja,alamat,password,gambar) 
+	   values ('$_POST[kode_pegawai]','$_POST[nama_pegawai]','$_POST[nik]','$_POST[no_hp]','$_POST[email]','$_POST[tempat_lahir]','$_POST[tgl_lahir]','$_POST[jenis_kelamin]','$_POST[status_pegawai]','$_POST[jabatan_pegawai]','$_POST[jenis_pegawai]','$_POST[mulai_kerja]','$_POST[alamat]','$password','$tanggal.jpg')");
 		  
 	   echo "<script>window.location=('index.php?aksi=pegawai')</script>";
 		  }
@@ -124,8 +124,8 @@ elseif($_GET['aksi']=='inputriwayat'){
 	mysqli_query($koneksi,"insert into riwayat (id_pegawai,ket_riwayat,jenis_riwayat) values ('$_POST[id_pegawai]','$_POST[ket_riwayat]','$_POST[jenis_riwayat]')");  
 echo "<script>window.location=('index.php?aksi=detailpegawai&id_pegawai=$_POST[id_pegawai]')</script>";
 }
-elseif($_GET['aksi']=='inputpenghargaan'){
-	mysqli_query($koneksi,"insert into penghargaan (id_pegawai,ket_penghargaan,jenis_penghargaan) values ('$_POST[id_pegawai]','$_POST[ket_penghargaan]','$_POST[jenis_penghargaan]')");  
+elseif($_GET['aksi']=='inputkeluarga'){
+	mysqli_query($koneksi,"insert into keluarga (id_pegawai,nama_keluarga,hubungan_keluarga,hp_keluarga) values ('$_POST[id_pegawai]','$_POST[nama_keluarga]','$_POST[hubungan_keluarga]','$_POST[hp_keluarga]')");  
 echo "<script>window.location=('index.php?aksi=detailpegawai&id_pegawai=$_POST[id_pegawai]')</script>";
 }
 elseif ($_GET['aksi'] == 'prosesuploaddokumen') {

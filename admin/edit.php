@@ -122,6 +122,7 @@ elseif($_GET['aksi']=='proseseditpegawai'){
 $kode_pegawai = $_POST['kode_pegawai'];
 $nama_pegawai = $_POST['nama_pegawai'];
 $nik = $_POST['nik'];
+$no_hp = $_POST['no_hp'];
 $email = $_POST['email'];
 $tempat_lahir = $_POST['tempat_lahir'];
 $tgl_lahir = $_POST['tgl_lahir'];
@@ -142,7 +143,8 @@ $password = md5($_POST['password']);
 	   mysqli_query($koneksi,"UPDATE pegawai SET 
 	   kode_pegawai = '$kode_pegawai',
 	   nama_pegawai = '$nama_pegawai', 
-	   nik = '$nik', 
+	   nik = '$nik',
+	   no_hp= '$no_hp',
 	   email = '$email', 
 	   tempat_lahir = '$tempat_lahir', 
 	   tgl_lahir = '$tgl_lahir', 
@@ -162,6 +164,7 @@ $password = md5($_POST['password']);
 	   kode_pegawai = '$kode_pegawai',
 	   nama_pegawai = '$nama_pegawai', 
 	   nik = '$nik', 
+	   no_hp= '$no_hp',
 	   email = '$email', 
 	   tempat_lahir = '$tempat_lahir', 
 	   tgl_lahir = '$tgl_lahir', 
