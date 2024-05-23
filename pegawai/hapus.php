@@ -79,7 +79,7 @@ elseif($_GET['aksi']=='hapuskritik'){
   }
 elseif($_GET['aksi']=='hapuskeluarga'){
   mysqli_query($koneksi,"DELETE FROM keluarga  WHERE id_keluarga='$_GET[id_keluarga]'");
-  echo "<script>window.alert('Berhasil hapus'); window.location=(''index.php?aksi=detailpegawai&id_pegawai=$_SESSION[id_pegawai]')</script>";
+  echo "<script>window.alert('Berhasil hapus'); window.location=('index.php?aksi=detailpegawai&id_pegawai=$_SESSION[id_pegawai]')</script>";
 }
 elseif($_GET['aksi']=='hapusriwayat'){
   mysqli_query($koneksi,"DELETE FROM riwayat WHERE id_riwayat='$_GET[id_riwayat]'");

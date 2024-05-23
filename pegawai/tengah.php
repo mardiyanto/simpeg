@@ -66,8 +66,14 @@ echo"
 
         <hr>
 
-        <strong><i class='fa fa-file-text-o margin-r-5'></i> Penghargaan</strong>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+        <strong><i class='fa fa-file-text-o margin-r-5'></i> Penghargaan</strong>";
+        $no=0;
+         $sqllite=mysqli_query($koneksi," SELECT * FROM riwayat WHERE jenis_riwayat='penghargaan' and id_pegawai='$_SESSION[id_pegawai]'");
+        while ($sx=mysqli_fetch_array($sqllite)){	
+            $no++;   
+       echo" <p> $no . $sx[ket_riwayat]</p>";
+        }
+      echo"
       </div><!-- /.box-body -->
     </div><!-- /.box -->
   </div><!-- /.col -->
@@ -342,18 +348,8 @@ $no++;
         echo"<tbody>
             <tr>
                 <td>$no</td>
-                <td><a href='../foto/dokumen/$q[file_dokumen]' target='_blank'>$q[ket_dokumen]</a></td>
-<td><div class='btn-group'>
-<button type='button' class='btn btn-info'>aksi</button>
-<button type='button' class='btn btn-info dropdown-toggle' data-toggle='dropdown'>
-<span class='caret'></span>
-<span class='sr-only'>Toggle Dropdown</span>
-</button>
-<ul class='dropdown-menu' role='menu'>
-<li><a href='index.php?aksi=editadmin&user_id=$t[user_id]' title='Edit'><i class='fa fa-pencil'></i>edit</a></li>
-<li><a href='hapus.php?aksi=hapusbuktidokumen&id_uploaddokumen=$t[id_uploaddokumen]&id_buktidokumen=$t[id_buktidokumen]' onclick=\"return confirm ('Apakah yakin ingin menghapus $t[user_username] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</li>
-</ul>
-</div></td>
+    <td><a href='../foto/dokumen/$q[file_dokumen]' target='_blank'>$q[ket_dokumen]</a></td>
+<td><a class='btn btn-info' href='hapus.php?aksi=hapusbuktidokumen&id_dokumen=$q[id_dokumen]&id_pegawai=$_SESSION[id_pegawai]' onclick=\"return confirm ('Apakah yakin ingin menghapus $q[ket_dokumen] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</a></td>
             </tr>
         </tbody>
         
@@ -421,7 +417,7 @@ $no++;
                 <td>$k[hubungan_keluarga]</td>
                 <td>$k[no_hpkeluarga]</td>
                 <td><button class='btn btn-info' data-toggle='modal' data-target='#uieditkeluarga$k[id_keluarga]'><i class='fa fa fa-pencil'></i></button>
-                <a class='btn btn-info' href='hapus.php?aksi=hapuskeluarga&id_keluarga=$k[keluarga]' onclick=\"return confirm ('Apakah yakin ingin menghapus $k[nama_keluarga] ?')\" title='Hapus'><i class='fa fa-remove'></i></a>
+                <a class='btn btn-info' href='hapus.php?aksi=hapuskeluarga&id_keluarga=$k[id_keluarga]&id_pegawai=$_SESSION[id_pegawai]' onclick=\"return confirm ('Apakah yakin ingin menghapus $k[nama_keluarga] ?')\" title='Hapus'><i class='fa fa-remove'></i></a>
                 </td>
             </tr>
         </tbody>
@@ -635,99 +631,7 @@ elseif($_GET['aksi']=='pegawai'){
         
           ";			
     
-    ////////////////input admin			
-    
-    echo"			
-    <div class='col-lg-12'>
-                            <div class='modal fade' id='uiModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-                                    <div class='modal-dialog'>
-                                        <div class='modal-content'>
-                                            <div class='modal-header'>
-                                                <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-                                                <h4 class='modal-title' id='H3'>Input Data </h4>
-                                            </div>
-                                            <div class='modal-body'>
-                                               <form role='form' method='post' enctype='multipart/form-data' action='input.php?aksi=inputpegawai'>
-                                                <div class='form-group'>
-                                                <label>NIP pegawai</label>
-                                                <input type='text' class='form-control' name='kode_pegawai'/><br>
-                                                <label>nama</label>
-                                                <input type='text' class='form-control' name='nama_pegawai'/><br>
-                                                <label>Nik</label>
-                                                <input type='text' class='form-control' name='nik'/><br>
-                                                <label>Nomor Hp</label>
-                                                <input type='text' class='form-control' name='no_hp'/><br>
-                                                <label>Email</label>
-                                                <input type='text' class='form-control' name='email'/><br>
-                                                <label>Mulai Kerja</label>
-                                                <input type='date' class='form-control' name='mulai_kerja'/><br>
-                                                <label>Tempat Lahir pegawai</label>
-                                                <input type='text' class='form-control' name='tempat_lahir'/><br>
-                                                <label>Tanggal Lahir pegawai</label>
-                                                <input type='date' class='form-control' name='tgl_lahir'/><br>
-                                                <label>Jenis Kelamin</label>
-                                                <select class='form-control select2' style='width: 100%;' name=jenis_kelamin>
-                                                <option value='' selected>--Pilih Jenis Kelamin--</option>
-                                                <option value='Laki-Laki'>Laki-Laki</option>
-                                                <option value='Perempuan'>Perempuan</option>
-                                                </select><br></br>
-                                                <label>Status Pegawai</label>
-                                                <select class='form-control select2' style='width: 100%;' name=status_pegawai>
-                                                    <option value='' selected>--Pilih Status Pegawai</option>
-                                                    <option value='TETAP'>TETAP</option>
-                                                    <option value='NO TETAP'>NO TETAP</option>
-                                                </select><br><br>
-                                                <label>Jenis Pegawai</label>
-                                                <select class='form-control select2' style='width: 100%;' name=jenis_pegawai>
-                                                    <option value='' selected>--Pilih Jenis Pegawai</option>
-                                                    <option value='Dosen'>Dosen</option>
-                                                    <option value='Kariawan'>Kariawan</option>
-                                                </select><br><br>
-                                                <label>Jabatan Pegawai</label>
-                                                <select class='form-control select2' style='width: 100%;' name='jabatan_pegawai'>
-                                                    <option value='' selected>--Pilih Jabatan Pegawai--</option>
-                                                    <option value='Rektor'>Rektor</option>
-                                                    <option value='Wakil Rektor'>Wakil Rektor</option>
-                                                    <option value='Dekan'>Dekan</option>
-                                                    <option value='Ketua Program Studi'>Ketua Program Studi</option>
-                                                    <option value='Koordinator Akademik'>Koordinator Akademik</option>
-                                                    <option value='Sekretaris Institut'>Sekretaris Institut</option>
-                                                    <option value='Bendahara'>Bendahara</option>
-                                                    <option value='Manajer SDM'>Manajer SDM</option>
-                                                    <option value='Kepala Bagian Administrasi'>Kepala Bagian Administrasi</option>
-                                                    <option value='Kepala Bagian IT'>Kepala Bagian IT</option>
-                                                    <option value='Kepala Bagian Keamanan'>Kepala Bagian Keamanan</option>
-                                                    <option value='Profesor'>Profesor</option>
-                                                    <option value='Lektor Kepala'>Lektor Kepala</option>
-                                                    <option value='Lektor'>Lektor</option>
-                                                    <option value='Asisten Dosen'>Asisten Dosen</option>
-                                                    <option value='Kepala Bagian Kemahasiswaan'>Kepala Bagian Kemahasiswaan</option>
-                                                    <option value='Kepala Bagian Bimbingan dan Konseling'>Kepala Bagian Bimbingan dan Konseling</option>
-                                                    <option value='Manajer Karir dan Alumni'>Manajer Karir dan Alumni</option>
-                                                    <option value='Petugas Administrasi'>Petugas Administrasi</option>
-                                                    <option value='Teknisi Laboratorium'>Teknisi Laboratorium</option>
-                                                    <option value='Pustakawan'>Pustakawan</option>
-                                                    <option value='Kepala Pusat Penelitian'>Kepala Pusat Penelitian</option>
-                                                    <option value='Koordinator Proyek Penelitian'>Koordinator Proyek Penelitian</option>
-                                                    <option value='Kepala Bagian Internasional'>Kepala Bagian Internasional</option>
-                                                    <option value='Kepala Bagian Kewirausahaan'>Kepala Bagian Kewirausahaan</option>
-                                                </select><br><br>
 
-                                                <label>Alamat Lengkap</label>
-                                                <textarea id='text-ckeditor' class='form-control' name='alamat'></textarea><br>
-                                                <label>foto</label>
-                                                <input type='file'  class='form-control' name='gambar'/><br>
-                            
-                                                <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
-                                                <button type='submit' class='btn btn-primary'>Save </button>
-                                            </div>
-                        </form>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                </div>			
-    "; 
     }
        
 /////////////////////////////////////////////////////////////////////////////////////////////////
@@ -797,8 +701,14 @@ echo"
 
         <hr>
 
-        <strong><i class='fa fa-file-text-o margin-r-5'></i> Penghargaan</strong>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+        <strong><i class='fa fa-file-text-o margin-r-5'></i> Penghargaan</strong>";
+        $no=0;
+         $sqllite=mysqli_query($koneksi," SELECT * FROM riwayat WHERE jenis_riwayat='penghargaan' and id_pegawai='$_SESSION[id_pegawai]'");
+        while ($sx=mysqli_fetch_array($sqllite)){	
+            $no++;   
+       echo" <p> $no . $sx[ket_riwayat]</p>";
+        }
+      echo"
       </div><!-- /.box-body -->
     </div><!-- /.box -->
   </div><!-- /.col -->
@@ -1074,18 +984,8 @@ $no++;
             <tr>
                 <td>$no</td>
                 <td><a href='../foto/dokumen/$q[file_dokumen]' target='_blank'>$q[ket_dokumen]</a></td>
-<td><div class='btn-group'>
-<button type='button' class='btn btn-info'>aksi</button>
-<button type='button' class='btn btn-info dropdown-toggle' data-toggle='dropdown'>
-<span class='caret'></span>
-<span class='sr-only'>Toggle Dropdown</span>
-</button>
-<ul class='dropdown-menu' role='menu'>
-<li><a href='index.php?aksi=editadmin&user_id=$t[user_id]' title='Edit'><i class='fa fa-pencil'></i>edit</a></li>
-<li><a href='hapus.php?aksi=hapusbuktidokumen&id_uploaddokumen=$t[id_uploaddokumen]&id_buktidokumen=$t[id_buktidokumen]' onclick=\"return confirm ('Apakah yakin ingin menghapus $t[user_username] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</li>
-</ul>
-</div></td>
-            </tr>
+                <td><a class='btn btn-info' href='hapus.php?aksi=hapusbuktidokumen&id_dokumen=$q[id_dokumen]&id_pegawai=$_SESSION[id_pegawai]' onclick=\"return confirm ('Apakah yakin ingin menghapus $q[ket_dokumen] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</a></td>
+                            </tr>
         </tbody>
         
                                  
@@ -1152,7 +1052,7 @@ $no++;
                 <td>$k[hubungan_keluarga]</td>
                 <td>$k[no_hpkeluarga]</td>
                 <td><button class='btn btn-info' data-toggle='modal' data-target='#uieditkeluarga$k[id_keluarga]'><i class='fa fa fa-pencil'></i></button>
-                <a class='btn btn-info' href='hapus.php?aksi=hapuskeluarga&id_keluarga=$k[keluarga]' onclick=\"return confirm ('Apakah yakin ingin menghapus $k[nama_keluarga] ?')\" title='Hapus'><i class='fa fa-remove'></i></a>
+                <a class='btn btn-info' href='hapus.php?aksi=hapuskeluarga&id_keluarga=$k[id_keluarga]&id_pegawai=$_SESSION[id_pegawai]' onclick=\"return confirm ('Apakah yakin ingin menghapus $k[nama_keluarga] ?')\" title='Hapus'><i class='fa fa-remove'></i></a>
                 </td>
             </tr>
         </tbody>
