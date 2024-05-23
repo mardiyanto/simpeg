@@ -2,7 +2,7 @@
   include '../koneksi.php';
   date_default_timezone_set('Asia/Jakarta');
   session_start();
-  if($_SESSION['status'] != "administrator_logedin"){
+  if($_SESSION['status'] != "pegawai"){
     header("location:../login.php?alert=belum_login");
   }
   $date=date ('d/m/Y');

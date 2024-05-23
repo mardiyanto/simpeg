@@ -2,7 +2,7 @@
   include '../koneksi.php';
   date_default_timezone_set('Asia/Jakarta');
   session_start();
-  if($_SESSION['status'] != "administrator_logedin"){
+  if($_SESSION['status'] != "pegawai"){
     header("location:../login.php?alert=belum_login");
   }
 ///////////////////////////lihat/////////////////////////////////////////////
@@ -61,15 +61,15 @@ elseif ($_GET['aksi'] == 'hapusbuktidokumen') {
           $result_delete = mysqli_query($koneksi, $query_delete);
 
           if ($result_delete) {
-              echo "<script>window.alert('Berhasil hapus'); window.location=('index.php?aksi=detailpegawai&id_pegawai=$_GET[id_pegawai]')</script>";
+              echo "<script>window.alert('Berhasil hapus'); window.location=('index.php?aksi=detailpegawai&id_pegawai=$_SESSION[id_pegawai]')</script>";
           } else {
-              echo "<script>window.alert('Gagal menghapus data dari database'); window.location=('index.php?aksi=detailpegawai&id_pegawai=$_GET[id_pegawai]')</script>";
+              echo "<script>window.alert('Gagal menghapus data dari database'); window.location=('index.php?aksi=detailpegawai&id_pegawai=$_SESSION[id_pegawai]')</script>";
           }
       } else {
-          echo "<script>window.alert('Gagal menghapus file tidak terdapat di database'); window.location=('index.php?aksi=detailpegawai&id_pegawai=$_GET[id_pegawai]')</script>";
+          echo "<script>window.alert('Gagal menghapus file tidak terdapat di database'); window.location=('index.php?aksi=detailpegawai&id_pegawai=$_SESSION[id_pegawai]')</script>";
       }
   } else {
-      echo "<script>window.alert('Gagal mengambil informasi file'); window.location=('index.php?aksi=detailpegawai&id_pegawai=$_GET[id_pegawai]')</script>";
+      echo "<script>window.alert('Gagal mengambil informasi file'); window.location=('index.php?aksi=detailpegawai&id_pegawai=$_SESSION[id_pegawai]')</script>";
   }
 
 }
@@ -79,11 +79,11 @@ elseif($_GET['aksi']=='hapuskritik'){
   }
 elseif($_GET['aksi']=='hapuskeluarga'){
   mysqli_query($koneksi,"DELETE FROM keluarga  WHERE id_keluarga='$_GET[id_keluarga]'");
-  echo "<script>window.alert('Berhasil hapus'); window.location=(''index.php?aksi=detailpegawai&id_pegawai=$_GET[id_pegawai]')</script>";
+  echo "<script>window.alert('Berhasil hapus'); window.location=(''index.php?aksi=detailpegawai&id_pegawai=$_SESSION[id_pegawai]')</script>";
 }
 elseif($_GET['aksi']=='hapusriwayat'){
   mysqli_query($koneksi,"DELETE FROM riwayat WHERE id_riwayat='$_GET[id_riwayat]'");
-  echo "<script>window.alert('Berhasil hapus'); window.location=('index.php?aksi=detailpegawai&id_pegawai=$_GET[id_pegawai]')</script>";
+  echo "<script>window.alert('Berhasil hapus'); window.location=('index.php?aksi=detailpegawai&id_pegawai=$_SESSION[id_pegawai]')</script>";
 }
 elseif($_GET['aksi']=='hapussubmenu'){
   mysqli_query($koneksi,"DELETE FROM submenu  WHERE id_sub='$_GET[id_sub]'");
@@ -119,12 +119,7 @@ elseif($_GET['aksi']=='hapusberkas'){
     mysqli_query($koneksi, "delete from file where file_id='$_GET[file_id]'");
     echo "<script>window.location=('index.php?aksi=listuploadfile&id_pegawai=$t[id_pegawai]')</script>";
 }
-elseif($_GET['aksi']=='hapuskeluarga'){
-  $tebaru=mysqli_query($koneksi," SELECT * FROM pegawai WHERE  id_pegawai=$_GET[id_pegawai]");
-  $t=mysqli_fetch_array($tebaru);
-  mysqli_query($koneksi,"DELETE FROM keluarga  WHERE id_keluarga='$_GET[id_keluarga]'");
-  echo "<script>window.location=('index.php?aksi=listtunjangan&id_pegawai=$t[id_pegawai]')</script>";
-  }
+
   elseif($_GET['aksi']=='hapustunjangan'){
     mysqli_query($koneksi,"DELETE FROM tunjangan  WHERE id_tunjangan='$_GET[id_tunjangan]'");
     mysqli_query($koneksi,"UPDATE pegawai SET status_pg='ada' WHERE id_pegawai='$_GET[id_pegawai]'"); 

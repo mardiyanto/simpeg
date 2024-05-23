@@ -255,22 +255,44 @@
 
        
 
-        <!-- Subscribe Start -->
-        <div class="container-fluid subscribe py-5">
-            <div class="container text-center py-5">
-                <div class="mx-auto text-center" style="max-width: 900px;">
-                    <h5 class="subscribe-title px-3">Subscribe</h5>
-                    <h1 class="text-white mb-4">Our Newsletter</h1>
-                    <p class="text-white mb-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum tempore nam, architecto doloremque velit explicabo? Voluptate sunt eveniet fuga eligendi! Expedita laudantium fugiat corrupti eum cum repellat a laborum quasi.
-                    </p>
-                    <div class="position-relative mx-auto">
-                        <input class="form-control border-primary rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
-                        <button type="button" class="btn btn-primary rounded-pill position-absolute top-0 end-0 py-2 px-4 mt-2 me-2">Subscribe</button>
+   <!-- Tour Booking Start -->
+   <div class="container-fluid booking py-5">
+            <div class="container py-5">
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6">
+                        <h5 class="section-booking-title pe-3">Login Pegawai</h5>
+                        <h1 class="text-white mb-4">Login Pegawai</h1>
+                        <p class="text-white mb-4">Untuk Login Silalahkan Mengunakan Kode Pegawai/NIDN
+                        </p>
+                    </div>
+                    <div class="col-lg-6">
+                        <h1 class="text-white mb-3">Login Sekarang</h1>
+                        <!-- <p class="text-white mb-4">Get <span class="text-warning">50% Off</span> On Your First Adventure Trip With Travela. Get More Deal Offers Here.</p> -->
+                        <form action="log_pegawai.php" method="POST">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control bg-white border-0"  name='kode_pegawai' placeholder="NIDN/Kode Pegawai">
+                                        <label for="name">NIDN/Kode Pegawai</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="password" class="form-control bg-white border-0" name='password' placeholder="Masukan Pasword">
+                                        <label for="email">Password</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary text-white w-100 py-3" type="submit">Login</button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Subscribe End -->
+        <!-- Tour Booking End -->
+
 
         <!-- Footer Start -->
         <div class="container-fluid footer py-5">

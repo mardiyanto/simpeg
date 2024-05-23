@@ -184,6 +184,10 @@ elseif($_GET['aksi']=='proseseditriwayat'){
 	mysqli_query($koneksi,"UPDATE riwayat SET ket_riwayat='$_POST[ket_riwayat]' WHERE id_riwayat='$_GET[id_riwayat]'");
 echo "<script>window.location=('index.php?aksi=detailpegawai&id_pegawai=$_POST[id_pegawai]')</script>";
 }
+elseif($_GET['aksi']=='proseseditkeluarga'){
+	mysqli_query($koneksi,"UPDATE keluarga SET nama_keluarga='$_POST[nama_keluarga]',hubungan_keluarga='$_POST[hubungan_keluarga]',no_hpkeluarga='$_POST[no_hpkeluarga]' WHERE id_keluarga='$_GET[id_keluarga]'");
+echo "<script>window.location=('index.php?aksi=detailpegawai&id_pegawai=$_POST[id_pegawai]')</script>";
+}
 elseif($_GET['aksi']=='proseseditsubmenu'){
 	mysqli_query($koneksi,"UPDATE submenu SET nama_sub='$_POST[nama_sub]',link_sub='$_POST[link_sub]',icon_sub='$_POST[icon_sub]' WHERE id_sub='$_GET[id_sub]'");
 echo "<script>window.location=('index.php?aksi=submenu')</script>";

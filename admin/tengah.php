@@ -577,9 +577,14 @@ echo"
 
         <hr>
 
-        <strong><i class='fa fa-file-text-o margin-r-5'></i> Penghargaan</strong>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
-      </div><!-- /.box-body -->
+        <strong><i class='fa fa-file-text-o margin-r-5'></i> Penghargaan</strong>";
+        $no=0;
+         $sqllite=mysqli_query($koneksi," SELECT * FROM riwayat WHERE jenis_riwayat='penghargaan' and id_pegawai='$_GET[id_pegawai]'");
+        while ($sx=mysqli_fetch_array($sqllite)){	
+            $no++;   
+       echo" <p> $no . $sx[ket_riwayat]</p>";
+        }
+      echo"</div><!-- /.box-body -->
     </div><!-- /.box -->
   </div><!-- /.col -->
   <div class='col-md-9'>
@@ -617,7 +622,7 @@ echo"
                             <td>$no</td>
                                 <td>$x[ket_riwayat]</td>
                 <td><button class='btn btn-info' data-toggle='modal' data-target='#uiModal$x[id_riwayat]'><i class='fa fa-pencil'></i>lihat</button>
-                <a class='btn btn-info' href='hapus.php?aksi=hapusriwayat&id_riwayat=$x[id_riwayat]' onclick=\"return confirm ('Apakah yakin ingin menghapus $x[ket_riwayat] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</a>
+                <a class='btn btn-info' href='hapus.php?aksi=hapusriwayat&id_riwayat=$x[id_riwayat]&id_pegawai=$_GET[id_pegawai]' onclick=\"return confirm ('Apakah yakin ingin menghapus $x[ket_riwayat] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</a>
                 </td>
                             </tr>
                             
@@ -696,7 +701,7 @@ echo"
                             <td>$no</td>
                                 <td>$j[ket_riwayat]</td>
                 <td><button class='btn btn-info' data-toggle='modal' data-target='#uiModalj$j[id_riwayat]'><i class='fa fa-pencil'></i>lihat</button>
-                <a class='btn btn-info' href='hapus.php?aksi=hapusriwayat&id_riwayat=$j[id_riwayat]' onclick=\"return confirm ('Apakah yakin ingin menghapus $j[ket_riwayat] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</a>
+                <a class='btn btn-info' href='hapus.php?aksi=hapusriwayat&id_riwayat=$j[id_riwayat]&id_pegawai=$_GET[id_pegawai]' onclick=\"return confirm ('Apakah yakin ingin menghapus $j[ket_riwayat] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</a>
                 </td>
                             </tr>
                             
@@ -778,7 +783,7 @@ echo"
                             <td>$no</td>
                                 <td>$s[ket_riwayat]</td>
                 <td><button class='btn btn-info' data-toggle='modal' data-target='#uiModalpenghargaan$s[id_riwayat]'><i class='fa fa-pencil'></i>lihat</button>
-                <a class='btn btn-info' href='hapus.php?aksi=hapusriwayat&id_riwayat=$s[id_riwayat]' onclick=\"return confirm ('Apakah yakin ingin menghapus $x[ket_riwayat] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</a>
+                <a class='btn btn-info' href='hapus.php?aksi=hapusriwayat&id_riwayat=$s[id_riwayat]&id_pegawai=$_GET[id_pegawai]' onclick=\"return confirm ('Apakah yakin ingin menghapus $s[ket_riwayat] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</a>
                 </td>
                             </tr>
                             
@@ -854,17 +859,7 @@ $no++;
             <tr>
                 <td>$no</td>
                 <td><a href='../foto/dokumen/$q[file_dokumen]' target='_blank'>$q[ket_dokumen]</a></td>
-<td><div class='btn-group'>
-<button type='button' class='btn btn-info'>aksi</button>
-<button type='button' class='btn btn-info dropdown-toggle' data-toggle='dropdown'>
-<span class='caret'></span>
-<span class='sr-only'>Toggle Dropdown</span>
-</button>
-<ul class='dropdown-menu' role='menu'>
-<li><a href='index.php?aksi=editadmin&user_id=$t[user_id]' title='Edit'><i class='fa fa-pencil'></i>edit</a></li>
-<li><a href='hapus.php?aksi=hapusbuktidokumen&id_uploaddokumen=$t[id_uploaddokumen]&id_buktidokumen=$t[id_buktidokumen]' onclick=\"return confirm ('Apakah yakin ingin menghapus $t[user_username] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</li>
-</ul>
-</div></td>
+<td><a class='btn btn-info' href='hapus.php?aksi=hapusbuktidokumen&id_dokumen=$q[id_dokumen]&id_pegawai=$_GET[id_pegawai]' onclick=\"return confirm ('Apakah yakin ingin menghapus $q[ket_dokumen] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</a></td>
             </tr>
         </tbody>
         
@@ -914,7 +909,9 @@ $no++;
             <tr>
                 <th>#</th>
                 <th>nama</th>
-                <th>keterangan</th>		  
+                <th>Hubungan</th>		
+                <th>hp</th>  
+                <th>aksi</th>  
             </tr>
         </thead>
 ";
@@ -926,11 +923,42 @@ $no++;
         echo"<tbody>
             <tr>
                 <td>$no</td>
-                <td>$q[nama_keluarga]</td>
-                <td></td>
+                <td>$k[nama_keluarga]</td>
+                <td>$k[hubungan_keluarga]</td>
+                <td>$k[no_hpkeluarga]</td>
+                <td><button class='btn btn-info' data-toggle='modal' data-target='#uieditkeluarga$k[id_keluarga]'><i class='fa fa fa-pencil'></i></button>
+                <a class='btn btn-info' href='hapus.php?aksi=hapuskeluarga&id_keluarga=$k[id_keluarga]&id_pegawai=$_GET[id_pegawai]' onclick=\"return confirm ('Apakah yakin ingin menghapus $k[nama_keluarga] ?')\" title='Hapus'><i class='fa fa-remove'></i></a>
+                </td>
             </tr>
         </tbody>
-        
+        <div class='modal fade' id='uieditkeluarga$k[id_keluarga]' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+    <div class='modal-dialog'>
+        <div class='modal-content'>
+            <div class='modal-header'>
+    <h4 class='modal-title' id='H3'>Edit data $t[nama_pegawai]</h4>
+            </div>
+            <div class='modal-body'>
+                <form role='form' method='post' action='edit.php?aksi=proseseditkeluarga&id_keluarga=$k[id_keluarga]'>
+                                    <div class='form-group'>
+                <label>Nama Keluarga</label>
+                <input type='text' class='form-control' value='$k[nama_keluarga]' name='nama_keluarga'/><br>
+                <label>Hubungan Keluarga</label>
+                <input type='text' class='form-control'  value='$k[hubungan_keluarga]' name='hubungan_keluarga'/><br>
+                <label>Kontak Darurat/HP</label>
+                <input type='text' class='form-control'  value='$k[no_hpkeluarga]' name='no_hpkeluarga'/><br>
+                <input type='hidden' class='form-control'  value='$_GET[id_pegawai]' name='id_pegawai'/><br>
+
+                <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+                <button type='submit' class='btn btn-primary'>Save </button>
+                </div>
+            </form>
+            <div class='modal-footer'>
+            <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+          
+          </div>
+            </div>
+        </div>
+    </div>
                                  
         ";
 }
@@ -939,7 +967,7 @@ $no++;
     <div class='modal-dialog'>
         <div class='modal-content'>
             <div class='modal-header'>
-    <h4 class='modal-title' id='H3'>Data upload $t[nama_pegawai]</h4>
+    <h4 class='modal-title' id='H3'>Tambah Data $t[nama_pegawai]</h4>
             </div>
             <div class='modal-body'>
                 <form role='form' method='post' action='input.php?aksi=inputkeluarga'>
