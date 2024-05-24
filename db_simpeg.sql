@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 17 Mei 2024 pada 02.07
+-- Generation Time: 24 Mei 2024 pada 17.32
 -- Versi Server: 10.1.25-MariaDB
 -- PHP Version: 5.6.31
 
@@ -41,7 +41,29 @@ CREATE TABLE `dokumen` (
 --
 
 INSERT INTO `dokumen` (`id_dokumen`, `id_pegawai`, `ket_dokumen`, `file_dokumen`, `jenis_dokumen`) VALUES
-(1, 5, 'Berwujud (Tengibel)', '1715903902_Lambang_Kabupaten_Pringsewu.png', NULL);
+(1, 5, 'Kepuasan Pasien', '1716563587_RUJUKAN WIJI.pdf', NULL),
+(2, 5, 'ijasah', '1716563629_ijasah.jpg', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `keluarga`
+--
+
+CREATE TABLE `keluarga` (
+  `id_keluarga` int(100) NOT NULL,
+  `id_pegawai` int(100) NOT NULL,
+  `nama_keluarga` varchar(100) NOT NULL,
+  `hubungan_keluarga` varchar(100) NOT NULL,
+  `no_hpkeluarga` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `keluarga`
+--
+
+INSERT INTO `keluarga` (`id_keluarga`, `id_pegawai`, `nama_keluarga`, `hubungan_keluarga`, `no_hpkeluarga`) VALUES
+(1, 5, 'miswan', 'paman', '09877823525');
 
 -- --------------------------------------------------------
 
@@ -75,6 +97,7 @@ CREATE TABLE `pegawai` (
   `nama_pegawai` varchar(100) NOT NULL,
   `status_pegawai` varchar(100) NOT NULL,
   `nik` varchar(100) NOT NULL,
+  `no_hp` varchar(100) DEFAULT NULL,
   `tempat_lahir` varchar(100) NOT NULL,
   `tgl_lahir` date NOT NULL,
   `jenis_kelamin` varchar(100) NOT NULL,
@@ -91,28 +114,8 @@ CREATE TABLE `pegawai` (
 -- Dumping data untuk tabel `pegawai`
 --
 
-INSERT INTO `pegawai` (`id_pegawai`, `kode_pegawai`, `nama_pegawai`, `status_pegawai`, `nik`, `tempat_lahir`, `tgl_lahir`, `jenis_kelamin`, `alamat`, `gambar`, `email`, `password`, `jenis_pegawai`, `jabatan_pegawai`, `mulai_kerja`) VALUES
-(5, 'KR002', 'MARDIYANTO', 'TETAP', '1820706109100034', 'Gunung Sugih ', '2024-05-16', 'Laki-Laki', 'jhgh', '16052024093038.jpg', 'mardybest@gmail.com', 'e421c038c9d423eea2f364f743dd986d', 'Dosen', 'Teknisi Laboratorium', '2010-05-16');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `penghargaan`
---
-
-CREATE TABLE `penghargaan` (
-  `id_penghargaan` int(100) NOT NULL,
-  `id_pegawai` int(100) NOT NULL,
-  `jenis_penghargaan` varchar(100) DEFAULT NULL,
-  `ket_penghargaan` text
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `penghargaan`
---
-
-INSERT INTO `penghargaan` (`id_penghargaan`, `id_pegawai`, `jenis_penghargaan`, `ket_penghargaan`) VALUES
-(1, 5, 'pendidikan', 'KARIAWAN TERPITAR DALAM PEMBUATAN APLIKASI');
+INSERT INTO `pegawai` (`id_pegawai`, `kode_pegawai`, `nama_pegawai`, `status_pegawai`, `nik`, `no_hp`, `tempat_lahir`, `tgl_lahir`, `jenis_kelamin`, `alamat`, `gambar`, `email`, `password`, `jenis_pegawai`, `jabatan_pegawai`, `mulai_kerja`) VALUES
+(5, '10201032', 'MARDIYANTO, M.T.I', 'NO TETAP', '1820706109100034', '082373971991', 'Gunung Sugih ', '2024-05-16', 'Laki-Laki', 'jalan johar perumahan perdana village no. a40\r\npodomoro', '6650ae4a83ab2.jpg', 'mardybest@gmail.com', '202cb962ac59075b964b07152d234b70', 'Dosen', 'Teknisi Laboratorium', '2010-05-16');
 
 -- --------------------------------------------------------
 
@@ -209,9 +212,11 @@ CREATE TABLE `riwayat` (
 --
 
 INSERT INTO `riwayat` (`id_riwayat`, `id_pegawai`, `jenis_riwayat`, `ket_riwayat`, `lainya`) VALUES
-(2, 5, 'pendidikan', 'SD NEGERI 2 TERBANGGI BESAR LAMPUNG TENGAH ', NULL),
-(3, 5, 'pendidikan', 'SMP NEGERI 5 TERBANGGI BESAR LAMPINGA TENGAH  ', NULL),
-(4, 5, 'pekerjaan', 'TEKNISI JARINGAI KOMPUTER SMK', NULL);
+(8, 0, 'pendidikan', 'kjkjkl', NULL),
+(9, 0, 'pekerjaan', 'fdgdfg', NULL),
+(14, 5, 'pendidikan', 'jhkh\r\n', NULL),
+(15, 5, 'penghargaan', 'dapae ok', NULL),
+(16, 5, 'pekerjaan', 'buruh pakrik 2023', NULL);
 
 -- --------------------------------------------------------
 
@@ -226,6 +231,13 @@ CREATE TABLE `uraiankerja` (
   `ket_uraiankerja` text NOT NULL,
   `foto_uraiankerja` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `uraiankerja`
+--
+
+INSERT INTO `uraiankerja` (`id_uraiankerja`, `id_pegawai`, `tgl_uraiankerja`, `ket_uraiankerja`, `foto_uraiankerja`) VALUES
+(2, 5, '2024-05-24 15:21:08', 'ngoding enak', '6650b0643d1fb.jpg');
 
 -- --------------------------------------------------------
 
@@ -260,6 +272,13 @@ ALTER TABLE `dokumen`
   ADD KEY `id_pegawai` (`id_pegawai`);
 
 --
+-- Indexes for table `keluarga`
+--
+ALTER TABLE `keluarga`
+  ADD PRIMARY KEY (`id_keluarga`),
+  ADD KEY `id_pegawai` (`id_pegawai`);
+
+--
 -- Indexes for table `map`
 --
 ALTER TABLE `map`
@@ -270,13 +289,6 @@ ALTER TABLE `map`
 --
 ALTER TABLE `pegawai`
   ADD PRIMARY KEY (`id_pegawai`);
-
---
--- Indexes for table `penghargaan`
---
-ALTER TABLE `penghargaan`
-  ADD PRIMARY KEY (`id_penghargaan`),
-  ADD KEY `id_pegawai` (`id_pegawai`);
 
 --
 -- Indexes for table `presensi_datang`
@@ -326,7 +338,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `dokumen`
 --
 ALTER TABLE `dokumen`
-  MODIFY `id_dokumen` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_dokumen` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `keluarga`
+--
+ALTER TABLE `keluarga`
+  MODIFY `id_keluarga` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `map`
 --
@@ -337,11 +354,6 @@ ALTER TABLE `map`
 --
 ALTER TABLE `pegawai`
   MODIFY `id_pegawai` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
---
--- AUTO_INCREMENT for table `penghargaan`
---
-ALTER TABLE `penghargaan`
-  MODIFY `id_penghargaan` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `presensi_datang`
 --
@@ -361,12 +373,12 @@ ALTER TABLE `profil`
 -- AUTO_INCREMENT for table `riwayat`
 --
 ALTER TABLE `riwayat`
-  MODIFY `id_riwayat` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_riwayat` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 --
 -- AUTO_INCREMENT for table `uraiankerja`
 --
 ALTER TABLE `uraiankerja`
-  MODIFY `id_uraiankerja` int(100) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_uraiankerja` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `user`
 --
