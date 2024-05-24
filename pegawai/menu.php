@@ -6,7 +6,7 @@
  </li>
  <li><a href="index.php?aksi=pegawai"><i class="fa fa-users"></i> <span>PEGAWAI</span></a></li>
  <li><a href="index.php?aksi=kerja"><i class="fa  fa-hourglass-half"></i> <span>KEGITAN KERJA</span></a></li>
- <li><a href="index.php?aksi=absensi"><i class="fa  fa-archive"></i> <span>ABSENSI</span></a></li>
+ <li><a href="absensi.php?aksi=absensi"><i class="fa  fa-archive"></i> <span>ABSENSI</span></a></li>
 <!-- <li class='treeview'>
                <a href='#'>
                  <i class='fa fa-bank'></i>
