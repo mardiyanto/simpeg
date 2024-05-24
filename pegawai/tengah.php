@@ -1130,5 +1130,107 @@ $no++;
 
 ";
 }
-
+elseif($_GET['aksi']=='kerja'){
+    echo"<div class='row'>
+                    <div class='col-lg-12'>
+                        <div class='panel panel-default'>
+                            <div class='panel-heading'>INFORMASI 
+                            </div>
+                            
+                            <div class='panel-body'>
+                            <button class='btn btn-info' data-toggle='modal' data-target='#uiModal'>
+                                    Tambah Data
+                                </button><br><br>	
+                                   <div class='table-responsive'>		
+         <table id='example1' class='table table-bordered table-striped'>
+                                        <thead>
+                                            <tr>
+                                            <th>No</th>
+                                            <th>Nama</th>
+                                            <th>Keterangan</th>
+                                            <th>aksi</th>			  
+                                          </tr></thead>
+                        <tbody>
+                        ";
+                
+    $no=0;
+    $tebaru=mysqli_query($koneksi," SELECT * FROM uraiankerja WHERE id_pegawai=$_SESSION[id_pegawai] order by id_uraiankerja desc");
+    while ($t=mysqli_fetch_array($tebaru)){	
+    $no++;
+                                        echo"<tr>
+                                            <td>$no</td>
+                                            <td>$_SESSION[nama_pegawai]</td>
+                                            <td>$t[ket_uraiankerja]</td>
+                                            <td><button class='btn btn-info btn-sm' data-toggle='modal' data-target='#ui$t[id_uraiankerja]'><i class='fa fa-pencil'></i></button>
+                                            <a class='btn btn-info btn-sm' href='hapus.php?aksi=hapuskerja&id_uraiankerja=$t[id_uraiankerja]' onclick=\"return confirm ('Apakah yakin ingin menghapus $t[ket_uraiankerja] ?')\" title='Hapus'><i class='fa fa-remove'></i></a>
+                                            </td>
+                                            </tr>
+                                            <div class='modal fade' id='ui$t[id_uraiankerja]' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+                                            <div class='modal-dialog'>
+                                                <div class='modal-content'>
+                                                    <div class='modal-header'>
+                                                        <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                                                        <h4 class='modal-title' id='H3'>Input Data </h4>
+                                                    </div>
+                                                    <div class='modal-body'>
+                                                       <form role='form' method='post' enctype='multipart/form-data' action='edit.php?aksi=proseseditkerja&gb=$t[foto_uraiankerja]&id_uraiankerja=$t[id_uraiankerja]'>
+                                                        <div class='form-group'>
+                                                <input type='hidden' class='form-control' value='$_SESSION[id_pegawai]' name='id_pegawai'/><br>
+                                                <label>Uraian Kerja Lengkap</label>
+                                                <textarea id='text-ckeditor' class='form-control' name='ket_uraiankerja'>$t[ket_uraiankerja]</textarea><br>
+                                    <img  src='../foto/kerja/$t[foto_uraiankerja]' alt='Preview Gambar' style='max-width: 200px; max-height: 200px;'></br>
+                                    <label>Gambar</label>
+                                    <input type='file'  class='form-control' name='gambar'/><br>
+                                    
+                                                        <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+                                                        <button type='submit' class='btn btn-primary'>Save </button>
+                                                    </div>
+                                </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>                   
+                                            
+                                            ";
+    }
+                                      echo"  </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   </div>		
+        
+          ";
+          ////////////////input admin			
+    
+    echo"			
+    <div class='col-lg-12'>
+                            <div class='modal fade' id='uiModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+                                    <div class='modal-dialog'>
+                                        <div class='modal-content'>
+                                            <div class='modal-header'>
+                                                <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                                                <h4 class='modal-title' id='H3'>Input Data </h4>
+                                            </div>
+                                            <div class='modal-body'>
+                                               <form role='form' method='post' enctype='multipart/form-data' action='input.php?aksi=inputkerja'>
+                                                <div class='form-group'>
+                                                <input type='hidden' class='form-control'value='$_SESSION[id_pegawai]'  name='id_pegawai'/><br>                                               
+                                                <label>Uraian Kerja Lengkap</label>
+                                                <textarea id='text-ckeditor' class='form-control' name='ket_uraiankerja'></textarea><br>
+                                                <label>foto</label>
+                                                <input type='file'  class='form-control' name='gambar'/><br>
+                            
+                                                <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+                                                <button type='submit' class='btn btn-primary'>Save </button>
+                                            </div>
+                        </form>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                </div>			
+    "; 			
+    }
 ?>
