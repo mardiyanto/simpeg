@@ -4,7 +4,7 @@
 
     <head>
         <meta charset="utf-8">
-        <title>Travela - Tourism Website Template</title>
+        <title><?php echo"$k_k[nama_app]";?></title>
         <meta content="width=device-width, initial-scale=1.0" name="viewport">
         <meta content="" name="keywords">
         <meta content="" name="description">
@@ -108,28 +108,27 @@
         <div class="container-fluid search-bar position-relative" style="top: -50%; transform: translateY(-50%);">
             <div class="container">
                 <div class="position-relative rounded-pill w-100 mx-auto p-5" style="background: rgba(19, 53, 123, 0.8);">
-                    <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Eg: Thailand">
-                    <button type="button" class="btn btn-primary rounded-pill py-2 px-4 position-absolute me-2" style="top: 50%; right: 46px; transform: translateY(-50%);">Search</button>
+                    <!-- <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Eg: Thailand">
+                    <button type="button" class="btn btn-primary rounded-pill py-2 px-4 position-absolute me-2" style="top: 50%; right: 46px; transform: translateY(-50%);">Search</button> -->
                 </div>
             </div>
         </div>
         <!-- Navbar & Hero End -->
 
         <!-- About Start -->
-        <div class="container-fluid about py-5">
+        <div id='tentang' class="container-fluid about py-5">
             <div class="container py-5">
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-5">
                         <div class="h-100" style="border: 50px solid; border-color: transparent #13357B transparent #13357B;">
-                            <img src="tema/img/about-img.jpg" class="img-fluid w-100 h-100" alt="">
+                            <img src="foto/<?php echo"$k_k[gambar]";?>" class="img-fluid w-100 h-100" alt="">
                         </div>
                     </div>
                     <div class="col-lg-7" style="background: linear-gradient(rgba(255, 255, 255, .8), rgba(255, 255, 255, .8)), url(tema/img/about-img-1.png);">
-                        <h5 class="section-about-title pe-3">About Us</h5>
-                        <h1 class="mb-4">Welcome to <span class="text-primary">Travela</span></h1>
-                        <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias, dolorum, doloribus sunt dicta, officia voluptatibus libero necessitatibus natus impedit quam ullam assumenda? Id atque iste consectetur. Commodi odit ab saepe!</p>
-                        <p class="mb-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium quos voluptatem suscipit neque enim, doloribus ipsum rem eos distinctio, dignissimos nisi saepe nulla? Libero numquam perferendis provident placeat molestiae quia?</p>
-                        <div class="row gy-2 gx-4 mb-4">
+                        <h5 class="section-about-title pe-3">Tentang Kami</h5>
+                        <h1 class="mb-4">Welcome to <span class="text-primary"><?php echo"$k_k[nama]";?></span></h1>
+                        <p class="mb-4"><?php echo"$k_k[isi]";?></p>
+                        <!-- <div class="row gy-2 gx-4 mb-4">
                             <div class="col-sm-6">
                                 <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>First Class Flights</p>
                             </div>
@@ -149,7 +148,7 @@
                                 <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>24/7 Service</p>
                             </div>
                         </div>
-                        <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="">Read More</a>
+                        <a class="btn btn-primary rounded-pill py-3 px-5 mt-2" href="">Read More</a> -->
                     </div>
                 </div>
             </div>
@@ -157,7 +156,7 @@
         <!-- About End -->
 
         <!-- Travel Guide Start -->
-        <div class="container-fluid guide py-5">
+        <!-- <div class="container-fluid guide py-5">
             <div class="container py-5">
                 <div class="mx-auto text-center mb-5" style="max-width: 900px;">
                     <h5 class="section-title px-3">Travel Guide</h5>
@@ -250,13 +249,13 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <!-- Travel Guide End -->
 
        
 
    <!-- Tour Booking Start -->
-   <div class="container-fluid booking py-5">
+   <div id='login' class="container-fluid booking py-5">
             <div class="container py-5">
                 <div class="row g-5 align-items-center">
                     <div class="col-lg-6">

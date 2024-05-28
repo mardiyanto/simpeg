@@ -14,7 +14,7 @@
                 <div class="col-lg-4 text-center text-lg-end">
                     <div class="d-inline-flex align-items-center" style="height: 45px;">
                         <a href="#"><small class="me-3 text-light"><i class="fa fa-user me-2"></i>Register</small></a>
-                        <a href="#"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>Login</small></a>
+                        <a href="#login"><small class="me-3 text-light"><i class="fa fa-sign-in-alt me-2"></i>Login</small></a>
                         <div class="dropdown">
                             <a href="#" class="dropdown-toggle text-light" data-bs-toggle="dropdown"><small><i class="fa fa-home me-2"></i> My Dashboard</small></a>
                             <div class="dropdown-menu rounded">
@@ -43,8 +43,8 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                     <div class="navbar-nav ms-auto py-0">
-                        <a href="index.php" class="nav-item nav-link active">Beranda</a>
-                        <a href="about.html" class="nav-item nav-link">Tentang</a>
+                        <a href="index.php" class="nav-item nav-link">Beranda</a>
+                        <a href="#tentang" class="nav-item nav-link">Tentang</a>
                         <a href="contact.html" class="nav-item nav-link">Contact</a>
                     </div>
                 </div>
