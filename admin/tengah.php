@@ -1,6 +1,7 @@
 <?php
 ///////////////////////////lihat/////////////////////////////////////////////
 if($_GET['aksi']=='home'){
+include "grafik.php";
 echo"
  <div class='row'>
                    <div class='col-lg-12'>

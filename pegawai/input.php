@@ -93,5 +93,26 @@ elseif($_GET['aksi']=='inputkerja'){
 		  }
 		 } 
 }
+elseif($_GET['aksi']=='inputcuti'){
+    $id_pegawai = mysqli_real_escape_string($koneksi, $_POST['id_pegawai']);
+    $lama_cuti = mysqli_real_escape_string($koneksi, $_POST['lama_cuti']);
+    $tgl_awal = mysqli_real_escape_string($koneksi, $_POST['tgl_awal']);
+    $tgl_akhir = mysqli_real_escape_string($koneksi, $_POST['tgl_akhir']);
+    $ket_cuti = mysqli_real_escape_string($koneksi, $_POST['ket_cuti']);
 
+    // Validasi input
+    if (empty($id_pegawai) || empty($lama_cuti) || empty($tgl_awal) || empty($tgl_akhir) || empty($ket_cuti)) {
+        echo "<script>alert('Semua field harus diisi.'); window.location=('javascript:history.go(-1)');</script>";
+    } else {
+        $query = "INSERT INTO cuti_pegawai (id_pegawai, lama_cuti, tgl_awal, tgl_akhir, ket_cuti, status_cuti) 
+        VALUES ('$id_pegawai', '$lama_cuti', '$tgl_awal', '$tgl_akhir', '$ket_cuti', 'pengajuan')";
+        if (mysqli_query($koneksi, $query)) {
+            echo "<script>window.location=('index.php?aksi=cuti')</script>";
+        } else {
+            echo "Error: " . mysqli_error($koneksi);
+        }
+    }
+    
+    echo "<script>window.location=('index.php?aksi=cuti')</script>";
+}
 ?>

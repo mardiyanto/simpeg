@@ -121,5 +121,12 @@ elseif($_GET['aksi']=='proseseditkerja'){
         echo "<script>window.location=('index.php?aksi=kerja')</script>";
     }
 }
-?>
+elseif($_GET['aksi']=='proseseditbatalcuti'){
+	mysqli_query($koneksi,"UPDATE cuti_pegawai SET ket_batal='$_POST[ket_batal]', status_cuti='batal' WHERE id_cuti='$_GET[id_cuti]'");
+echo "<script>window.location=('index.php?aksi=cuti')</script>";
+}
+elseif($_GET['aksi']=='proseseditcuti'){
+	mysqli_query($koneksi,"UPDATE cuti_pegawai SET lama_cuti='$_POST[lama_cuti]', tgl_awal='$_POST[tgl_awal]', tgl_akhir='$_POST[tgl_akhir]', ket_cuti='$_POST[ket_cuti]', status_cuti='pengajuan' WHERE id_cuti='$_GET[id_cuti]'");
+echo "<script>window.location=('index.php?aksi=cuti')</script>";
+}
 ?>

@@ -64,7 +64,7 @@ if ($resultCekPegawai->num_rows > 0) {
     $gambarBinary = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $dataGambar));
 
     // Simpan gambar ke dalam folder (pastikan folder telah ada dan memiliki izin tulis)
-    $folderTujuan = "uploads/";  // Ganti dengan path folder tujuan Anda
+    $folderTujuan = "../uploads/";  // Ganti dengan path folder tujuan Anda
     $namaFile = "absen_" . $idPegawai . "_" . time() . ".jpg";
     $pathFile = $folderTujuan . $namaFile;
 
