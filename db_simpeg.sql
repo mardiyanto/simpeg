@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: 24 Mei 2024 pada 17.32
--- Versi Server: 10.1.25-MariaDB
--- PHP Version: 5.6.31
+-- Host: localhost
+-- Waktu pembuatan: 29 Bulan Mei 2024 pada 10.03
+-- Versi server: 10.4.22-MariaDB-log
+-- Versi PHP: 7.4.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -21,6 +20,31 @@ SET time_zone = "+00:00";
 --
 -- Database: `db_simpeg`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `cuti_pegawai`
+--
+
+CREATE TABLE `cuti_pegawai` (
+  `id_cuti` int(100) NOT NULL,
+  `id_pegawai` int(100) NOT NULL,
+  `lama_cuti` varchar(100) NOT NULL,
+  `tgl_awal` varchar(100) NOT NULL,
+  `tgl_akhir` varchar(100) NOT NULL,
+  `ket_cuti` text NOT NULL,
+  `status_cuti` varchar(100) NOT NULL,
+  `ket_batal` text DEFAULT NULL,
+  `tgl_input` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data untuk tabel `cuti_pegawai`
+--
+
+INSERT INTO `cuti_pegawai` (`id_cuti`, `id_pegawai`, `lama_cuti`, `tgl_awal`, `tgl_akhir`, `ket_cuti`, `status_cuti`, `ket_batal`, `tgl_input`) VALUES
+(1, 5, '21', '2024-06-30', '2024-07-06', 'nikah bro', 'pengajuan', 'ok', '2024-05-29 08:01:56');
 
 -- --------------------------------------------------------
 
@@ -115,7 +139,7 @@ CREATE TABLE `pegawai` (
 --
 
 INSERT INTO `pegawai` (`id_pegawai`, `kode_pegawai`, `nama_pegawai`, `status_pegawai`, `nik`, `no_hp`, `tempat_lahir`, `tgl_lahir`, `jenis_kelamin`, `alamat`, `gambar`, `email`, `password`, `jenis_pegawai`, `jabatan_pegawai`, `mulai_kerja`) VALUES
-(5, '10201032', 'MARDIYANTO, M.T.I', 'NO TETAP', '1820706109100034', '082373971991', 'Gunung Sugih ', '2024-05-16', 'Laki-Laki', 'jalan johar perumahan perdana village no. a40\r\npodomoro', '6650ae4a83ab2.jpg', 'mardybest@gmail.com', '202cb962ac59075b964b07152d234b70', 'Dosen', 'Teknisi Laboratorium', '2010-05-16');
+(5, '10201032', 'MARDIYANTO, M.T.I', 'NO TETAP', '1820706109100034', '082373971991', 'Gunung Sugih ', '2024-05-16', 'Laki-Laki', 'jalan johar perumahan perdana village no. a40\r\npodomoro', '6650ae4a83ab2.jpg', 'mardybest@gmail.com', '625972dff6c098eedb27df8640957291', 'Dosen', 'Teknisi Laboratorium', '2010-05-16');
 
 -- --------------------------------------------------------
 
@@ -141,7 +165,7 @@ CREATE TABLE `presensi_datang` (
 --
 
 INSERT INTO `presensi_datang` (`id_presensi_datang`, `gambar_datang`, `tanggal_absensi_datang`, `jam_absensi_datang`, `id_pegawai`, `status_absensi_datang`, `status_absensi`, `status_hadir`, `latitude`, `longitude`) VALUES
-(1, 'absen_1_1714911538.jpg', '2024-05-05', '19:18:58', 1, 'datang', 'pagi', 'hadir', '-5.3485219', '104.9681028');
+(1, 'absen_5_1716963873.jpg', '2024-05-29', '13:24:33', 5, 'datang', 'pagi', 'hadir', '-3.407872', '104.251392');
 
 -- --------------------------------------------------------
 
@@ -165,7 +189,7 @@ CREATE TABLE `presensi_pulang` (
 --
 
 INSERT INTO `presensi_pulang` (`id_presensi_pulang`, `gambar_pulang`, `tanggal_absensi_pulang`, `jam_absensi_pulang`, `id_pegawai`, `status_absensi_pulang`, `latitude`, `longitude`) VALUES
-(1, 'absen_1_1714911552.jpg', '2024-05-05', '19:19:12', 1, 'pulang', '-5.3485219', '104.9681028');
+(1, 'absen_5_1716963913.jpg', '2024-05-29', '13:25:13', 5, 'pulang', '-3.407872', '104.251392');
 
 -- --------------------------------------------------------
 
@@ -227,17 +251,10 @@ INSERT INTO `riwayat` (`id_riwayat`, `id_pegawai`, `jenis_riwayat`, `ket_riwayat
 CREATE TABLE `uraiankerja` (
   `id_uraiankerja` int(100) NOT NULL,
   `id_pegawai` int(100) NOT NULL,
-  `tgl_uraiankerja` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `tgl_uraiankerja` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `ket_uraiankerja` text NOT NULL,
   `foto_uraiankerja` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `uraiankerja`
---
-
-INSERT INTO `uraiankerja` (`id_uraiankerja`, `id_pegawai`, `tgl_uraiankerja`, `ket_uraiankerja`, `foto_uraiankerja`) VALUES
-(2, 5, '2024-05-24 15:21:08', 'ngoding enak', '6650b0643d1fb.jpg');
 
 -- --------------------------------------------------------
 
@@ -265,125 +282,148 @@ INSERT INTO `user` (`user_id`, `user_nama`, `user_username`, `user_password`, `u
 --
 
 --
--- Indexes for table `dokumen`
+-- Indeks untuk tabel `cuti_pegawai`
+--
+ALTER TABLE `cuti_pegawai`
+  ADD PRIMARY KEY (`id_cuti`),
+  ADD KEY `id_pegawai` (`id_pegawai`);
+
+--
+-- Indeks untuk tabel `dokumen`
 --
 ALTER TABLE `dokumen`
   ADD PRIMARY KEY (`id_dokumen`),
   ADD KEY `id_pegawai` (`id_pegawai`);
 
 --
--- Indexes for table `keluarga`
+-- Indeks untuk tabel `keluarga`
 --
 ALTER TABLE `keluarga`
   ADD PRIMARY KEY (`id_keluarga`),
   ADD KEY `id_pegawai` (`id_pegawai`);
 
 --
--- Indexes for table `map`
+-- Indeks untuk tabel `map`
 --
 ALTER TABLE `map`
   ADD PRIMARY KEY (`id_map`);
 
 --
--- Indexes for table `pegawai`
+-- Indeks untuk tabel `pegawai`
 --
 ALTER TABLE `pegawai`
   ADD PRIMARY KEY (`id_pegawai`);
 
 --
--- Indexes for table `presensi_datang`
+-- Indeks untuk tabel `presensi_datang`
 --
 ALTER TABLE `presensi_datang`
   ADD PRIMARY KEY (`id_presensi_datang`),
   ADD KEY `id_pegawai` (`id_pegawai`);
 
 --
--- Indexes for table `presensi_pulang`
+-- Indeks untuk tabel `presensi_pulang`
 --
 ALTER TABLE `presensi_pulang`
   ADD PRIMARY KEY (`id_presensi_pulang`),
   ADD KEY `id_pegawai` (`id_pegawai`);
 
 --
--- Indexes for table `profil`
+-- Indeks untuk tabel `profil`
 --
 ALTER TABLE `profil`
   ADD PRIMARY KEY (`id_profil`);
 
 --
--- Indexes for table `riwayat`
+-- Indeks untuk tabel `riwayat`
 --
 ALTER TABLE `riwayat`
   ADD PRIMARY KEY (`id_riwayat`),
   ADD KEY `id_pegawai` (`id_pegawai`);
 
 --
--- Indexes for table `uraiankerja`
+-- Indeks untuk tabel `uraiankerja`
 --
 ALTER TABLE `uraiankerja`
   ADD PRIMARY KEY (`id_uraiankerja`),
   ADD KEY `id_pegawai` (`id_pegawai`);
 
 --
--- Indexes for table `user`
+-- Indeks untuk tabel `user`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`user_id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `dokumen`
+-- AUTO_INCREMENT untuk tabel `cuti_pegawai`
+--
+ALTER TABLE `cuti_pegawai`
+  MODIFY `id_cuti` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT untuk tabel `dokumen`
 --
 ALTER TABLE `dokumen`
   MODIFY `id_dokumen` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
--- AUTO_INCREMENT for table `keluarga`
+-- AUTO_INCREMENT untuk tabel `keluarga`
 --
 ALTER TABLE `keluarga`
   MODIFY `id_keluarga` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
--- AUTO_INCREMENT for table `map`
+-- AUTO_INCREMENT untuk tabel `map`
 --
 ALTER TABLE `map`
   MODIFY `id_map` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
--- AUTO_INCREMENT for table `pegawai`
+-- AUTO_INCREMENT untuk tabel `pegawai`
 --
 ALTER TABLE `pegawai`
   MODIFY `id_pegawai` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
 --
--- AUTO_INCREMENT for table `presensi_datang`
+-- AUTO_INCREMENT untuk tabel `presensi_datang`
 --
 ALTER TABLE `presensi_datang`
   MODIFY `id_presensi_datang` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
--- AUTO_INCREMENT for table `presensi_pulang`
+-- AUTO_INCREMENT untuk tabel `presensi_pulang`
 --
 ALTER TABLE `presensi_pulang`
   MODIFY `id_presensi_pulang` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
 --
--- AUTO_INCREMENT for table `profil`
+-- AUTO_INCREMENT untuk tabel `profil`
 --
 ALTER TABLE `profil`
   MODIFY `id_profil` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
 --
--- AUTO_INCREMENT for table `riwayat`
+-- AUTO_INCREMENT untuk tabel `riwayat`
 --
 ALTER TABLE `riwayat`
-  MODIFY `id_riwayat` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_riwayat` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
 --
--- AUTO_INCREMENT for table `uraiankerja`
+-- AUTO_INCREMENT untuk tabel `uraiankerja`
 --
 ALTER TABLE `uraiankerja`
   MODIFY `id_uraiankerja` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;COMMIT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
