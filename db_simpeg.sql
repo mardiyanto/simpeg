@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Waktu pembuatan: 29 Bulan Mei 2024 pada 10.03
--- Versi server: 10.4.22-MariaDB-log
--- Versi PHP: 7.4.27
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 30 Bulan Mei 2024 pada 10.21
+-- Versi server: 10.1.38-MariaDB
+-- Versi PHP: 5.6.40
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -35,16 +36,17 @@ CREATE TABLE `cuti_pegawai` (
   `tgl_akhir` varchar(100) NOT NULL,
   `ket_cuti` text NOT NULL,
   `status_cuti` varchar(100) NOT NULL,
-  `ket_batal` text DEFAULT NULL,
-  `tgl_input` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `ket_batal` text,
+  `tgl_input` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `tgl_status` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data untuk tabel `cuti_pegawai`
 --
 
-INSERT INTO `cuti_pegawai` (`id_cuti`, `id_pegawai`, `lama_cuti`, `tgl_awal`, `tgl_akhir`, `ket_cuti`, `status_cuti`, `ket_batal`, `tgl_input`) VALUES
-(1, 5, '21', '2024-06-30', '2024-07-06', 'nikah bro', 'pengajuan', 'ok', '2024-05-29 08:01:56');
+INSERT INTO `cuti_pegawai` (`id_cuti`, `id_pegawai`, `lama_cuti`, `tgl_awal`, `tgl_akhir`, `ket_cuti`, `status_cuti`, `ket_batal`, `tgl_input`, `tgl_status`) VALUES
+(1, 5, '21', '2024-06-30', '2024-07-06', 'nikah bro', 'acc', 'ok', '2024-05-30 07:27:01', '30/05/2024');
 
 -- --------------------------------------------------------
 
@@ -139,7 +141,7 @@ CREATE TABLE `pegawai` (
 --
 
 INSERT INTO `pegawai` (`id_pegawai`, `kode_pegawai`, `nama_pegawai`, `status_pegawai`, `nik`, `no_hp`, `tempat_lahir`, `tgl_lahir`, `jenis_kelamin`, `alamat`, `gambar`, `email`, `password`, `jenis_pegawai`, `jabatan_pegawai`, `mulai_kerja`) VALUES
-(5, '10201032', 'MARDIYANTO, M.T.I', 'NO TETAP', '1820706109100034', '082373971991', 'Gunung Sugih ', '2024-05-16', 'Laki-Laki', 'jalan johar perumahan perdana village no. a40\r\npodomoro', '6650ae4a83ab2.jpg', 'mardybest@gmail.com', '625972dff6c098eedb27df8640957291', 'Dosen', 'Teknisi Laboratorium', '2010-05-16');
+(5, '10201032', 'MARDIYANTO, M.T.I', 'TETAP', '1820706109100034', '082373971991', 'Gunung Sugih ', '2024-05-16', 'Laki-Laki', 'jalan johar perumahan perdana village no. a40\r\npodomoro', '6650ae4a83ab2.jpg', 'mardybest@gmail.com', '625972dff6c098eedb27df8640957291', 'Dosen dan Kariawan', 'Teknisi Laboratorium', '2010-05-16');
 
 -- --------------------------------------------------------
 
@@ -165,7 +167,8 @@ CREATE TABLE `presensi_datang` (
 --
 
 INSERT INTO `presensi_datang` (`id_presensi_datang`, `gambar_datang`, `tanggal_absensi_datang`, `jam_absensi_datang`, `id_pegawai`, `status_absensi_datang`, `status_absensi`, `status_hadir`, `latitude`, `longitude`) VALUES
-(1, 'absen_5_1716963873.jpg', '2024-05-29', '13:24:33', 5, 'datang', 'pagi', 'hadir', '-3.407872', '104.251392');
+(1, 'absen_5_1716963873.jpg', '2024-05-29', '13:24:33', 5, 'datang', 'pagi', 'hadir', '-3.407872', '104.251392'),
+(2, 'absen_5_1717039019.jpg', '2024-05-30', '10:16:59', 5, 'datang', 'pagi', 'hadir', '-5.3641216', '105.2409856');
 
 -- --------------------------------------------------------
 
@@ -189,7 +192,8 @@ CREATE TABLE `presensi_pulang` (
 --
 
 INSERT INTO `presensi_pulang` (`id_presensi_pulang`, `gambar_pulang`, `tanggal_absensi_pulang`, `jam_absensi_pulang`, `id_pegawai`, `status_absensi_pulang`, `latitude`, `longitude`) VALUES
-(1, 'absen_5_1716963913.jpg', '2024-05-29', '13:25:13', 5, 'pulang', '-3.407872', '104.251392');
+(1, 'absen_5_1716963913.jpg', '2024-05-29', '13:25:13', 5, 'pulang', '-3.407872', '104.251392'),
+(2, 'absen_5_1717055246.jpg', '2024-05-30', '14:47:26', 5, 'pulang', '-5.3641216', '105.2409856');
 
 -- --------------------------------------------------------
 
@@ -251,7 +255,7 @@ INSERT INTO `riwayat` (`id_riwayat`, `id_pegawai`, `jenis_riwayat`, `ket_riwayat
 CREATE TABLE `uraiankerja` (
   `id_uraiankerja` int(100) NOT NULL,
   `id_pegawai` int(100) NOT NULL,
-  `tgl_uraiankerja` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `tgl_uraiankerja` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `ket_uraiankerja` text NOT NULL,
   `foto_uraiankerja` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -392,13 +396,13 @@ ALTER TABLE `pegawai`
 -- AUTO_INCREMENT untuk tabel `presensi_datang`
 --
 ALTER TABLE `presensi_datang`
-  MODIFY `id_presensi_datang` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_presensi_datang` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `presensi_pulang`
 --
 ALTER TABLE `presensi_pulang`
-  MODIFY `id_presensi_pulang` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_presensi_pulang` int(100) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `profil`

@@ -204,6 +204,14 @@ elseif($_GET['aksi']=='proseseditprofesi'){
 	mysqli_query($koneksi,"UPDATE profesi SET nama_profesi='$_POST[nama_profesi]' WHERE id_profesi='$_GET[id_profesi]'");
 echo "<script>window.location=('index.php?aksi=profesi')</script>";
 }
+elseif($_GET['aksi']=='proseseditacccuti'){
+	mysqli_query($koneksi,"UPDATE cuti_pegawai SET status_cuti='acc',tgl_status='$date' WHERE id_cuti='$_GET[id_cuti]'");
+echo "<script>window.alert('Proses selesai');window.location=('index.php?aksi=cuti')</script>";
+}
+elseif($_GET['aksi']=='proseseditbatalcuti'){
+	mysqli_query($koneksi,"UPDATE cuti_pegawai SET status_cuti='tolak',tgl_status='$date' WHERE id_cuti='$_GET[id_cuti]'");
+echo "<script>window.alert('Proses selesai');window.location=('index.php?aksi=cuti')</script>";
+}
 elseif($_GET['aksi']=='proseseditadmin'){
 $nama  = $_POST['nama'];
 $username = $_POST['username'];

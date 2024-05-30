@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Jakarta');
 ///////////////////////////lihat/////////////////////////////////////////////
 if($_GET['aksi']=='home'){
 include "grafik.php";
@@ -351,19 +352,22 @@ elseif($_GET['aksi']=='pegawai'){
                                                 <select class='form-control select2' style='width: 100%;' name=status_pegawai>
                                                     <option value='$t[status_pegawai]' selected>$t[status_pegawai]</option>
                                                     <option value='TETAP'>TETAP</option>
-                                                    <option value='NO TETAP'>NO TETAP</option>
+                                                    <option value='NON TETAP'>NON TETAP</option>
                                                 </select><br><br>
                                                 <label>Jenis Pegawai</label>
                                                 <select class='form-control select2' style='width: 100%;' name=jenis_pegawai>
                                                     <option value='$t[jenis_pegawai]' selected>$t[jenis_pegawai]</option>
                                                     <option value='Dosen'>Dosen</option>
                                                     <option value='Kariawan'>Kariawan</option>
+                                                    <option value='Dosen dan Kariawan'>Dosen dan Kariawan</option>
                                                 </select><br><br>
                                                 <label>Jabatan Pegawai</label>
                                                 <select class='form-control select2' style='width: 100%;' name='jabatan_pegawai'>
                                                     <option value='$t[jabatan_pegawai]' selected>$t[jabatan_pegawai]</option>
                                                     <option value='Rektor'>Rektor</option>
-                                                    <option value='Wakil Rektor'>Wakil Rektor</option>
+                                                    <option value='Wakil Rektor 1'>Wakil Rektor 1</option>
+                                                    <option value='Wakil Rektor 2'>Wakil Rektor 2</option>
+                                                    <option value='Wakil Rektor 3'>Wakil Rektor 3</option>
                                                     <option value='Dekan'>Dekan</option>
                                                     <option value='Ketua Program Studi'>Ketua Program Studi</option>
                                                     <option value='Koordinator Akademik'>Koordinator Akademik</option>
@@ -463,12 +467,15 @@ elseif($_GET['aksi']=='pegawai'){
                                                     <option value='' selected>--Pilih Jenis Pegawai</option>
                                                     <option value='Dosen'>Dosen</option>
                                                     <option value='Kariawan'>Kariawan</option>
+                                                    <option value='Dosen dan Kariawan'>Dosen dan Kariawan</option>
                                                 </select><br><br>
                                                 <label>Jabatan Pegawai</label>
                                                 <select class='form-control select2' style='width: 100%;' name='jabatan_pegawai'>
                                                     <option value='' selected>--Pilih Jabatan Pegawai--</option>
                                                     <option value='Rektor'>Rektor</option>
-                                                    <option value='Wakil Rektor'>Wakil Rektor</option>
+                                                    <option value='Wakil Rektor 1'>Wakil Rektor 1</option>
+                                                    <option value='Wakil Rektor 2'>Wakil Rektor 2</option>
+                                                    <option value='Wakil Rektor 3'>Wakil Rektor 3</option>
                                                     <option value='Dekan'>Dekan</option>
                                                     <option value='Ketua Program Studi'>Ketua Program Studi</option>
                                                     <option value='Koordinator Akademik'>Koordinator Akademik</option>
@@ -841,7 +848,7 @@ echo"
         </div><!-- /.tab-pane -->
 
         <div class='tab-pane' id='settings'>
-        <button class='btn btn-info' data-toggle='modal' data-target='#uiModalupload'><i class='fa fa-cloud-upload'></i>Tambah Data</button>
+        <button class='btn btn-info' data-toggle='modal' data-target='#uiModalupload'><i class='fa fa-cloud-upload'></i>Tambah Data</button><br><br>
         <table id='example1' class='table table-bordered table-striped'>
         <thead>
             <tr>
@@ -904,7 +911,7 @@ $no++;
 </div>
         </div><!-- /.tab-pane -->
         <div class='tab-pane' id='keluarga'>
-        <button class='btn btn-info' data-toggle='modal' data-target='#uiModalkeluarga'><i class='fa fa-cloud-upload'></i>Tambah Data</button>
+        <button class='btn btn-info' data-toggle='modal' data-target='#uiModalkeluarga'><i class='fa fa-plus'></i>Tambah Data</button><br><br>
         <table id='example1' class='table table-bordered table-striped'>
         <thead>
             <tr>
@@ -1077,48 +1084,137 @@ elseif($_GET['aksi']=='kritik'){
     }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
-elseif($_GET['aksi']=='jabatan'){
+elseif($_GET['aksi']=='presensi'){
 echo"<div class='row'>
                 <div class='col-lg-12'>
                     <div class='panel panel-default'>
                         <div class='panel-heading'>INFORMASI 
                         </div>
                         <div class='panel-body'>	
-			<button class='btn btn-info' data-toggle='modal' data-target='#uiModal'>
-                                Tambah Data
-                            </button> <a href='laporan.php?aksi=jabatan' target='_blank' class='btn btn-info' ><i class='fa fa-print' ></i></span></a><br><br>
+	 <a href='laporan.php?aksi=presensi' target='_blank' class='btn btn-info' ><i class='fa fa-print' ></i></span></a>  
+      <a href='index.php?aksi=presensidatang' class='btn btn-info' >Absensi Datang</a> 
+      <a href='index.php?aksi=presensipulang' class='btn btn-info' >Absensi Pulang</a><br><br>
                            	<div class='table-responsive'>		
 	 <table id='example1' class='table table-bordered table-striped'>
                                     <thead>
                                         <tr>
 										<th>No</th>
-                                            <th>Nama jabatan</th>
-                                            <th>Jumlah</th>
-                                            <th></th>			  
+                                        <th>nama</th>
+                                        <th>Tanggal Absensi</th>
+                                        <th>Jam Datang</th>
+                                        <th>Jam Pulang</th>
+                                        <th>Status</th>
+                                        <th>Jam Kerja Efektif</th>
+                                        <th>aksi</th>			  
                                       </tr></thead>
                     <tbody>
 				    ";
-			
-$no=0;
-$sql=mysqli_query($koneksi,"SELECT COUNT(pegawai.jabatan) as jlh,jabatan.id_jabatan,jabatan.nama_jabatan FROM jabatan LEFT JOIN pegawai ON pegawai.jabatan = jabatan.id_jabatan GROUP BY jabatan.id_jabatan ORDER BY id_jabatan ASC");
-while ($t=mysqli_fetch_array($sql)){	
-$no++;
-                                    echo"<tr>
-										<td>$no</td>
-                                            <td>$t[nama_jabatan]</td>
-                                            <td>$t[jlh]</td>
-							<td><div class='btn-group'>
-                      <button type='button' class='btn btn-info'>edit</button>
-                      <button type='button' class='btn btn-info dropdown-toggle' data-toggle='dropdown'>
-                        <span class='caret'></span>
-                        <span class='sr-only'>Toggle Dropdown</span>
-                      </button>
-                      <ul class='dropdown-menu' role='menu'>
-                        <li><a href='index.php?aksi=editjabatan&id_jabatan=$t[id_jabatan]' title='Edit'><i class='fa fa-pencil'></i>edit</a></li>
-						<li><a href='hapus.php?aksi=hapusjabatan&id_jabatan=$t[id_jabatan]' onclick=\"return confirm ('Apakah yakin ingin menghapus $t[nama_jabatan] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</li>
-                        </ul>
-                    </div></td>
-                                        </tr>";
+                    
+                    $no=0;
+                    $tebaru=mysqli_query($koneksi," SELECT * FROM pegawai,presensi_datang WHERE presensi_datang.id_pegawai=pegawai.id_pegawai order by presensi_datang.id_presensi_datang  DESC");
+                    while ($t=mysqli_fetch_array($tebaru)){	
+                        $sql=mysqli_query($koneksi," SELECT * FROM presensi_pulang WHERE id_pegawai=$t[id_pegawai] ");
+                        $tx=mysqli_fetch_array($sql);    
+                    $no++;
+                    // Waktu standar kedatangan (misalnya, 08:00)
+                    $standardTime = "08:00";
+                    // Waktu aktual kedatangan (misalnya, diambil dari input pengguna)
+                    $actualTime = $t['jam_absensi_datang']; // Waktu kedatangan aktual dari database
+                    // Konversi waktu ke format DateTime
+                    $standardDateTime = new DateTime($standardTime);
+                    $actualDateTime = new DateTime($actualTime);
+                    // Waktu standar kepulangan (misalnya, 15:30)
+                    $standardTimepulang = "15:30";
+                    // Waktu kepulangan aktual dari database
+                    $actualTimepulang = $tx['jam_absensi_pulang'];
+                    // Konversi waktu ke format DateTime
+                    $standardDateTimepulang = new DateTime($standardTimepulang);
+                    $actualDateTimepulang = new DateTime($actualTimepulang);
+                    // Menghitung total jam kerja efektif
+                    $intervalKerja = $actualDateTime->diff($actualDateTimepulang);
+                    $jamKerjaEfektif = $intervalKerja->format('%h jam %i menit');
+                    echo"<tr>
+                        <td>$no</td>
+                        <td>$t[nama_pegawai]</td>
+                        <td>$t[tanggal_absensi_datang]</td>
+                        <td>$t[jam_absensi_datang] "; // Menampilkan status keterlambatan
+                        if ($actualDateTime > $standardDateTime) {
+                            $interval = $standardDateTime->diff($actualDateTime);
+                                                       echo "<button class='btn btn-danger'>Terlambat " . $interval->format('%h jam %i menit') . ".</button>";
+                        } else {
+                            echo "<button class='btn btn-success'>Tepat waktu</button>";
+                        }
+                        echo "</td>
+                        <td>$tx[jam_absensi_pulang] "; // Menampilkan status pulang cepat
+                        if ($actualDateTimepulang < $standardDateTimepulang) {
+                            $intervalpulang = $standardDateTimepulang->diff($actualDateTimepulang);
+                            echo "<button class='btn btn-warning'>Pulang cepat " . $intervalpulang->format('%h jam %i menit') . ".</button>";
+                        } else {
+                            echo "<button class='btn btn-success'>Pulang tepat waktu</button>";
+                        }
+                        echo "</td>
+                        <td>$t[status_hadir]</td>
+                        <td>$jamKerjaEfektif</td> 
+                                        <td><button class='btn btn-info' data-toggle='modal' data-target='#uiModal$t[id_pegawai]'>AKSI</button></td>
+                                        </tr>
+                                        <!-- Modal edit-->
+                                        <div class='modal fade' id='uiModal$t[id_pegawai]' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+                                        <div class='modal-dialog'>
+                                            <div class='modal-content'>
+                                                <div class='modal-header'>
+                                                    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                                
+                                                </div>
+                                                        <div class='box-body'>
+                                                        <div class='row'>
+                                                        <div class='col-md-6'>
+                                                            <div class='card'>
+                                                                <div class='card-body'>
+                                                                    <h5 class='card-title'>Nama Pegawai</h5>
+                                                                    <p class='card-text'>$t[nama_pegawai]</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class='col-md-6'>
+                                                        <div class='card'>
+                                                            <div class='card-body'>
+                                                                <h5 class='card-title'>Status</h5>
+                                                                <p class='card-text'>$t[status_hadir]</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                        <div class='col-md-6'>
+                                                            <div class='card'>
+                                                                <div class='card-body'>
+                                                                    <h5 class='card-title'>Jam Presensi</h5>
+                                                                    <p class='card-text'>$t[jam_absensi_datang]</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class='col-md-12'>
+                                                            <div class='card'>
+                                                                <div class='card-body'>
+                                                                    <h5 class='card-title'>Gambar</h5>
+                                                                    <p class='card-text'><img src='../uploads/$t[gambar_datang]' alt='Gambar Modal' class='img-fluid'></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class='col-md-12'>
+                                                            <div class='card'>
+                                                                <div class='card-body'>
+                                                                <a href='detaillokasi.php?id_presensi_datang=$t[id_presensi_datang]' class='btn btn-info' >MAP</a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    
+                                                        </div>
+                                            </div>
+                                        </div>
+                                </div>                         
+                                        
+                                        ";
 }
                                   echo"  </tbody>
                                 </table>
@@ -1129,168 +1225,631 @@ $no++;
                </div>		
 	
 	  ";			
-
-////////////////input admin			
-
-echo"			
-<div class='col-lg-12'>
-                        <div class='modal fade' id='uiModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-                                <div class='modal-dialog'>
-                                    <div class='modal-content'>
-                                        <div class='modal-header'>
-                                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-                                            <h4 class='modal-title' id='H3'>Input Data </h4>
-                                        </div>
-                                        <div class='modal-body'>
-                                           <form role='form' method='post' action='input.php?aksi=inputjabatan'>
-                                            <div class='form-group'>
-                                            <label>Nama jabatan</label>
-						 <input type='text' class='form-control' name='nama_jabatan'/><br>
-					</br>
-                                            <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
-                                            <button type='submit' class='btn btn-primary'>Save </button>
-                                        </div>
-					</form>
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
-		    </div>			
-"; 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
-
-elseif($_GET['aksi']=='editjabatan'){
-$tebaru=mysqli_query($koneksi," SELECT * FROM jabatan WHERE id_jabatan=$_GET[id_jabatan] ");
-$t=mysqli_fetch_array($tebaru);
-echo"
-<div class='row'>
-                <div class='col-lg-12'>
-                    <div class='panel panel-default'>
-                        <div class='panel-heading'>EDIT  $t[nama_jabatan]
-                        </div>
-                        <div class='panel-body'>
-<form id='form1'  method='post' action='edit.php?aksi=proseseditjabatan&id_jabatan=$t[id_jabatan]'>
-       <div class='form-grup'>
-        <label>Nama jabatan</label>
-        <input type='text' class='form-control' value='$t[nama_jabatan]' name='nama_jabatan'/><br>
-	
-		
-    	<div class='modal-footer'>
-                                            <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
-                                            <button type='submit' class='btn btn-primary'>Save </button>
-                                        </div> </div>
-    </form></div> </div></div></div>
-";
-}
-elseif($_GET['aksi']=='profesi'){
-echo"<div class='row'>
-                <div class='col-lg-12'>
-                    <div class='panel panel-default'>
-                        <div class='panel-heading'>INFORMASI 
-                        </div>
-                        <div class='panel-body'>	
-			<button class='btn btn-info' data-toggle='modal' data-target='#uiModal'>
-                                Tambah Data
-                            </button> <a href='laporan.php?aksi=profesi' target='_blank' class='btn btn-info' ><i class='fa fa-print' ></i></span></a><br><br>
-                           	<div class='table-responsive'>		
-	 <table id='example1' class='table table-bordered table-striped'>
-                                    <thead>
-                                        <tr>
-										<th>No</th>
-                                            <th>Nama profesi</th>
-                                            <th>Jumlah</th>	
-                                            <th>Status</th>		  
-                                      </tr></thead>
-                    <tbody>
-				    ";
-			
-$no=0;
-$sql=mysqli_query($koneksi,"SELECT COUNT(pegawai.jurusan) as jlh,profesi.id_profesi,profesi.nama_profesi FROM profesi LEFT JOIN pegawai ON pegawai.jurusan = profesi.id_profesi GROUP BY profesi.id_profesi ORDER BY id_profesi ASC");
-while ($t=mysqli_fetch_array($sql)){	
-$no++;
-                                    echo"<tr>
-										<td>$no</td>
-                                            <td>$t[nama_profesi]</td>
-                                            <td>$t[jlh]</td>
-							<td><div class='btn-group'>
-                      <button type='button' class='btn btn-info'>edit</button>
-                      <button type='button' class='btn btn-info dropdown-toggle' data-toggle='dropdown'>
-                        <span class='caret'></span>
-                        <span class='sr-only'>Toggle Dropdown</span>
-                      </button>
-                      <ul class='dropdown-menu' role='menu'>
-                        <li><a href='index.php?aksi=editprofesi&id_profesi=$t[id_profesi]' title='Edit'><i class='fa fa-pencil'></i>edit</a></li>
-						<li><a href='hapus.php?aksi=hapusprofesi&id_profesi=$t[id_profesi]' onclick=\"return confirm ('Apakah yakin ingin menghapus $t[nama_gol] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</li>
-                        </ul>
-                    </div></td>
-                                        </tr>";
-}
-                                  echo"  </tbody>
-                                </table>
+elseif($_GET['aksi']=='presensidatang'){
+    echo"<div class='row'>
+                    <div class='col-lg-12'>
+                        <div class='panel panel-default'>
+                            <div class='panel-heading'>INFORMASI 
+                            </div>
+                            <div class='panel-body'>	
+                <a href='index.php?aksi=presensi' class='btn btn-info' >Total Absensi</a> <a href='index.php?aksi=presensipulang' class='btn btn-info' >Absensi Pulang</a><br><br>
+                                   <div class='table-responsive'>		
+                                   <table id='example1' class='table table-bordered table-striped'>
+                                        <thead>
+                                            <tr><th>#</th>
+                                                <th>nama</th>
+                                                <th>Tanggal Absensi</th>
+                                                <th>Jam Datang</th>
+                                                <th>aksi</th>		  
+                                            </tr>
+                                        </thead>
+                        ";
+                
+    $no=0;
+    $tebaru=mysqli_query($koneksi," SELECT * FROM presensi_datang,pegawai WHERE presensi_datang.id_pegawai=pegawai.id_pegawai order by presensi_datang.id_presensi_datang  DESC");
+    while ($t=mysqli_fetch_array($tebaru)){	
+    $no++;
+                                        echo"<tbody>
+                                            <tr>
+                                            <td>$no</td>
+                                                <td>$t[nama_pegawai]</td>
+                                                <td>$t[tanggal_absensi_datang]</td>
+                                                <td>$t[jam_absensi_datang]</td>
+                                                <td><button class='btn btn-info' data-toggle='modal' data-target='#uiModal'>AKSI</button></td>
+                                            </tr>
+                                        </tbody>
+                                        <!-- Modal edit-->
+                                        <div class='modal fade' id='uiModal$t[id_pemilih]' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+                                                <div class='modal-dialog'>
+                                                    <div class='modal-content'>
+                                                        <div class='modal-header'>
+                                                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                                                            <h4 class='modal-title' id='H3'>Edit Data $t[nama_pemilih]</h4>
+                                                        </div>
+                                                                <div class='box-body'>
+                                                                    <form action='edit.php?aksi=proseseditpemilih&id_pemilih=$t[id_pemilih]' method='post' enctype='multipart/form-data'>
+                                                                    <div class='form-group'>
+                                                                        <label>Nama</label>
+                                                                        <input type='text' class='form-control' name='nama_pemilih' value='$t[nama_pemilih]' required='required' placeholder='Masukkan Nama ..'>
+                                                                    </div>
+                                                                    <div class='form-group'>
+                                                                        <label>nisn</label>
+                                                                        <input type='text' class='form-control' name='nisn' value='$t[nisn]' required='required' placeholder='Masukkan nisn ..'>
+                                                                    </div>
+                                                                    <div class='form-group'>
+                                                                        <label>No hp</label>
+                                                                        <input type='text' class='form-control' name='no_hp' value='$t[no_hp]' required='required'  placeholder='Masukkan no hp..'>
+                                                                    </div>
+                                                                    <div class='form-group'>
+                                                                        <label>Kelas</label>
+                                                                        <input type='text' class='form-control' name='kelas' value='$t[kelas]' required='required' placeholder='Masukkan kelas..'>
+                                                                    </div>
+                                                                    <div class='form-group'>
+                                                                        <input type='submit' class='btn btn-sm btn-primary' value='Simpan'>
+                                                                    </div>
+                                                                    </form>
+                                                                </div>
+                                                    </div>
+                                                </div>
+                                        </div>                    
+                                        
+                                        ";
+    }
+                                    echo"</table>
+                                </div>
                             </div>
                         </div>
+                    </div>
+                   </div>";			
+    
+    ////////////////input data	
+    
+    echo"			<!-- Modal input-->
+                            <div class='modal fade' id='uiModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+                                    <div class='modal-dialog'>
+                                        <div class='modal-content'>
+                                            <div class='modal-header'>
+                                                <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                                                <h4 class='modal-title' id='H3'>Input Data</h4>
+                                            </div>
+                                                    <div class='box-body'>
+                                                        <form action='input.php?aksi=inputpemilih' method='post' enctype='multipart/form-data'>
+                                                        <div class='form-group'>
+                                                                        <label>Nama</label>
+                                                                        <input type='text' class='form-control' name='nama_pemilih' required='required' placeholder='Masukkan Nama ..'>
+                                                                    </div>
+                                                                    <div class='form-group'>
+                                                                        <label>nisn</label>
+                                                                        <input type='text' class='form-control' name='nisn' required='required' placeholder='Masukkan nisn ..'>
+                                                                    </div>
+                                                                    <div class='form-group'>
+                                                                        <label>No hp</label>
+                                                                        <input type='text' class='form-control' name='no_hp' required='required' placeholder='Masukkan nomor hp ..'>
+                                                                    </div>
+                                                                    <div class='form-group'>
+                                                                        <label>Kelas</label>
+                                                                        <input type='text' class='form-control' name='kelas' required='required'  placeholder='Masukkan kelas..'>
+                                                                    </div>
+                                                        <div class='form-group'>
+                                                            <input type='submit' class='btn btn-sm btn-primary' value='Simpan'>
+                                                        </div>
+                                                        </form>
+                                                    </div>
+                                        </div>
+                                    </div>
+                            </div>
+        
+    "; 
+    }  
+elseif($_GET['aksi']=='presensipulang'){
+    echo"<div class='row'>
+                    <div class='col-lg-12'>
+                        <div class='panel panel-default'>
+                            <div class='panel-heading'>INFORMASI 
+                            </div>
+                            <div class='panel-body'>	
+                <a href='index.php?aksi=presensi' class='btn btn-info' >Total Absensi</a> <a href='index.php?aksi=presensidatang' class='btn btn-info' >Absensi Datang</a><br><br>
+                                   <div class='table-responsive'>		
+                                   <table id='example1' class='table table-bordered table-striped'>
+                                        <thead>
+                                            <tr> <th>#</th>
+                                                <th>nama</th>
+                                                <th>Tanggal Absensi</th>
+                                                <th>Jam Datang</th>
+                                                <th>aksi</th>		  
+                                            </tr>
+                                        </thead>
+                        ";
+                
+    $no=0;
+    $tebaru=mysqli_query($koneksi," SELECT * FROM presensi_pulang,pegawai WHERE presensi_pulang.id_pegawai=pegawai.id_pegawai order by presensi_pulang.id_presensi_pulang  DESC");
+    while ($t=mysqli_fetch_array($tebaru)){	
+    $no++;
+                                        echo"<tbody>
+                                            <tr> <td>$no</td>
+                                                <td>$t[nama_pegawai]</td>
+                                                <td>$t[tanggal_absensi_pulang]</td>
+                                                <td>$t[jam_absensi_pulang]</td>
+                                                <td><button class='btn btn-info' data-toggle='modal' data-target='#uiModal'>AKSI</button></td>
+                                            </tr>
+                                        </tbody>
+                                        <!-- Modal edit-->
+                                        <div class='modal fade' id='uiModal$t[id_pegawai]' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+                                                <div class='modal-dialog'>
+                                                    <div class='modal-content'>
+                                                        <div class='modal-header'>
+                                                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                                                            <h4 class='modal-title' id='H3'>Edit Data $t[nama_pegawai]</h4>
+                                                        </div>
+                                                                <div class='box-body'>
+                                                                 <div class='form-group'>
+                                                                        <label>Nama</label>
+                                                                        <input type='text' class='form-control' name='nama_pemilih' value='$t[nama_pemilih]' required='required' placeholder='Masukkan Nama ..'>
+                                                                    </div>
+                                                                    <div class='form-group'>
+                                                                        <label>nisn</label>
+                                                                        <input type='text' class='form-control' name='nisn' value='$t[nisn]' required='required' placeholder='Masukkan nisn ..'>
+                                                                    </div>
+                                                                    <div class='form-group'>
+                                                                        <label>No hp</label>
+                                                                        <input type='text' class='form-control' name='no_hp' value='$t[no_hp]' required='required'  placeholder='Masukkan no hp..'>
+                                                                    </div>
+                                                                    <div class='form-group'>
+                                                                        <label>Kelas</label>
+                                                                        <input type='text' class='form-control' name='kelas' value='$t[kelas]' required='required' placeholder='Masukkan kelas..'>
+                                                                    </div>
+                                                                    <div class='form-group'>
+                                                                        <input type='submit' class='btn btn-sm btn-primary' value='Simpan'>
+                                                                    </div>
+                                                                    </form>
+                                                                </div>
+                                                    </div>
+                                                </div>
+                                        </div>                    
+                                        
+                                        ";
+    }
+                                    echo"</table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   </div>";			
+    
+    ////////////////input data	
+    
+    echo"			<!-- Modal input-->
+                            <div class='modal fade' id='uiModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+                                    <div class='modal-dialog'>
+                                        <div class='modal-content'>
+                                            <div class='modal-header'>
+                                                <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                                                <h4 class='modal-title' id='H3'>Input Data</h4>
+                                            </div>
+                                                    <div class='box-body'>
+                                                        <form action='input.php?aksi=inputpemilih' method='post' enctype='multipart/form-data'>
+                                                        <div class='form-group'>
+                                                                        <label>Nama</label>
+                                                                        <input type='text' class='form-control' name='nama_pemilih' required='required' placeholder='Masukkan Nama ..'>
+                                                                    </div>
+                                                                    <div class='form-group'>
+                                                                        <label>nisn</label>
+                                                                        <input type='text' class='form-control' name='nisn' required='required' placeholder='Masukkan nisn ..'>
+                                                                    </div>
+                                                                    <div class='form-group'>
+                                                                        <label>No hp</label>
+                                                                        <input type='text' class='form-control' name='no_hp' required='required' placeholder='Masukkan nomor hp ..'>
+                                                                    </div>
+                                                                    <div class='form-group'>
+                                                                        <label>Kelas</label>
+                                                                        <input type='text' class='form-control' name='kelas' required='required'  placeholder='Masukkan kelas..'>
+                                                                    </div>
+                                                        <div class='form-group'>
+                                                            <input type='submit' class='btn btn-sm btn-primary' value='Simpan'>
+                                                        </div>
+                                                        </form>
+                                                    </div>
+                                        </div>
+                                    </div>
+                            </div>
+        
+    "; 
+    }  
+    elseif($_GET['aksi']=='rekappresensi'){
+        echo"
+        <div class='col-lg-12'>
+        <div class='panel panel-default'>
+            <div class='panel-heading'>Rekap Presensi Setiap Pegawai Bulan Ini
+            </div>
+            <div class='panel-body'>	
+        <form id='form1'  method='post' action='index.php?aksi=detailrekap'>
+        <div class='form-group'>
+        <label>Tanggal Akhir</label>
+        <input type='date' class='form-control'  name='tgl_awal'/>
+        <label>Tanggal Akhir</label>
+        <input type='date' class='form-control' name='tgl_akhir'/>
+                <div class='modal-footer'>
+                                                    <button type='submit' class='btn btn-primary'>Filter </button>
+                                                </div> </div>
+            </form>
+        </div>
+        </div>  
+    </div>
+        <div class='col-lg-12'>
+            <div class='panel panel-default'>
+                <div class='panel-heading'>Rekap Presensi Setiap Pegawai Bulan Ini
+                </div>
+                <div class='panel-body'>	
+                       <div class='table-responsive'>		
+                       <table id='example1' class='table table-bordered table-striped'>
+                            <thead>
+                                <tr>
+                                    <th>nama</th>
+                                    <th>Bulan/Tahun</th>
+                                    <th>Total Presensi</th>
+                                    <th>aksi</th>		  
+                                </tr>
+                            </thead>
+            ";
+            $bulan_tahun_sekarang = date("Y-m");
+            // Query SQL untuk membuat rekap presensi setiap pegawai setiap bulan
+            $query = "SELECT pg.id_pegawai, pg.nama_pegawai, DATE_FORMAT(pd.tanggal_absensi_datang, '%Y-%m') AS bulan_tahun,
+                             COUNT(pd.id_presensi_datang) as total_presensi
+                      FROM pegawai pg
+                      LEFT JOIN presensi_datang pd ON pg.id_pegawai = pd.id_pegawai
+                      WHERE DATE_FORMAT(pd.tanggal_absensi_datang, '%Y-%m') = '$bulan_tahun_sekarang'
+                      GROUP BY pg.id_pegawai, DATE_FORMAT(pd.tanggal_absensi_datang, '%Y-%m')";
+            // Jalankan query
+            $result = $koneksi->query($query);
+            while ($t = $result->fetch_assoc()) {
+                $sql=mysqli_query($koneksi," SELECT * FROM presensi_datang WHERE id_pegawai=$t[id_pegawai] ");
+                $tx=mysqli_fetch_array($sql);   
+                            echo"<tbody>
+                                <tr>
+                                    <td>$t[nama_pegawai]</td>
+                                    <td>$t[bulan_tahun]</td>
+                                    <td>$t[total_presensi]</td>
+                                    <td><button class='btn btn-info' data-toggle='modal' data-target='#uiModal$t[id_pegawai]'>AKSI</button></td>
+                                </tr>
+                            </tbody>
+                            <!-- Modal edit-->
+                            
+                            <div class='modal fade' id='uiModal$t[id_pegawai]' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+                                    <div class='modal-dialog'>
+                                        <div class='modal-content'>
+                                            <div class='modal-header'>
+                                                <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                            
+                                            </div>
+                                                    <div class='box-body'>
+                                                    <div class='row'>
+                                                    <div class='col-md-6'>
+                                                        <div class='card'>
+                                                            <div class='card-body'>
+                                                                <h5 class='card-title'>Nama Pegawai</h5>
+                                                                <p class='card-text'>$t[nama_pegawai]</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class='col-md-6'>
+                                                    <div class='card'>
+                                                        <div class='card-body'>
+                                                            <h5 class='card-title'>Status</h5>
+                                                            <p class='card-text'>$tx[status_hadir]</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                    <div class='col-md-6'>
+                                                        <div class='card'>
+                                                            <div class='card-body'>
+                                                                <h5 class='card-title'>Jam Presensi</h5>
+                                                                <p class='card-text'>$tx[jam_absensi_datang]</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class='col-md-12'>
+                                                        <div class='card'>
+                                                            <div class='card-body'>
+                                                                <h5 class='card-title'>Gambar</h5>
+                                                                <p class='card-text'><img src='../uploads/$tx[gambar_datang]' alt='Gambar Modal' class='img-fluid'></p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class='col-md-12'>
+                                                        <div class='card'>
+                                                            <div class='card-body'>
+                                                            <a href='detaillokasi.php?id_presensi_datang=$tx[id_presensi_datang]' class='btn btn-info' >MAP</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                </div>
+                                                
+                                                    </div>
+                                        </div>
+                                    </div>
+                            </div>                    
+                            
+                            ";
+    }
+                        echo"</table>
                     </div>
                 </div>
-               </div>		
-	
-	  ";			
-
-////////////////input admin			
-
-echo"			
-<div class='col-lg-12'>
-                        <div class='modal fade' id='uiModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-                                <div class='modal-dialog'>
-                                    <div class='modal-content'>
-                                        <div class='modal-header'>
-                                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-                                            <h4 class='modal-title' id='H3'>Input Data </h4>
+            </div>
+        </div>
+       ";			
+    }
+    
+    elseif($_GET['aksi']=='detailrekap'){
+        $tgl_awal = date("d F Y", strtotime($_POST['tgl_awal']));
+        $tgl_akhir = date("d F Y", strtotime($_POST['tgl_akhir'])); 
+        // Gabungkan dalam satu string
+        $periode = $tgl_awal . " - " . $tgl_akhir;
+        echo"
+    <div class='col-lg-12'>
+    <div class='panel panel-default'>
+        <div class='panel-heading'>Rekap Presensi Setiap Pegawai Bulan Ini
+        </div>
+        <div class='panel-body'>
+        <form id='form1'  method='post' action='index.php?aksi=detailrekap'>
+        <div class='form-group'>
+        <label>Tanggal awal</label>
+        <input type='date' class='form-control' value='$_POST[tgl_awal]' name='tgl_awal'/>
+        <label>Tanggal Akhir</label>
+        <input type='date' class='form-control' value='$_POST[tgl_akhir]' name='tgl_akhir'/>
+                <div class='modal-footer'>
+                                                    <button type='submit' class='btn btn-primary'>Filter </button>
+                                                </div> </div>
+            </form>
+            </div>
+            </div>  
+        </div>
+        <div class='col-lg-12'>
+            <div class='panel panel-default'>
+                <div class='panel-heading'>Rekap Presensi Setiap Pegawai tanggal $periode
+                </div>
+                <div class='panel-body'>	
+                       <div class='table-responsive'>		
+                       <table id='example1' class='table table-bordered table-striped'>
+                            <thead>
+                                <tr>
+                                    <th>nama</th>
+                                    <th>Bulan/Tahun</th>
+                                    <th>Total Presensi</th>
+                                    <th>aksi</th>		  
+                                </tr>
+                            </thead>
+            ";
+            $tgl_awal = "$_POST[tgl_awal]";
+            $tgl_akhir = "$_POST[tgl_akhir]";
+            
+            // Query SQL untuk membuat rekap presensi setiap pegawai dalam rentang tanggal tertentu
+            $query = "SELECT pg.id_pegawai, pg.nama_pegawai, DATE_FORMAT(pd.tanggal_absensi_datang, '%Y-%m') AS bulan_tahun,
+                             COUNT(pd.id_presensi_datang) as total_presensi
+                      FROM pegawai pg
+                      LEFT JOIN presensi_datang pd ON pg.id_pegawai = pd.id_pegawai
+                      WHERE pd.tanggal_absensi_datang BETWEEN '$tgl_awal' AND '$tgl_akhir'
+                      GROUP BY pg.id_pegawai, DATE_FORMAT(pd.tanggal_absensi_datang, '%Y-%m')";
+            
+            // Jalankan query
+            $result = $koneksi->query($query);
+            
+            while ($t = $result->fetch_assoc()) {
+                $sql=mysqli_query($koneksi," SELECT * FROM presensi_datang WHERE id_pegawai=$t[id_pegawai] ");
+                $tx=mysqli_fetch_array($sql);
+                            echo"<tbody>
+                                <tr>
+                                    <td>$t[nama_pegawai]</td>
+                                    <td>$t[bulan_tahun]</td>
+                                    <td>$t[total_presensi]</td>
+                                    <td><button class='btn btn-info' data-toggle='modal' data-target='#uiModal$t[id_pegawai]'>AKSI</button></td>
+                                    </tr>
+                                </tbody>
+                                <!-- Modal edit-->
+                                
+                                <div class='modal fade' id='uiModal$t[id_pegawai]' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+                                        <div class='modal-dialog'>
+                                            <div class='modal-content'>
+                                                <div class='modal-header'>
+                                                    <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                                
+                                                </div>
+                                                        <div class='box-body'>
+                                                        <div class='row'>
+                                                        <div class='col-md-6'>
+                                                            <div class='card'>
+                                                                <div class='card-body'>
+                                                                    <h5 class='card-title'>Nama Pegawai</h5>
+                                                                    <p class='card-text'>$t[nama_pegawai]</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class='col-md-6'>
+                                                            <div class='card'>
+                                                                <div class='card-body'>
+                                                                    <h5 class='card-title'>Jam Presensi</h5>
+                                                                    <p class='card-text'>$tx[jam_absensi_datang]</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class='col-md-12'>
+                                                            <div class='card'>
+                                                                <div class='card-body'>
+                                                                    <h5 class='card-title'>Gambar</h5>
+                                                                    <p class='card-text'><img src='../upload/$tx[gambar_datang]' alt='Gambar Modal' class='img-fluid'></p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                        </div>
+                                            </div>
                                         </div>
-                                        <div class='modal-body'>
-                                           <form role='form' method='post' action='input.php?aksi=inputprofesi'>
-                                            <div class='form-group'>
-                                            <label>Nama profesi</label>
-						 <input type='text' class='form-control' name='nama_profesi'/><br>
-					</br>
-                                            <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
-                                            <button type='submit' class='btn btn-primary'>Save </button>
-                                        </div>
-					</form>
-                                    </div>
+                                </div>                    
+                                
+                            ";
+    }
+                        echo"</table>
+                    </div>
+                </div>
+            </div>
+        </div>";			
+    }     
+elseif($_GET['aksi']=='cuti'){
+    echo"<div class='row'>
+                    <div class='col-lg-12'>
+                        <div class='panel panel-default'>
+                            <div class='panel-heading'>INFORMASI 
+                            </div>
+                            
+                            <div class='panel-body'>	
+                                   <div class='table-responsive'>		
+         <table id='example1' class='table table-bordered table-striped'>
+                                        <thead>
+                                            <tr>
+                                            <th>No</th>
+                                            <th>Nama</th>
+                                            <th>Keterangan</th>
+                                            <th>lama cuti</th>
+                                            <th>status cuti</th>
+                                            <th>aksi</th>			  
+                                          </tr></thead>
+                        <tbody>
+                        ";
+                
+    $no=0;
+    $tebaru=mysqli_query($koneksi,"SELECT cuti_pegawai.*, pegawai.nama_pegawai FROM cuti_pegawai JOIN pegawai ON cuti_pegawai.id_pegawai = pegawai.id_pegawai ORDER BY cuti_pegawai.id_cuti DESC");
+    while ($t=mysqli_fetch_array($tebaru)){	
+    // Tanggal awal dan akhir cuti
+$tgl_input = date('Y-m-d', strtotime($t['tgl_input']));
+$tanggalAwal = $t['tgl_awal'];
+$tanggalAkhir = $t['tgl_akhir'];
+// Membuat objek DateTime dari tanggal awal dan akhir
+$dateAwal = new DateTime($tanggalAwal);
+$dateAkhir = new DateTime($tanggalAkhir);
+// Menghitung selisih antara tanggal awal dan akhir
+$interval = $dateAwal->diff($dateAkhir);
+// Menambahkan 1 hari karena perhitungan termasuk hari awal dan akhir
+$lamaCuti = $interval->days + 1;
+// Menampilkan hasil 
+    $no++;
+                                        echo "<tr>
+                                            <td>$no</td>
+                                            <td>$t[nama_pegawai]</td>
+                                            <td>$t[ket_cuti]</td>
+                                            <td>$lamaCuti hari</td>
+                                            <td>$t[status_cuti]</td>
+                                            <td><button class='btn btn-info btn-sm' data-toggle='modal' data-target='#ui$t[id_cuti]'><i class='fa fa-pencil'>EDIT</i></button>
+                                            <a class='btn btn-success btn-sm' href='edit.php?aksi=proseseditacccuti&id_cuti=$t[id_cuti]'><i class='fa fa-check'></i>ACC</a>
+                                            <a class='btn btn-danger btn-sm' href='edit.php?aksi=proseseditbatalcuti&id_cuti=$t[id_cuti]'><i class='fa fa-ban'></i>Tolak</a>
+                                            
+                                            </td>
+                                            </tr>
+                                            <div class='modal fade' id='ui$t[id_cuti]' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+                                                <div class='modal-dialog'>
+                                                    <div class='modal-content'>
+                                                        <div class='modal-header'>
+                                                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                                                            <h4 class='modal-title' id='H3'>Input Data</h4>
+                                                        </div>
+                                                        <div class='modal-body'>
+                                                            <form role='form' method='post' enctype='multipart/form-data' action='edit.php?aksi=proseseditcuti&id_cuti=$t[id_cuti]'>
+                                                                <div class='form-group'>
+                                                                    <input type='hidden' class='form-control' value='$t[id_pegawai]' name='id_pegawai'/>
+                                                                    <label>Perkiraan Lama Cuti</label>
+                                                                    <input type='text' class='form-control' value='$t[lama_cuti]' name='lama_cuti'/>
+                                                                    <label>Tanggal Awal</label>
+                                                                    <input type='date' class='form-control' value='$t[tgl_awal]' name='tgl_awal'/>
+                                                                    <label>Tanggal Akhir</label>
+                                                                    <input type='date' class='form-control' value='$t[tgl_akhir]' name='tgl_akhir'/>
+                                                                    <label>Keterangan Cuti</label>
+                                                                    <textarea class='form-control' name='ket_cuti'>$t[ket_cuti]</textarea>
+                                                                </div>
+                                                                <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+                                                                <button type='submit' class='btn btn-primary'>Save</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>                   
+                                            <div class='modal fade' id='uibatal$t[id_cuti]' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
+                                                <div class='modal-dialog'>
+                                                    <div class='modal-content'>
+                                                        <div class='modal-header'>
+                                                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
+                                                            <h4 class='modal-title' id='H3'>Input Data</h4>
+                                                        </div>
+                                                        <div class='modal-body'>
+                                                            <form role='form' method='post' enctype='multipart/form-data' action='edit.php?aksi=proseseditbatalcuti&id_cuti=$t[id_cuti]'>
+                                                                <div class='form-group'>
+                                                                    <input type='hidden' class='form-control' value='$_SESSION[id_pegawai]' name='id_pegawai'/>
+                                                                    <label>Keterangan Batal</label>
+                                                                    <textarea class='form-control' name='ket_batal'>$t[ket_batal]</textarea>
+                                                                </div>
+                                                                <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
+                                                                <button type='submit' class='btn btn-primary'>Save</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>                   
+                                            ";
+    }
+                                      echo"  </tbody>
+                                    </table>
                                 </div>
                             </div>
-                    </div>
-		    </div>			
-"; 
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-elseif($_GET['aksi']=='editprofesi'){
-$tebaru=mysqli_query($koneksi," SELECT * FROM profesi WHERE id_profesi=$_GET[id_profesi] ");
-$t=mysqli_fetch_array($tebaru);
-echo"
-<div class='row'>
-                <div class='col-lg-12'>
-                    <div class='panel panel-default'>
-                        <div class='panel-heading'>EDIT  $t[nama_profesi]
                         </div>
-                        <div class='panel-body'>
-<form id='form1'  method='post' action='edit.php?aksi=proseseditprofesi&id_profesi=$t[id_profesi]'>
-       <div class='form-grup'>
-        <label>Nama profesi</label>
-        <input type='text' class='form-control' value='$t[nama_profesi]' name='nama_profesi'/><br>
-	
-		
-    	<div class='modal-footer'>
-                                            <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
-                                            <button type='submit' class='btn btn-primary'>Save </button>
-                                        </div> </div>
-    </form></div> </div></div></div>
-";
+                    </div>
+                   </div>		
+        
+          ";
 }
+elseif($_GET['aksi']=='kerja'){
+    echo"<div class='row'>
+                    <div class='col-lg-12'>
+                        <div class='panel panel-default'>
+                            <div class='panel-heading'>INFORMASI 
+                            </div>
+                            
+                            <div class='panel-body'>	
+                                   <div class='table-responsive'>		
+         <table id='example1' class='table table-bordered table-striped'>
+                                        <thead>
+                                            <tr>
+                                            <th>No</th>
+                                            <th>Nama</th>
+                                            <th>Keterangan</th>
+                                            <th>aksi</th>			  
+                                          </tr></thead>
+                        <tbody>
+                        ";
+                
+    $no=0;
+    $tebaru=mysqli_query($koneksi,"SELECT uraiankerja.*, pegawai.nama_pegawai FROM uraiankerja JOIN pegawai ON uraiankerja.id_pegawai = pegawai.id_pegawai ORDER BY uraiankerja.id_uraiankerja DESC");
+    while ($t=mysqli_fetch_array($tebaru)){	
+    $no++;
+                                        echo"<tr>
+                                            <td>$no</td>
+                                            <td>$t[nama_pegawai]</td>
+                                            <td>$t[ket_uraiankerja]</td>
+                                            <td></td>
+                                            </tr>
+                                            ";
+    }
+                                      echo"  </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   </div>		
+        
+          ";		
+    }
 elseif($_GET['aksi']=='pegawai1'){
 echo"<div class='row'>
                 <div class='col-lg-12'>
@@ -1314,7 +1873,7 @@ echo"<div class='row'>
 				    ";
 			
 $no=0;
-$sqli = mysqli_query($koneksi,"SELECT id_pegawai, nama_pegawai, nip, tgl_lahir, (YEAR(CURDATE())-YEAR(tgl_lahir)) AS umur FROM pegawai");
+$sqli = mysqli_query($koneksi,"SELECT id_pegawai, nama_pegawai, nik, tgl_lahir, (YEAR(CURDATE())-YEAR(tgl_lahir)) AS umur FROM pegawai");
 while ($t=mysqli_fetch_array($sqli)){	
 $no++;
                                     echo"<tr>
@@ -1322,7 +1881,7 @@ $no++;
                                             <td>$t[nama_pegawai] </td>
                                             <td>$t[umur]</td>
 							<td><div class='btn-group'>
-                      <button type='button' class='btn btn-info'>$t[nip]</button>
+                      <button type='button' class='btn btn-info'>$t[nik]</button>
                       <button type='button' class='btn btn-info dropdown-toggle' data-toggle='dropdown'>
                         <span class='caret'></span>
                         <span class='sr-only'>Toggle Dropdown</span>
@@ -1417,1148 +1976,6 @@ echo"
                     </div>
 		    </div>			
 "; 
-}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-elseif($_GET['aksi']=='editpegawai1'){
-$tebaru=mysqli_query($koneksi," SELECT * FROM pegawai WHERE id_pegawai=$_GET[id_pegawai] ");
-$t=mysqli_fetch_array($tebaru);
-echo"  <div class='row'>
- <form id='form1'  method='post' action='edit.php?aksi=proseseditpegawai&id_pegawai=$t[id_pegawai]'>       <!-- /.col -->
-        <div class='col-md-12'>
-          <div class='nav-tabs-custom'>
-            <ul class='nav nav-tabs'>
-              <li class='active'><a href='#activity' data-toggle='tab'>Data Pribadi</a></li>
-              <li><a href='#settings' data-toggle='tab'>Data Pendidikan </a></li>
-			  <li><a href='#cpns' data-toggle='tab'>Data Jabatan</a></li>
-			  
-            </ul>
-            <div class='tab-content'>
-              <div class='active tab-pane' id='activity'>
-                <!-- Post -->
-			                    <div class='panel panel-default'>
-                        <div class='panel-heading'>EDIT  $t[nama_pegawai]
-                        </div>
-                        <div class='panel-body'>
-	<div class='col-md-3'>					
-        <label>Nama pegawai</label>
-        <input type='text' class='form-control' value='$t[nama_pegawai]' name='nama_pegawai'/><br>
-	<label>Nip pegawai</label>
-        <input type='text' class='form-control' value='$t[nip]' name='nip'/><br>
-        <label>User Name</label>
-     <input type='text' class='form-control'  name='username'/><br>
- <label>Password</label>
-     <input type='text' class='form-control'  name='password'/><br>
-	 </div>
-	 	<div class='col-md-3'>					
-        <label>Tempat Lahir pegawai</label>
-        <input type='text' class='form-control' value='$t[tmp_lahir]' name='tmp_lahir'/><br>
-	<label>Tanggal Lahir pegawai</label>
-        <input type='date' class='form-control' value='$t[tgl_lahir]' name='tgl_lahir'/><br>
-	 </div>
-	 <div class='col-md-3'>					
-        <label>Jenis Kelamin</label>
-		<select class='form-control select2' style='width: 100%;' name=jenis_kelamin>
-		<option value=$t[jenis_kelamin] selected>$t[jenis_kelamin]</option>
-	<option value='Laki-Laki'>Laki-Laki</option>
-	<option value='Perempuan'>Perempuan</option>
-	</select><br>
-	<label>Nomor HP</label>
-        <input type='text' class='form-control' value='$t[no_hp]' name='no_hp'/><br>
-	 </div>
-	  <div class='col-md-3'>					
-        <label>Agama</label>
-			<select class='form-control select2' style='width: 100%;' name=agama>
-		<option value=$t[agama] selected>$t[agama]</option>
-	<option value='Islam'>Islam</option>
-			<option value='Kristen Protestan'>Kristen Protestan</option>
-			<option value='Kristen Katholik'>Kristen Katholik</option>
-			<option value='Hindu'>Hindu</option>
-			<option value='Budha'>Budha</option>
-	</select>
-        <br>
-	<label>Alamat Lengkap</label>
-        <input type='text' class='form-control' value='$t[alamat]' name='alamat'/><br>
-	 </div>
-  
-  </div> </div>
-              </div>
-              <!-- /.tab-pane -->
-
-              <!-- /.tab-pane -->
-
-              <div class='tab-pane' id='settings'>
-                                      <div class='panel panel-default'>
-                                <div class='panel-heading'>
-									Form data
-                                 </div>
-                                
-                                <div class='panel-body'>
-									<div class='col-md-3'>					
-        <label>Tingkat Pendidikan</label>
-		<select class='form-control select2' style='width: 100%;' name=tingkat>
-		<option value=$t[tingkat] selected>$t[tingkat]</option>"; 
-		$sql=mysqli_query($koneksi,"SELECT * FROM pendidikan ORDER BY id_pen");
-		while ($c=mysqli_fetch_array($sql))
-		{
-			echo "<option value=$c[id_pen]>$c[jenjang]</option>";
-		}
-	echo "</select>
-        <br>
-	<label>Jurusan Pendidikan</label>
-		<select class='form-control select2' style='width: 100%;' name=jurusan>
-		<option value=$t[jurusan] selected>$t[jurusan]</option>"; 
-		$sql=mysqli_query($koneksi,"SELECT * FROM profesi ORDER BY id_profesi");
-		while ($c=mysqli_fetch_array($sql))
-		{
-			echo "<option value=$c[id_profesi]>$c[nama_profesi]</option>";
-		}
-	echo "</select>
-        <br>
-	 </div>
-	 	<div class='col-md-3'>					
-        <label>Tahun Lulus</label>
-        <input type='text' class='form-control' value='$t[tahun_lulus]' name='tahun_lulus'/><br>
-	  <label>Lulus CPNS Tahun</label>
-        <input type='date' class='form-control' value='$t[cpns]' name='cpns'/><br>
-	 </div>
-	  	<div class='col-md-3'>					
-        <label>Tahun Pengakatan PNS</label>
-        <input type='date' class='form-control' value='$t[pns]' name='pns'/><br>
-	  <label>Golongan PNS</label>
-       <select class='form-control select2' style='width: 100%;' name=gol>
-		<option value=$t[gol] selected>$t[gol]</option>"; 
-		$sql=mysqli_query($koneksi,"SELECT * FROM golongan ORDER BY id_gol");
-		while ($c=mysqli_fetch_array($sql))
-		{
-			echo "<option value=$c[id_gol]>$c[nama_gol]</option>";
-		}
-	echo "</select><br>
-	 </div>
-			<div class='col-md-3'>					
-        <label>TMT Golongan</label>
-        <input type='date' class='form-control' value='$t[tmp]' name='tmp'/><br>
-	  <label>Eselon</label>
-        <input type='text' class='form-control' value='$t[eselon]' name='eselon'/><br>
-	 </div>						</div>
-								</div>
-								</div> <!-- /.tab-pane -->
-
-              <div class='tab-pane' id='cpns'>
-                                      <div class='panel panel-default'>
-                                <div class='panel-heading'>
-									Form data
-                                 </div>
-                                
-                                <div class='panel-body'>
-
-  	<div class='col-md-3'>					
-        <label>Taggal Jabatan</label>
-        <input type='date' class='form-control' value='$t[tmt_jabatan]' name='tmt_jabatan'/><br>
-	  <label>Jabatan</label>
-       <select class='form-control select2' style='width: 100%;' name=jabatan>
-		<option value=$t[jabatan] selected>$t[jabatan]</option>"; 
-		$sql=mysqli_query($koneksi,"SELECT * FROM jabatan ORDER BY id_jabatan");
-		while ($c=mysqli_fetch_array($sql))
-		{
-			echo "<option value=$c[id_jabatan]>$c[nama_jabatan]</option>";
-		}
-	echo "</select><br>
-	 </div>
-	
-     <div class='col-md-3'>					
-     <label>Masa Kerja </label>
-     <div class='input-group'>
-     <div class='input-group-addon'>
-                  Tahun</div>
-     <input type='text' class='form-control' value='$t[masa_kerja_thn]' name='masa_kerja_thn' onKeyUp=\"this.value=this.value.replace(/[^0-9]/g,'')\"/>
-     </div><br>
-     <label>Masa Kerja </label>
-     <div class='input-group'>
-     <div class='input-group-addon'>
-                  Bulan</div>
-     <input type='text' class='form-control' value='$t[masa_kerja_bln]' name='masa_kerja_bln' onKeyUp=\"this.value=this.value.replace(/[^0-9]/g,'')\"/>
-     </div><br>
-  </div>
-	 	 <div class='col-md-3'>					
-        <label>email</label>
-        <input type='text' class='form-control' value='$t[email]' name='email'/><br>
-	<label>Status</label>
-	<select class='form-control select2' style='width: 100%;' name=status>
-		<option value=$t[status] selected>$t[status]</option>
-		<option value='PNS'>PNS</option>
-		<option value='P3K'>P3K</option>
-        <option value='TKS'>TKS SK PUSKES</option>
-        <option value='THLS'>THLS DINAS</option>
-     </select><br><br>
-     <label>Mempunyai Pesiunan (janda)</label>
-     <div class='input-group'>
-     <div class='input-group-addon'>
-                  Rp</div>
-     <input type='text' class='form-control' value='$t[pesiunan_janda]' name='pesiunan_janda' onKeyUp=\"this.value=this.value.replace(/[^0-9]/g,'')\"/>
-     </div>
-     <br>
-	 </div>
-     <div class='col-md-3'>
-     <label>Total Gaji PNS (Rp)</label>
-     <div class='input-group'>
-     <div class='input-group-addon'>
-                  Rp</div>
-                  <input type='text' class='form-control' value='$t[gaji_pns]' name='gaji_pns' onKeyUp=\"this.value=this.value.replace(/[^0-9]/g,'')\"/> 
-                </div>					
-    <br>
-     <label>Pekerjaan Lainya</label>
-     <input type='text' class='form-control' value='$t[pekerjaan_lain]' name='pekerjaan_lain'/><br>
-     <label>Penghasilan Lain (Rp)</label>
-     <div class='input-group'>
-     <div class='input-group-addon'>
-                  Rp</div>
-     <input type='text' class='form-control' value='$t[penghasilan_lain]' name='penghasilan_lain' onKeyUp=\"this.value=this.value.replace(/[^0-9]/g,'')\"/>
-     </div>
-     <br>
-
-  </div>
-</div></div></div> <!-- /.tab-pane -->
-              </div>
-              <!-- /.tab-pane -->
-            </div>
-            <!-- /.tab-content -->
-          </div>
-          <!-- /.nav-tabs-custom -->
-		   	<div class='modal-footer'>
-                                            <a href='index.php?aksi=pegawai' class='btn btn-default'>Close</a>
-                                            <button type='submit' class='btn btn-primary'>Save </button>
-                                        </div> </form>
-        </div> 
-";
-}
-
-elseif($_GET['aksi']=='uploadfile'){
-    echo"<div class='row'>
-    <div class='col-lg-12'>
-        <div class='panel panel-default'>
-            <div class='panel-heading'>INFORMASI 
-            </div>
-            <div class='panel-body'>	
-                   <div class='table-responsive'>		
-<table id='example1' class='table table-bordered table-striped'>
-                        <thead>
-                            <tr>
-                            <th>No</th>
-                                <th>Nama pegawai</th>
-                                <th>NIP</th>		  
-                          </tr></thead>
-        <tbody>
-        ";
-
-$no=0;
-$tebaru=mysqli_query($koneksi," SELECT * FROM pegawai ");
-while ($t=mysqli_fetch_array($tebaru)){	
-$no++;
-                        echo"<tr>
-                            <td>$no</td>
-                                <td>$t[nama_pegawai]</td>
-                <td><div class='btn-group'>
-                <a class='btn btn-info' href='index.php?aksi=listuploadfile&id_pegawai=$t[id_pegawai]' title='Edit'>$t[nip]</a>
-          <button type='button' class='btn btn-info dropdown-toggle' data-toggle='dropdown'>
-            <span class='caret'></span>
-            <span class='sr-only'>Toggle Dropdown</span>
-          </button>
-          <ul class='dropdown-menu' role='menu'>
-            <li><a href='index.php?aksi=editpegawai&id_pegawai=$t[id_pegawai]' title='Edit'><i class='fa fa-pencil'></i>Lihat</a></li>
-            <li><a href='hapus.php?aksi=hapuspegawai&id_pegawai=$t[id_pegawai]' onclick=\"return confirm ('Apakah yakin ingin menghapus $t[nama_pegawai] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</li>
-            </ul>
-        </div></td>
-                            </tr>";
-}
-                      echo"  </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-   </div>		
-
-";	
-    }
-elseif($_GET['aksi']=='listuploadfile'){
-    $tebaru=mysqli_query($koneksi," SELECT * FROM pegawai WHERE  id_pegawai=$_GET[id_pegawai] ");
-    $t=mysqli_fetch_array($tebaru);
-    echo"<div class='row'>
-    <div class='col-lg-12'>
-        <div class='panel panel-default'>
-            <div class='panel-heading'>Berkas  $t[nama_pegawai]
-            </div>
-            <div class='panel-body'>
-            <a class='btn btn-info' href='index.php?aksi=prosesupload&id_pegawai=$t[id_pegawai]' title='Edit'>Tambah File</a>	<br><br>
-                   <div class='table-responsive'>		
-<table id='example1' class='table table-bordered table-striped'>
-                        <thead>
-                            <tr>
-                            <th>No</th>
-                                <th>Nama Berkas</th>
-                                <th>Download</th>		  
-                          </tr></thead>
-        <tbody>
-        ";
-
-$no=0;
-$tebaru=mysqli_query($koneksi," SELECT * FROM file WHERE  id_pegawai=$_GET[id_pegawai] ");
-while ($t=mysqli_fetch_array($tebaru)){	
-$no++;
-                        echo"<tr>
-                            <td>$no</td>
-                                <td>$t[nama_file]</td>
-                <td><a class='btn btn-info' href='upload/$t[file_name]' title='dowload'><i class='fa  fa-download'></i></a>
-                <a class='btn btn-danger' href='hapus.php?aksi=hapusberkas&file_id=$t[file_id]&id_pegawai=$t[id_pegawai]' onclick=\"return confirm ('Apakah yakin ingin menghapus $t[nama_file] ?')\" title='Hapus'><i class='fa  fa-remove '></i></a></td>
-                            </tr>";
-}
-                      echo"  </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-   </div>		
-
-";	
-}
-elseif($_GET['aksi']=='prosesupload'){
-    $tebaru=mysqli_query($koneksi," SELECT * FROM pegawai WHERE id_pegawai=$_GET[id_pegawai] ");
-    $t=mysqli_fetch_array($tebaru);
-    echo"<div class='row'>
-    <div class='col-lg-12'>
-        <div class='panel panel-default'>
-            <div class='panel-heading'>INFORMASI 
-            </div>
-            <div class='panel-body'>	
-            <div class='form-grup'>
-            <form id='upload_form' action='upload.php' method='post' enctype='multipart/form-data'>
-            <div class='col-md-12'>					
-            <label>Nama pegawai</label>
-            <input type='text' class='form-control' value='$t[nama_pegawai]' name='nama_pegawai'/>
-                    <input type='hidden' class='form-control' value='$t[id_pegawai]'  name='id_pegawai'/><br>
-            <label>Nama File</label>
-            <input type='text' class='form-control' name='nama_file'/><br>
-           <label>File</label>
-          <input  name='upload' id='upload' type='file' class='form-control'/>
-          <br>
-        <div id='progress-bar'></div>
-        <br>
-     <div id='targetLayer' style='display:none;'></div><br>
-         </div>
-    
-        
-            
-            <div class='modal-footer'>
-                                                <a class='btn btn-default' data-dismiss='modal'>Close</a>
-                                                <button 'btnSubmit' class='btn btn-primary' class='form-control'>Upload</button>
-                                            </div> </div>
-                                            </form>                 
-                </div>
-            </div>
-        </div>
-    </div>		
-
-";	    
-    }
-elseif($_GET['aksi']=='tunjangan'){
-        echo"<div class='row'>
-        <div class='col-lg-12'>
-            <div class='panel panel-default'>
-                <div class='panel-heading'>INFORMASI TUNJANGAN
-                </div>
-                <div class='panel-body'>	
-                       <div class='table-responsive'>		
-    <table id='example1' class='table table-bordered table-striped'>
-                            <thead>
-                                <tr>
-                                <th>No</th>
-                                    <th>Nama pegawai</th>
-                                    <th>Tunjangan</th>
-                                    <th>NIP</th>		  
-                              </tr></thead>
-            <tbody>
-            ";
-    
-    $no=0;
-    $tebaru=mysqli_query($koneksi," SELECT * FROM pegawai ");
-    while ($t=mysqli_fetch_array($tebaru)){	
-    $no++;
-                            echo"<tr>
-                                <td>$no</td>
-                                    <td>$t[nama_pegawai]</td>
-                                    <td>"; if($t['status_pg']=='baru'){
-                                           echo"<a class='btn btn-info' href='index.php?aksi=listtunjangan&id_pegawai=$t[id_pegawai]'>Tambah keluarga</a>";
-                                            }
-                                          else if($t['status_pg']=='ada'){
-                                            echo"<a class='btn btn-primary' href='input.php?aksi=inputtunjangan&id_pegawai=$t[id_pegawai]' >Ajukan Tunjangan</a>";
-                                          } else { 
-                                            echo"<a class='btn btn-primary' href='index.php?aksi=lihattunjangan' >Lihat Pengajuan</a>";
-                                             }
-                                       echo"
-                                  </td>
-                    <td><div class='btn-group'>
-                    <a class='btn btn-info' href='index.php?aksi=listtunjangan&id_pegawai=$t[id_pegawai]'>data keluarga</a>
-              <button type='button' class='btn btn-info dropdown-toggle' data-toggle='dropdown'>
-                <span class='caret'></span>
-                <span class='sr-only'>Toggle Dropdown</span>
-              </button>
-              <ul class='dropdown-menu' role='menu'>
-                <li><a href='index.php?aksi=editpegawai&id_pegawai=$t[id_pegawai]' title='Edit'><i class='fa fa-pencil'></i>Lihat</a></li>
-                <li><a href='hapus.php?aksi=hapuspegawai&id_pegawai=$t[id_pegawai]' onclick=\"return confirm ('Apakah yakin ingin menghapus $t[nama_pegawai] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</li>
-                </ul>
-            </div></td>
-                                </tr>";
-    }
-                          echo"  </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-       </div>		
-    
-    ";	
- }
- elseif($_GET['aksi']=='listtunjangan'){
-    $tebaru=mysqli_query($koneksi," SELECT * FROM pegawai WHERE  id_pegawai=$_GET[id_pegawai] ");
-    $t=mysqli_fetch_array($tebaru);
-    echo"<div class='row'>
-    <div class='col-lg-12'>
-        <div class='panel panel-default'>
-            <div class='panel-heading'>Berkas  $t[nama_pegawai]
-            </div>
-            <div class='panel-body'>
-            <button class='btn btn-info' data-toggle='modal' data-target='#uiModal'>
-                               Data Istri/Suami
-                            </button>  <button class='btn btn-info' data-toggle='modal' data-target='#uiModal1'>
-                            Tambah Data Anak
-                        </button>  <br><br>
-          
-                   <div class='table-responsive'>		
-<table id='example1' class='table table-bordered table-striped'>
-                        <thead>
-                            <tr>
-                            <th>No</th>
-                                <th>Nama Keluarga</th>
-                                <th>Status Keluarga</th>
-                                <th></th>
-                                <th></th>		  
-                          </tr></thead>
-        <tbody>
-        ";
-$no=0;
-$tebaru=mysqli_query($koneksi," SELECT * FROM keluarga WHERE  id_pegawai=$_GET[id_pegawai] ");
-while ($t=mysqli_fetch_array($tebaru)){	
-$no++;
-                        echo"<tr>
-                            <td>$no</td>
-                            <td>$t[nama_keluarga]</td>
-                <td>$t[status_keluarga]</td>
-                <td>"; if($t['tunjang_status']=='pengajuan'){
-                    echo"<a class='btn btn-primary' href='edit.php?aksi=tidakajukantunjangan&id_keluarga=$t[id_keluarga]&id_pegawai=$_GET[id_pegawai]' onclick=\"return confirm ('Apakah yakin ingin tidak mengajukan tunjangan Untuk  $t[status_keluarga] anda atas nama $t[nama_keluarga]  ?')\" >Di Ajukan</a>";
-                     }
-                   else if($t['tunjang_status']=='tidak'){
-                     echo" <a class='btn btn-primary'href='edit.php?aksi=ajukantunjangan&id_keluarga=$t[id_keluarga]&id_pegawai=$_GET[id_pegawai]' onclick=\"return confirm ('Apakah yakin ingin mengajukan tunjangan Untuk  $t[status_keluarga] anda atas nama $t[nama_keluarga]  ?')\"  >Tidak Di Ajukan</a>";
-                   } else { 
-                     echo"<a class='btn btn-danger' href='edit.php?aksi=ajukantunjangan&id_keluarga=$t[id_keluarga]&id_pegawai=$_GET[id_pegawai]' onclick=\"return confirm ('Apakah yakin ingin mengajukan tunjangan Untuk  $t[status_keluarga] anda atas nama $t[nama_keluarga]  ?')\" >Anjukan Tunjangan</a>";
-                      }
-                echo"</td>
-                <td><div class='btn-group'>
-                <a class='btn btn-info' href='index.php?aksi=listtunjangan&id_pegawai=$t[id_pegawai]'>Aksi</a>
-          <button type='button' class='btn btn-info dropdown-toggle' data-toggle='dropdown'>
-            <span class='caret'></span>
-            <span class='sr-only'>Toggle Dropdown</span>
-          </button>
-          <ul class='dropdown-menu' role='menu'>"; if($t['status_aktif']=='anak'){ echo"<li><a href='index.php?aksi=editkeluargaanak&id_keluarga=$t[id_keluarga]' title='Edit'><i class='fa fa-pencil'></i>Lihat</a></li>"; }
-            else { echo"<li><a href='index.php?aksi=editkeluarga&id_keluarga=$t[id_keluarga]' title='Edit'><i class='fa fa-pencil'></i>Lihat</a></li>";  }
-            echo" <li><a href='hapus.php?aksi=hapuskeluarga&id_keluarga=$t[id_keluarga]&id_pegawai=$_GET[id_pegawai]' onclick=\"return confirm ('Apakah yakin ingin menghapus $t[nama_keluarga] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</li>
-            </ul>
-        </div>
-                </td>
-                            </tr>";
-}
-                      echo"  </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-   </div>		
-
-";
-echo"			
-<div class='col-lg-12'>
-                        <div class='modal fade' id='uiModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-                                <div class='modal-dialog'>
-                                    <div class='modal-content'>
-                                        <div class='modal-header'>
-                                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-                                            <h4 class='modal-title' id='H3'>Input Data </h4>
-                                        </div>
-                                        <div class='modal-body'>
-                         <form role='form' method='post' action='input.php?aksi=inputkeluarga'>
-                                            <div class='form-group'>
-                         <label>Nama Suami/Istri</label>
-                         <input type='hidden' class='form-control' value='$_GET[id_pegawai]' name='id_pegawai'/> 
-                         <input type='hidden' class='form-control' value='istri' name='status_aktif'/>                   
-						 <input type='text' class='form-control' name='nama_keluarga'/><br>
-                         <label>Jenis Kelamin</label>
-	                    <select class='form-control select2' style='width: 100%;' name=jk_keluarga>
-		                <option value='' selected>Pilih Jenis Kelamin</option>
-		                <option value=Laki-Laki>Laki-Laki</option>
-                        <option value=Perempuan>Perempuan</option>
-                        </select><br>
-                        <label>Tempat Lahir</label>
-                        <input type='text' class='form-control' name='tempatlahir_keluarga'/>
-                       </br>
-                       <label>Tgl Lahir</label>
-                       <input type='date' class='form-control' name='tgllahir_keluarga'/>
-                      </br>
-                         <label>Status</label>
-	                    <select class='form-control select2' style='width: 100%;' name=status_keluarga>
-		                <option value='' selected>Pilih Status Keluarga</option>
-		                <option value=istri>Istri</option>
-                        <option value=suami>suami</option>
-                        </select><br>
-                        <label>Pekerjaan</label>
-	                    <select class='form-control select2' style='width: 100%;' name=pekejaan_keluarga>
-		                <option value='' selected>Pilih Pekerjaan</option>
-		                <option value=bekerja>bekerja</option>
-                        <option value=tidakbekerja>tidak bekerja</option>
-                        </select><br>
-                        <label>Penghasilan (jika bekerja)</label>
-						 <input type='text' class='form-control' name='penghasilan_keluarga'/>
-					    </br>
-                        <label>Keterangan Istri/Suami</label>
-                        <input type='text' class='form-control' name='ket_keluarga'/>
-                       </br>
-                       <label>Status Tunjangan</label>
-                       <select class='form-control select2' style='width: 100%;' name=tunjang_status>
-                       <option value='' selected>Pilih Tunjangan</option>
-                       <option value=pengajuan>ajukan Tunjangan</option>
-                       <option value=tidak>tidak di ajukan</option>
-                       </select><br
-  
-                                            <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
-                                            <button type='submit' class='btn btn-primary'>Save </button>
-                                        </div>
-					</form>
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
-		    </div>			
-"; 	
-echo"			
-<div class='col-lg-12'>
-                        <div class='modal fade' id='uiModal1' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-                                <div class='modal-dialog'>
-                                    <div class='modal-content'>
-                                        <div class='modal-header'>
-                                            <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-                                            <h4 class='modal-title' id='H3'>Input Data Anak</h4>
-                                        </div>
-                                        <div class='modal-body'>
-                         <form role='form' method='post' action='input.php?aksi=inputkeluarga'>
-                                            <div class='form-group'>
-                         <label>Nama Anak</label>
-                         <input type='hidden' class='form-control' value='$_GET[id_pegawai]' name='id_pegawai'/>
-                         <input type='hidden' class='form-control' value='anak' name='status_aktif'/>                    
-						 <input type='text' class='form-control' name='nama_keluarga'/><br>
-                         <label>Jenis Kelamin</label>
-	                    <select class='form-control select2' style='width: 100%;' name=jk_keluarga>
-		                <option value='-' selected>Pilih Jenis Kelamin</option>
-		                <option value=Laki-Laki>Laki-Laki</option>
-                        <option value=Perempuan>Perempuan</option>
-                        </select><br><br>
-                        <label>Tempat Lahir</label>
-                        <input type='text' class='form-control' name='tempatlahir_keluarga'/>
-                       </br>
-                       <label>Tgl Lahir</label>
-                       <input type='date' class='form-control' name='tgllahir_keluarga'/>
-                      </br>
-                      <label>Tanggal Meninggal/cerai Ayah/Ibu</label>
-                      <input type='date' class='form-control' name='tgl_mati'/>
-                     </br>
-                      <label>Status Perkawinan Anak</label>
-                      <select class='form-control select2' style='width: 100%;' name=status_nikah>
-                      <option value='-' selected>Pilih Perkawinan Anak</option>
-                      <option value=pernah>pernah nikah</option>
-                      <option value=belum>belum nikah</option>
-                      </select><br><br>
-                      <label>Status Beasiswa</label>
-                      <select class='form-control select2' style='width: 100%;' name=status_beasiswa>
-                      <option value='-' selected>Pilih Beasiswa</option>
-                      <option value=TidakAdaBeasiswa>Tidak Ada Beasiswa</option>
-                      <option value=Beasiswa/Darmasiswa>Beasiswa/Darma siswa</option>
-                      <option value=Ikatandinas>Ikatan dinas</option>
-                      </select><br><br>
-                         <label>Status Anak</label>
-	                    <select class='form-control select2' style='width: 100%;' name=status_keluarga>
-		                <option value='-' selected>Pilih Status Anak</option>
-		                <option value=anak>anak</option>
-                        <option value=anakangkat>anak angkat</option>
-                        <option value=anaktiri>anak tiri</option>
-                        </select><br><br>
-
-                        <label>Status Pendidikan Anak</label>
-	                    <select class='form-control select2' style='width: 100%;' name=status_sekolah>
-		                <option value='-' selected>Pilih Pendidikan Anak</option>		    
-                        <option value=BelumSekolah>Belum Sekolah</option>
-		                <option value=sekolah>sekolah</option>
-                        <option value=kuliah>kuliah</option>
-                        </select><br><br>
-                        <label>Status Pekerjaan Anak</label>
-	                    <select class='form-control select2' style='width: 100%;' name=pekejaan_keluarga>
-		                <option value='-' selected>Pilih Pekerjaan</option>
-		                <option value=bekerja>bekerja</option>
-                        <option value=tidakbekerja>tidak bekerja</option>
-                        </select><br>
-                        <label>Status Tunjangan</label>
-                        <select class='form-control select2' style='width: 100%;' name=tunjang_status>
-                        <option value='baru' selected>Pilih Tunjangan</option>
-                        <option value=pengajuan>ajukan Tunjangan</option>
-                        <option value=tidak>tidak di ajukan</option>
-                        </select><br><br>
-						  <label>Tempat Sekolah (jika masih sekolah)</label>
-						 <input type='text' class='form-control' name='pendidikan_keluarga'/>
-					    </br>
-                        <label>Status Anak Angkat</label>
-	                    <select class='form-control select2' style='width: 100%;' name=anak_angkat_status>
-		                <option value='' selected>Pilih Status Anak Angkat</option>		    
-                        <option value=negeri>Putusan Pengadilan Negeri</option>
-		                <option value=tionghoa>Hukum adopsi bagi keturunan tionghoa</option>
-                        </select><br><br>
-                        <label>Keterangan Anak</label>
-                        <input type='text' class='form-control' name='ket_keluarga'/>
-                       </br>
-  
-                                            <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
-                                            <button type='submit' class='btn btn-primary'>Save </button>
-                                        </div>
-					</form>
-                                    </div>
-                                </div>
-                            </div>
-                    </div>
-		    </div>			
-"; 	
-}
-elseif($_GET['aksi']=='editkeluarga'){
-    $tebaru=mysqli_query($koneksi," SELECT * FROM keluarga WHERE id_keluarga=$_GET[id_keluarga] ");
-    $t=mysqli_fetch_array($tebaru);
-    echo"
-    <div class='row'>
-                    <div class='col-lg-12'>
-                        <div class='panel panel-default'>
-                            <div class='panel-heading'>EDIT  $t[nama_keluarga]
-                            </div>
-                            <div class='panel-body'>			
-                             <form role='form' method='post' action='edit.php?aksi=proseseditkeluarga&id_keluarga=$t[id_keluarga]'>
-                                                <div class='form-group'>
-                             <label>Nama Keluarga</label>
-                             <input type='hidden' class='form-control' value='$t[id_pegawai]' name='id_pegawai'/>    
-                             <input type='hidden' class='form-control' value='$t[status_aktif]' name='status_aktif'/>                
-                             <input type='text' class='form-control' value='$t[nama_keluarga]' name='nama_keluarga'/><br>
-                             <label>Jenis Kelamin</label>
-                            <select class='form-control select2' style='width: 100%;' name=jk_keluarga>
-                            <option value='$t[jk_keluarga]' selected>$t[jk_keluarga]</option>
-                            <option value=Laki-Laki>Laki-Laki</option>
-                            <option value=Perempuan>Perempuan</option>
-                            </select><br>
-                            <label>Tempat Lahir</label>
-                            <input type='text' class='form-control' value='$t[tempatlahir_keluarga]' name='tempatlahir_keluarga'/>
-                           </br>
-                           <label>Tgl Lahir</label>
-                           <input type='date' class='form-control' value='$t[tgllahir_keluarga]' name='tgllahir_keluarga'/>
-                          </br>
-                             <label>Status</label>
-                            <select class='form-control select2' style='width: 100%;' name=status_keluarga>
-                            <option value='$t[status_keluarga]' selected>$t[status_keluarga]</option>
-                            <option value=istri>Istri</option>
-                            <option value=suami>suami</option>
-                            <option value=anak>anak</option>
-                            <option value=anak angkat>anak angkat</option>
-                            </select><br>
-                            <label>Status Tunjangan</label>
-                            <select class='form-control select2' style='width: 100%;' name=tunjang_status>
-                            <option value='$t[tunjang_status]' selected>$t[tunjang_status]</option>
-                            <option value=pengajuan>ajukan Tunjangan</option>
-                            <option value=tidak>tidak di ajukan</option>
-                            </select><br><br>
-                            <label>Pekerjaan</label>
-                            <select class='form-control select2' style='width: 100%;' name=pekejaan_keluarga>
-                            <option value='$t[pekejaan_keluarga]' selected>$t[pekejaan_keluarga]</option>
-                            <option value=bekerja>bekerja</option>
-                            <option value=tidak bekerja>tidak bekerja</option>
-        
-                            </select><br>
-                         
-                            <label>Penghasilan (jika bekerja)</label>
-                             <input type='text' class='form-control' value='$t[penghasilan_keluarga]' name='penghasilan_keluarga'/>
-                            </br>
-                            <label>Keterangan Istri/Suami</label>
-                            <input type='text' class='form-control' value='$t[ket_keluarga]' name='ket_keluarga'/>
-                           </br>
-      
-                                                <button type='button' class='btn btn-default' onclick=self.history.back()>Close</button>
-                                                <button type='submit' class='btn btn-primary'>Save </button>
-                                            </div>
-                        </form>
-                        </div>
-                        </div>
-                </div>
-        </div>	
-    "; 	
-}
-elseif($_GET['aksi']=='editkeluargaanak'){
-    $tebaru=mysqli_query($koneksi," SELECT * FROM keluarga WHERE id_keluarga=$_GET[id_keluarga] ");
-    $t=mysqli_fetch_array($tebaru);
-    echo"
-    <div class='row'>
-                    <div class='col-lg-12'>
-                        <div class='panel panel-default'>
-                            <div class='panel-heading'>ANAK $t[nama_keluarga]
-                            </div>
-                            <div class='panel-body'>			
-                            <form role='form' method='post' action='edit.php?aksi=prosesedianak&id_keluarga=$t[id_keluarga]'>
-                            <div class='form-group'>
-         <label>Nama Anak</label>
-         <input type='hidden' class='form-control' value='$t[id_pegawai]' name='id_pegawai'/>
-         <input type='hidden' class='form-control' value='anak' name='status_aktif'/>                    
-         <input type='text' class='form-control' value='$t[nama_keluarga]' name='nama_keluarga'/><br>
-         <label>Jenis Kelamin</label>
-        <select class='form-control select2' style='width: 100%;' name=jk_keluarga>
-        <option value='$t[jk_keluarga]' selected>$t[jk_keluarga]</option>
-        <option value=Laki-Laki>Laki-Laki</option>
-        <option value=Perempuan>Perempuan</option>
-        </select><br><br>
-        <label>Tempat Lahir</label>
-        <input type='text' class='form-control'  value='$t[tempatlahir_keluarga]' name='tempatlahir_keluarga'/>
-       </br>
-       <label>Tgl Lahir</label>
-       <input type='date' class='form-control' value='$t[tgllahir_keluarga]' name='tgllahir_keluarga'/>
-      </br>
-      <label>Tanggal Meninggal/cerai Ayah/Ibu</label>
-      <input type='date' class='form-control' value='$t[tgl_mati]' name='tgl_mati'/>
-     </br>
-      <label>Status Perkawinan Anak</label>
-      <select class='form-control select2' style='width: 100%;' name=status_nikah>
-      <option value='$t[status_nikah]' selected>$t[status_nikah]</option>
-      <option value=pernah>pernah nikah</option>
-      <option value=belum>belum nikah</option>
-      </select><br><br>
-      <label>Status Beasiswa</label>
-      <select class='form-control select2' style='width: 100%;' name=status_beasiswa>
-      <option value='$t[status_beasiswa]' selected>$t[status_beasiswa]</option>
-      <option value=TidakAdaBeasiswa>Tidak Ada Beasiswa</option>
-      <option value=Beasiswa/Darmasiswa>Beasiswa/Darma siswa</option>
-      <option value=Ikatandinas>Ikatan dinas</option>
-      </select><br><br>
-         <label>Status Anak</label>
-        <select class='form-control select2' style='width: 100%;' name=status_keluarga>
-        <option value='$t[status_keluarga]' selected>$t[status_keluarga]</option>
-        <option value=anak>anak</option>
-        <option value=anakangkat>anak angkat</option>
-        <option value=anaktiri>anak tiri</option>
-        </select><br><br>
-
-        <label>Status Pendidikan Anak</label>
-        <select class='form-control select2' style='width: 100%;' name=status_sekolah>
-        <option value='$t[status_sekolah]' selected>$t[status_sekolah]</option>		    
-        <option value=BelumSekolah>Belum Sekolah</option>
-        <option value=sekolah>sekolah</option>
-        <option value=kuliah>kuliah</option>
-        </select><br><br>
-        <label>Status Pekerjaan Anak</label>
-        <select class='form-control select2' style='width: 100%;' name=pekejaan_keluarga>
-        <option value='$t[pekejaan_keluarga]' selected>$t[pekejaan_keluarga]</option>
-        <option value=bekerja>bekerja</option>
-        <option value=tidakbekerja>tidak bekerja</option>
-        </select><br>
-        <label>Status Tunjangan</label>
-        <select class='form-control select2' style='width: 100%;' name=tunjang_status>
-        <option value='$t[tunjang_status]' selected>$t[tunjang_status]</option>
-        <option value=pengajuan>ajukan Tunjangan</option>
-        <option value=tidak>tidak di ajukan</option>
-        </select><br><br>
-          <label>Tempat Sekolah (jika masih sekolah)</label>
-         <input type='text' value='$t[pendidikan_keluarga]' class='form-control' name='pendidikan_keluarga'/>
-        </br>
-        <label>Status Anak Angkat</label>
-        <select class='form-control select2' style='width: 100%;' name=anak_angkat_status>
-        <option value='$t[anak_angkat_status]' selected>$t[anak_angkat_status]</option>		    
-        <option value=negeri>Putusan Pengadilan Negeri</option>
-        <option value=tionghoa>Hukum adopsi bagi keturunan tionghoa</option>
-        </select><br><br>
-        <label>Keterangan Anak</label>
-        <input type='text' class='form-control' value='$t[ket_keluarga]' name='ket_keluarga'/>
-       </br>
-
-                            <button type='button' class='btn btn-default' onclick=self.history.back()>Close</button>
-                            <button type='submit' class='btn btn-primary'>Save </button>
-                        </div>
-    </form>
-                        </div>
-                        </div>
-                </div>
-        </div>	
-    "; 	
-}
-elseif($_GET['aksi']=='postunjangan'){
-    $tebaru=mysqli_query($koneksi," SELECT * FROM pegawai WHERE  id_pegawai=$_GET[id_pegawai] ");
-    $t=mysqli_fetch_array($tebaru);
-    echo"
-    <div class='row'>
-                    <div class='col-lg-12'>
-                        <div class='panel panel-default'>
-                            <div class='panel-heading'>$t[nama_pegawai]
-                            </div>
-                            <div class='panel-body'>			
-            <form role='form' method='post' action='input.php?aksi=inputtunjangan'>
-                            <div class='form-group'>
-         <label>Pekerjaan Sampingan</label>
-         <input type='hidden' class='form-control' value='$t[id_pegawai]' name='id_pegawai'/>                   
-         <input type='text' class='form-control'  name='t_pekerjaan'/><br>
-         <label>Penghasilan Sampingan Rp</label>                
-         <input type='text' class='form-control'  name='t_penghasilan'/><br>
-         <label>Mempunyai pensiunan janda Rp</label>
-         <input type='text' class='form-control'  name='t_janda'/><br>
-         <label>Gaji PNS Rp</label>
-         <input type='text' class='form-control'  name='t_gaji'/><br>
-         <button type='button' class='btn btn-default'' onclick=self.history.back()>Close</button>
-                            <button type='submit' class='btn btn-primary'>Save </button>
-                        </div>
-          </form>
-                             
-                        </div>
-                        </div>
-                </div>
-        </div>	
-    "; 	
-}
-elseif($_GET['aksi']=='lihattunjangan'){
-    echo"<div class='row'>
-    <div class='col-lg-12'>
-        <div class='panel panel-default'>
-            <div class='panel-heading'>
-            </div>
-            <div class='panel-body'>
-                   <div class='table-responsive'>		
-<table id='example1' class='table table-bordered table-striped'>
-                        <thead>
-                            <tr>
-                            <th>No</th>
-                                <th>Nama Pegawai</th>
-                                <th>Status Tunjangan</th>
-                                <th></th>
-                                <th></th>		  
-                          </tr></thead>
-        <tbody>
-        ";
-$no=0;
-$tebaru=mysqli_query($koneksi," SELECT * FROM tunjangan,pegawai WHERE tunjangan.id_pegawai=pegawai.id_pegawai");
-while ($t=mysqli_fetch_array($tebaru)){	
-$no++;
-                        echo"<tr>
-                            <td>$no</td>
-                            <td>$t[nama_pegawai]</td>
-                <td>$t[t_status]</td>
-                <td><a class='btn btn-primary' href='cetaksk.php?id_pegawai=$t[id_pegawai]' target='_blank'>Cetak SK</a> 
-                <a class='btn btn-primary' href='cetakskanak.php?id_pegawai=$t[id_pegawai]' target='_blank'>Cetak Daftar Anak</a></td>
-                <td><a class='btn btn-danger' href='hapus.php?aksi=hapustunjangan&id_tunjangan=$t[id_tunjangan]&id_pegawai=$t[id_pegawai]' onclick=\"return confirm ('Apakah yakin ingin menghapus data ini ?')\" >Hapus</a> </td>
-                            </tr>";
-}
-                      echo"  </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-   </div>		
-";
-}
-elseif($_GET['aksi']=='pangku'){
-    echo"<div class='row'>
-                    <div class='col-lg-12'>
-                        <div class='panel panel-default'>
-                            <div class='panel-heading'>INFORMASI 
-                            </div>
-                            <div class='panel-body'>	
-                <button class='btn btn-info' data-toggle='modal' data-target='#uiModal'>
-                                    Tambah Data
-                                </button> <a href='laporan.php?aksi=pangku' target='_blank' class='btn btn-info' ><i class='fa fa-print' ></i></span></a><br><br>
-                                   <div class='table-responsive'>		
-         <table id='example1' class='table table-bordered table-striped'>
-                                        <thead>
-                                            <tr>
-                                            <th>No</th>
-                                                <th>Nama Pemangku</th>
-                                                <th>Jumlah</th>
-                                                <th></th>		  
-                                          </tr></thead>
-                        <tbody>
-                        ";
-                
-    $no=0;
-    $sqli = mysqli_query($koneksi,"SELECT * FROM pemangku");
-    while ($t=mysqli_fetch_array($sqli)){	
-    $no++;
-                                        echo"<tr>
-                                            <td>$no</td>
-                                                <td>$t[nama_pkjab]</td>
-                                                <td>$t[jml]</td>
-                                <td><div class='btn-group'>
-                          <button type='button' class='btn btn-info'>AKSI</button>
-                          <button type='button' class='btn btn-info dropdown-toggle' data-toggle='dropdown'>
-                            <span class='caret'></span>
-                            <span class='sr-only'>Toggle Dropdown</span>
-                          </button>
-                          <ul class='dropdown-menu' role='menu'>
-                            <li><a href='index.php?aksi=editpangku&id_pkjab=$t[id_pkjab]' title='Edit'><i class='fa fa-pencil'></i>Lihat</a></li>
-                            <li><a href='hapus.php?aksi=hapuspangku&id_pkjab=$t[id_pkjab]' onclick=\"return confirm ('Apakah yakin ingin menghapus $t[nama_pkjab] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</li>
-                            </ul>
-                        </div></td>
-                                            </tr>";
-    }
-                                      echo"  </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                   </div>		
-        
-          ";			
-    
-    ////////////////input admin			
-    
-    echo"			
-    <div class='col-lg-12'>
-                            <div class='modal fade' id='uiModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-                                    <div class='modal-dialog'>
-                                        <div class='modal-content'>
-                                            <div class='modal-header'>
-                                                <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-                                                <h4 class='modal-title' id='H3'>Input Data </h4>
-                                            </div>
-                                            <div class='modal-body'>
-                                               <form role='form' method='post' action='input.php?aksi=inputpangku'>
-                                                <div class='form-group'>
-                                                <label>Nama Pemangku</label>
-                                                <input type='text' class='form-control' name='nama_pkjab'/><br>
-                                                <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
-                                                <button type='submit' class='btn btn-primary'>Save </button>
-                                            </div>
-                        </form>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                </div>			
-    "; 
-    }
-elseif($_GET['aksi']=='editpangku'){
-    $tebaru=mysqli_query($koneksi," SELECT * FROM pemangku WHERE  id_pkjab=$_GET[id_pkjab] ");
-    $t=mysqli_fetch_array($tebaru);   
-    echo"<div class='row'>
-    <div class='col-lg-12'>
-        <div class='panel panel-default'>
-            <div class='panel-heading'>
-            </div>
-            <div class='panel-body'>
-            <form role='form' method='post' action='edit.php?aksi=proseseditpangku&id_pkjab=$t[id_pkjab]'>
-            <div class='form-group'>
-            <label>Nama Pemangku</label>
-            <input type='text' class='form-control' value='$t[nama_pkjab]' name='nama_pkjab'/><br>
-            <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
-            <button type='submit' class='btn btn-primary'>Save </button>
-            </div>
-         </form>
-            </div>
-        </div>
-    </div>
-   </div>		
-";   
-}    
-elseif($_GET['aksi']=='pangkujabatan'){
-    echo"<div class='row'>
-                    <div class='col-lg-12'>
-                        <div class='panel panel-default'>
-                            <div class='panel-heading'>INFORMASI 
-                            </div>
-                            <div class='panel-body'>	
-                <button class='btn btn-info' data-toggle='modal' data-target='#uiModal'>
-                                    Tambah Data
-                                </button> <br><br>
-                                   <div class='table-responsive'>		
-         <table id='example1' class='table table-bordered table-striped'>
-                                        <thead>
-                                            <tr>
-                                            <th>No</th>
-                                                <th>Nama pegawai</th>
-                                                <th>Nama Pemangku Jabatan</th>
-                                                <th>NIP</th>		  
-                                          </tr></thead>
-                        <tbody>
-                        ";
-                
-    $no=0;
-    $sqli = mysqli_query($koneksi,"SELECT * FROM pemangkujabatan,pemangku,pegawai WHERE pemangkujabatan.id_pegawai=pegawai.id_pegawai AND pemangkujabatan.id_pkjab=pemangku.id_pkjab");
-    while ($t=mysqli_fetch_array($sqli)){	
-    $no++;
-                                        echo"<tr>
-                                            <td>$no</td>
-                                                <td>$t[nama_pegawai]</td>
-                                                <td>$t[nama_pkjab]</td>
-                                <td><div class='btn-group'>
-                          <a href='laporan.php?aksi=pangkujabatan&id_pangku=$t[id_pangku]' target='_blank' class='btn btn-info'>$t[nip]</a>
-                          <button type='button' class='btn btn-info dropdown-toggle' data-toggle='dropdown'>
-                            <span class='caret'></span>
-                            <span class='sr-only'>Toggle Dropdown</span>
-                          </button>
-                          <ul class='dropdown-menu' role='menu'>
-                            <li><a href='index.php?aksi=editpangkujabatan&id_pangku=$t[id_pangku]' title='Edit'><i class='fa fa-pencil'></i>Lihat</a></li>
-                            <li><a href='hapus.php?aksi=hapuspangkujabatan&id_pangku=$t[id_pangku]' onclick=\"return confirm ('Apakah yakin ingin menghapus $t[nama_pkjab] ?')\" title='Hapus'><i class='fa fa-remove'></i>hapus</li>
-                            </ul>
-                        </div></td>
-                                            </tr>";
-    }
-                                      echo"  </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                   </div>		
-        
-          ";			
-    
-    ////////////////input admin			
-    
-    echo"			
-    <div class='col-lg-12'>
-                            <div class='modal fade' id='uiModal' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'>
-                                    <div class='modal-dialog'>
-                                        <div class='modal-content'>
-                                            <div class='modal-header'>
-                                                <button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button>
-                                                <h4 class='modal-title' id='H3'>Input Data </h4>
-                                            </div>
-                                            <div class='modal-body'>
-                                               <form role='form' method='post' action='input.php?aksi=inputpangkujabatan'>
-                                                <div class='form-group'>
-                                                <label>Nama Pemangku Jabatan</label>
-                                                <select class='form-control select2' style='width: 100%;' name='id_pkjab'>
-                                                <option value='' selected>--Pilih Nama Pemangku Jabatan--</option>
-                                                "; 
-		$sql=mysqli_query($koneksi,"SELECT * FROM pemangku ORDER BY id_pkjab");
-		while ($c=mysqli_fetch_array($sql))
-		{
-			echo "<option value='$c[id_pkjab]'>$c[nama_pkjab]</option>";
-		}
-	                                        echo "
-                                            </select><br><br>
-                                               
-                                                <label>Nama Pegawai</label>
-       <select class='form-control select2' style='width: 100%;' name='id_pegawai'>
-       <option value='' selected>--Pilih Nama Pegawai--</option>"; 
-		$sql=mysqli_query($koneksi,"SELECT * FROM pegawai ORDER BY id_pegawai");
-		while ($c=mysqli_fetch_array($sql))
-		{
-			echo "<option value='$c[id_pegawai]'>$c[nama_pegawai]</option>";
-		}
-	echo "</select><br><br>
-                                                <label>Nomor Surat</label>
-                                                <input type='text' class='form-control' name='nomor_surat'/><br>
-
-                                                <label>Tanggal Surat</label>
-                                                <input type='date' class='form-control' name='tanggal_surat'/><br>
-                                                 </br>
-                                                <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
-                                                <button type='submit' class='btn btn-primary'>Save </button>
-                                            </div>
-                        </form>
-                                        </div>
-                                    </div>
-                                </div>
-                        </div>
-                </div>			
-    "; 
-    }
-elseif($_GET['aksi']=='editpangkujabatan'){
-       $sqli = mysqli_query($koneksi,"SELECT * FROM pemangkujabatan,pemangku,pegawai WHERE pemangkujabatan.id_pegawai=pegawai.id_pegawai AND pemangkujabatan.id_pkjab=pemangku.id_pkjab AND id_pangku=$_GET[id_pangku] ");
-        $t=mysqli_fetch_array($sqli);   
-        echo"<div class='row'>
-        <div class='col-lg-12'>
-            <div class='panel panel-default'>
-                <div class='panel-heading'>
-                </div>
-                <div class='panel-body'>
-                <form role='form' method='post' action='edit.php?aksi=proseseditpangkujabatan&id_pangku=$t[id_pangku]'>
-                <div class='form-group'>
-                <label>Nama Pemangku Jabatan</label>
-                <select class='form-control select2' style='width: 100%;' name='id_pkjab'>
-                <option value='$t[id_pkjab]' selected>$t[nama_pkjab]</option>
-                "; 
-$sql=mysqli_query($koneksi,"SELECT * FROM pemangku ORDER BY id_pkjab");
-while ($c=mysqli_fetch_array($sql))
-{
-echo "<option value='$c[id_pkjab]'>$c[nama_pkjab]</option>";
-}
-            echo "
-            </select><br><br>
-               
-                <label>Nama Pegawai</label>
-<select class='form-control select2' style='width: 100%;' name='id_pegawai'>
-<option value='$t[id_pegawai]' selected>$t[nama_pegawai]</option>"; 
-$sql=mysqli_query($koneksi,"SELECT * FROM pegawai ORDER BY id_pegawai");
-while ($c=mysqli_fetch_array($sql))
-{
-echo "<option value='$c[id_pegawai]'>$c[nama_pegawai]</option>";
-}
-echo "</select><br><br>
-                <label>Nomor Surat</label>
-                <input type='text' class='form-control' value='$t[nomor_surat]' name='nomor_surat'/><br>
-
-                <label>Tanggal Surat</label>
-                <input type='date' class='form-control' value='$t[tanggal_surat]' name='tanggal_surat'/><br>
-                 </br>
-                <a href='index.php?aksi=pangkujabatan' class='btn btn-default' >Close</a>
-                <button type='submit' class='btn btn-primary'>Save </button>
-            </div>
-</form>
-                </div>
-            </div>
-        </div>
-       </div>		
-    ";   
 } 
-elseif($_GET['aksi']=='kadis'){ 
-    echo"<div class='row'>
-    <div class='col-lg-12'>
-        <div class='panel panel-default'>
-            <div class='panel-heading'>
-            </div>
-            <div class='panel-body'>
-            <form role='form' method='post' action='edit.php?aksi=proseseditprofil&id_profil=2'>
-            <div class='form-group'>
-            <label>Nama Kepala Dinas</label>
-            <input type='text' class='form-control' value='$tt[nama]' name='nama'/><br>
-			<label>Nip Kepala Dinas</label>
-            <input type='text' class='form-control' value='$tt[alias]' name='alias'/><br>
-            <button type='button' class='btn btn-default' data-dismiss='modal'>Close</button>
-            <button type='submit' class='btn btn-primary'>Save </button>
-            </div>
-         </form>
-            </div>
-        </div>
-    </div>
-   </div>		
-";   
-}  
 
 ?>

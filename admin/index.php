@@ -22,7 +22,6 @@
     <link rel="stylesheet" href="../sys/bootstrap/dist/css/skins/_all-skins.min.css">
 	<script src="../sys/bootstrap/plugins/ckeditor/ckeditor.js"></script> 
 	<script src="../sys/bootstrap/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-	<script src="../sys/bootstrap/plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <script src="js/jquery.form.js"></script>	
 
     <script src="../sys/bootstrap/bootstrap/js/bootstrap.min.js"></script>
