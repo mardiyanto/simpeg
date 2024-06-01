@@ -358,8 +358,8 @@ elseif($_GET['aksi']=='pegawai'){
                                                 <select class='form-control select2' style='width: 100%;' name=jenis_pegawai>
                                                     <option value='$t[jenis_pegawai]' selected>$t[jenis_pegawai]</option>
                                                     <option value='Dosen'>Dosen</option>
-                                                    <option value='Kariawan'>Kariawan</option>
-                                                    <option value='Dosen dan Kariawan'>Dosen dan Kariawan</option>
+                                                    <option value='Tenaga Pendidik'>Tenaga Pendidik</option>
+                                                    <option value='Dosen dan Tenaga Pendidik'>Dosen dan Tenaga Pendidik</option>
                                                 </select><br><br>
                                                 <label>Jabatan Pegawai</label>
                                                 <select class='form-control select2' style='width: 100%;' name='jabatan_pegawai'>
@@ -466,8 +466,8 @@ elseif($_GET['aksi']=='pegawai'){
                                                 <select class='form-control select2' style='width: 100%;' name=jenis_pegawai>
                                                     <option value='' selected>--Pilih Jenis Pegawai</option>
                                                     <option value='Dosen'>Dosen</option>
-                                                    <option value='Kariawan'>Kariawan</option>
-                                                    <option value='Dosen dan Kariawan'>Dosen dan Kariawan</option>
+                                                    <option value='Tenaga Pendidik'>Tenaga Pendidik</option>
+                                                    <option value='Dosen dan Tenaga Pendidik'>Dosen dan Tenaga Pendidik</option>
                                                 </select><br><br>
                                                 <label>Jabatan Pegawai</label>
                                                 <select class='form-control select2' style='width: 100%;' name='jabatan_pegawai'>
@@ -1850,6 +1850,240 @@ elseif($_GET['aksi']=='kerja'){
         
           ";		
     }
+elseif($_GET['aksi']=='ulangtahun'){
+    // Ambil data pegawai
+$sql = "SELECT nama_pegawai, tgl_lahir FROM pegawai";
+$result = $koneksi->query($sql);
+
+echo "<div class='row'>
+<div class='col-lg-12'>
+<div class='panel panel-default'>
+    <div class='panel-heading'>
+        Pegawai yang Berulang Tahun Hari Ini
+    </div>
+    <div class='panel-body'>";
+
+$jumlah_ulang_tahun = 0;
+
+if ($result->num_rows > 0) {
+    echo "<table id='example1' class='table table-striped table-bordered'>";
+    echo "<thead>
+            <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Tanggal Lahir</th>
+                <th>Usia</th>
+            </tr>
+          </thead>
+          <tbody>";
+
+    $no = 1;
+    $today = new DateTime();
+    while ($row = $result->fetch_assoc()) {
+        $nama = $row['nama_pegawai'];
+        $tgl_lahir = $row['tgl_lahir'];
+        
+        // Hitung usia
+        $birthDate = new DateTime($tgl_lahir);
+        $usia = $birthDate->diff($today)->y;
+
+        // Check if today is the birthday
+        if ($birthDate->format('m-d') == $today->format('m-d')) {
+            $jumlah_ulang_tahun++;
+            echo "<tr>
+                    <td>{$no}</td>
+                    <td>{$nama}</td>
+                    <td>{$tgl_lahir}</td>
+                    <td>{$usia} tahun</td>
+                  </tr>";
+            $no++;
+        }
+    }
+
+    echo "</tbody></table>";
+} else {
+    echo "<p>Tidak ada data yang ditemukan.</p>";
+}
+
+echo "<p>Jumlah pegawai yang berulang tahun hari ini: {$jumlah_ulang_tahun}</p>";
+
+echo "</div>
+</div>
+</div>
+</div>";		
+}
+elseif($_GET['aksi']=='dosen'){
+        echo"<div class='row'>
+                        <div class='col-lg-12'>
+                            <div class='panel panel-default'>
+                                <div class='panel-heading'>INFORMASI 
+                                </div>
+                                <div class='panel-body'>	
+                                <a class='btn btn-info' href='get.php?aksi=getpegawai'>download Data</a></br></br>
+                                     <div class='table-responsive'>		
+           <table id='example1' class='table table-bordered table-striped'>
+                                            <thead>
+                                                <tr> <th>No</th>
+                                                    <th>NIDN</th>
+                                                    <th>Nama</th>
+                                                    <th>Jenis Kelamin</th>	
+                                                    <th>Agama</th>	 
+                                                    <th>id_dosen</th>	  
+                                                    <th>status</th>	 
+                                                </tr>
+                                            </thead><tbody>
+                    ";
+            
+        $no=0;
+        $filter = "nama_status_aktif='Aktif'";
+        $order = '';
+        $limit = '';
+        $offset = '';
+        $data_aray = [
+          'act' => 'GetListDosen',
+          'token' => $_token,
+          'filter' => $filter, 
+          'order' => $order, 
+          'limit' => $limit, 
+          'offset' => $offset
+        ];
+        $datajson = json_decode($_ws->execute($data_aray));
+        $dataArray = $datajson->data;
+        foreach ($dataArray as $d) {
+        $no++;
+                                            echo"
+                                                <tr><td>$no</td>
+                                                <td> <a class='btn btn-info' href='index.php?aksi=detaildosen&id_d=$d->id_dosen'>$d->nidn</a></td> 
+                                                    <td>$d->nama_dosen</td> 
+                                                    <td>$d->jenis_kelamin</td> 
+                                                    <td>$d->nama_agama</td>
+                                                    <td>$d->id_dosen</td>
+                                                    <td>$d->nama_status_aktif</td>	
+                                                </tr>";
+        }
+                                        echo"
+                                            </tbody></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       </div>";	
+     
+}
+elseif($_GET['aksi']=='detaildosen'){
+          $id_dos=$_GET['id_d'];
+          $filter = "id_dosen='$id_dos'";
+          $order = '';
+          $limit = '';
+          $offset = '';
+          $data_aray = [
+            'act' => 'DetailBiodataDosen',
+            'token' => $_token,
+            'filter' => $filter, 
+            'order' => $order, 
+            'limit' => $limit, 
+            'offset' => $offset
+          ];
+          $datajson = json_decode($_ws->execute($data_aray));
+          $dataArray = $datajson->data;
+          foreach ($dataArray as $d);
+        echo"<div class='row'>
+                        <div class='col-lg-12'>
+                            <div class='panel panel-default'>
+                                <div class='panel-heading'>INFORMASI 
+                                </div>
+                                <div class='panel-body'>	
+                                <a class='btn btn-info' href='index.php?aksi=dosen'>Kembali</a></br></br>
+                                     <div class='table-responsive'>
+                                     <table class='table table-bordered table-striped'>
+                                     <tr>
+                                       <td>Nama Dosen</td>
+                                       <td>$d->nama_dosen</td>
+                                     </tr>
+                                     <tr>
+                                       <td>Tempat Lahir</td>
+                                       <td>$d->tempat_lahir</td>
+                                     </tr>
+                                     <tr>
+                                       <td>Tanggal Lahir</td>
+                                       <td>$d->tanggal_lahir</td>
+                                     </tr>
+                                     <tr>
+                                       <td>Jenis Kelamin</td>
+                                       <td>$d->jenis_kelamin</td>
+                                     </tr>
+                                     <tr>
+                                       <td>Agama</td>
+                                       <td>$d->nama_agama</td>
+                                     </tr>
+                                     <tr>
+                                       <td>Status Dosen</td>
+                                       <td>$d->nama_status_aktif</td>
+                                     </tr>
+                                     <tr>
+                                       <td>NIDN</td>
+                                       <td>$d->nidn</td>
+                                     </tr>
+                                     <tr>
+                                       <td>Nama Ibu</td>
+                                       <td>$d->nama_ibu_kandung</td>
+                                     </tr>
+                                     <tr>
+                                       <td>NIK</td>
+                                       <td>$d->nik</td>
+                                     </tr>
+                                     <tr>
+                                       <td>Jenis SDM</td>
+                                       <td>$d->nama_jenis_sdm</td>
+                                     </tr>
+                                     <tr>
+                                       <td>SK Pangkat</td>
+                                       <td>$d->mulai_sk_pengangkatan</td>
+                                     </tr>
+                                     <tr>
+                                       <td>Nama Lembaga</td>
+                                       <td>$d->nama_lembaga_pengangkatan</td>
+                                     </tr>
+                                     <tr>
+                                       <td>Pankat Golongan</td>
+                                       <td>$d->nama_pangkat_golongan</td>
+                                     </tr>
+                                     <tr>
+                                       <td>Sumber Gaji</td>
+                                       <td>$d->nama_sumber_gaji</td>
+                                     </tr>
+                                     <tr>
+                                       <td>HP</td>
+                                       <td>$d->handphone</td>
+                                     </tr>
+                                     <tr>
+                                       <td>Email</td>
+                                       <td>$d->email</td>
+                                     </tr>
+                                     <tr>
+                                     <td>Status Nikah</td>
+                                     <td>$d->status_pernikahan</td>
+                                     </tr>
+                                      <tr>
+                                       <td>Nama Istri</td>
+                                       <td>$d->nama_suami_istri</td>
+                                     </tr>
+                                     <tr>
+                                     <td>Pekerjaan Istri</td>
+                                     <td>$d->nama_pekerjaan_suami_istri</td>
+                                     </tr>
+                              
+                                   </table> 
+                                     
+      
+          
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       </div>";	
+        
+}
 elseif($_GET['aksi']=='pegawai1'){
 echo"<div class='row'>
                 <div class='col-lg-12'>

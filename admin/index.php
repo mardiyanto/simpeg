@@ -1,5 +1,6 @@
   <?php 
   include '../koneksi.php';
+  include '../config/initsoap.php';
   date_default_timezone_set('Asia/Jakarta');
   session_start();
   if($_SESSION['status'] != "administrator_logedin"){
