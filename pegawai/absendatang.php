@@ -150,14 +150,15 @@
                                     <div class='form-group'>
                                         <label>Kode Kariawan</label>
                                         <input type='text' class='form-control' value='$tx[kode_pegawai]' name='kode_pegawai' id='kode_pegawai' readonly />
-                                                        <label>Shiff Absensi</label>
-                                                        <select class='form-control select2' style='width: 100%;' id='status_absensi' name=status_absensi>
-                                                            <option value='pagi' selected>--Pilih Shiff absensi--</option>
-                                                            <option value='pagi'>pagi</option>
-                                                            <option value='siang'>siang</option>
-                                                            <option value='sore'>sore</option>
-                                                        </select><br>
-                                                        <label>Status Absensi</label>
+                                        <input type='hidden' class='form-control' value='pagi' id='status_absensi' name=status_absensi />";
+                                                        // <label>Shiff Absensi</label>
+                                                        // <select class='form-control select2' style='width: 100%;' id='status_absensi' name=status_absensi>
+                                                        //     <option value='pagi' selected>--Pilih Shiff absensi--</option>
+                                                        //     <option value='pagi'>pagi</option>
+                                                        //     <option value='siang'>siang</option>
+                                                        //     <option value='sore'>sore</option>
+                                                        // </select><br>
+                                                        echo"<label>Status Absensi</label>
                                                         <select class='form-control select2' style='width: 100%;' id='status_hadir' name=status_hadir>
                                                             <option value='hadir' selected>--Pilih status absensi--</option>
                                                             <option value='hadir'>hadir</option>

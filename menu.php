@@ -45,7 +45,7 @@
                     <div class="navbar-nav ms-auto py-0">
                         <a href="index.php" class="nav-item nav-link">Beranda</a>
                         <a href="#tentang" class="nav-item nav-link">Tentang</a>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        <a href="#hubungi" class="nav-item nav-link">Hubungi kami</a>
                     </div>
                 </div>
             </nav>

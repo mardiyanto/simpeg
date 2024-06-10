@@ -313,65 +313,74 @@
                 </div>
             </div>
         </div>
-        <!-- Modal Gagal Login -->
-<div class="modal fade" id="loginFailedModal" tabindex="-1" role="dialog" aria-labelledby="loginFailedModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginFailedModalLabel">Login Gagal</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+      <!-- Contact Start -->
+      <div id="hubungi" class="container-fluid contact bg-light py-5">
+            <div class="container py-5">
+                <div class="mx-auto text-center mb-5" style="max-width: 900px;">
+                    <h5 class="section-title px-3">Hubungi</h5>
+                    <h1 class="mb-0">Hubngi Kami</h1>
                 </div>
-                <div class="modal-body">
-                    <p class="text-center text-danger">Username dan password salah. Silakan coba lagi.</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-4">
+                        <div class="bg-white rounded p-4">
+                            <div class="text-center mb-4">
+                                <i class="fa fa-map-marker-alt fa-3x text-primary"></i>
+                                <h4 class="text-primary"><Address></Address></h4>
+                                <p class="mb-0"><?php echo"$k_k[alamat]"; ?></p>
+                            </div>
+                            <div class="text-center mb-4">
+                                <i class="fa fa-phone-alt fa-3x text-primary mb-3"></i>
+                                <h4 class="text-primary">No.Telpone</h4>
+                                <p class="mb-0"><?php echo"$k_k[tahun]"; ?></p>
+                            </div>
+                           
+                            <div class="text-center">
+                                <i class="fa fa-envelope-open fa-3x text-primary mb-3"></i>
+                                <h4 class="text-primary">Email</h4>
+                                <p class="mb-0"><?php echo"$k_k[alias]"; ?></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <h3 class="mb-2">Form Kritik Saran</h3>
+                        <p class="mb-4">Kritik dan saran anda membantu kami agar lebih baik lagi</p>
+                        <form>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control border-0" id="name" name="nama" placeholder="Your Name">
+                                        <label for="name">Nama</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="email" class="form-control border-0" id="email" name="email" placeholder="Your Email">
+                                        <label for="email">Email</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <textarea class="form-control border-0" placeholder="Leave a message here" name="pesan" id="message" style="height: 160px"></textarea>
+                                        <label for="message">Pesan</label>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <button class="btn btn-primary w-100 py-3" type="submit">Kirim Pesan</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-12">
+                        <div class="rounded">
+                            <iframe class="rounded w-100" 
+                            style="height: 450px;" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1178.0092557566109!2d104.97180856008619!3d-5.357795635596876!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e473268e8e194c1%3A0x98daa3984209b483!2sInstitut%20Bakti%20Nusantara%20(IBN)%20Pringsewu!5e1!3m2!1sid!2sid!4v1718022166717!5m2!1sid!2sid" 
+                            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-<!-- Modal loguot -->
-<div class="modal fade" id="logoutFailedModal" tabindex="-1" role="dialog" aria-labelledby="loginFailedModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginFailedModalLabel">Login Gagal</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p class="text-center text-danger">ANDA TELAH BERHASIL LOGOUT</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Modal login -->
-<div class="modal fade" id="loginFailedModal" tabindex="-1" role="dialog" aria-labelledby="loginFailedModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginFailedModalLabel">Login Gagal</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <p class="text-center text-danger">ANDA HARUS LOGIN UNTUK MENGAKSES DASHBOARD</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                </div>
-            </div>
-        </div>
-    </div>
-        <!-- Tour Booking End -->
-
+        <!-- Contact End -->
         <!-- Copyright Start -->
         <div class="container-fluid copyright text-body py-4">
             <div class="container">
